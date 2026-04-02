@@ -68,13 +68,58 @@ function Topbar({active}){
 // PAGE: OVERVIEW
 // ═══════════════════════════════════════════════════════════════════════════════
 function PageOverview(){
-  const metrics=[{label:"Sistemas",value:"3",sub:"Retaguarda · App · Pipeline",accent:C.blue},{label:"Prazo Estimado",value:"5m+",sub:"Design · Dados · Dev · Infra",accent:C.purple},{label:"Perfis de Acesso",value:"3",sub:"Diretoria · Gerente · Backoffice",accent:C.green}];
-  const systems=[
-    {abbr:"RT",name:"Retaguarda",bg:C.navy,tags:["Web","3 perfis","Protheus"],feats:["Dashboard de KPIs por perfil","Módulo Indústria — Faturamento s/ IPI","Módulo Revenda — Faturamento s/ IPI","Filtros por gerente e área/cidade","Gráficos de evolução mensal","Parametrização de alertas","Controle de acessos — CRUD usuários","Log de atividades"]},
-    {abbr:"APP",name:"App Mobile",bg:C.blue,tags:["React Native","Mobile-First","iOS + Android"],feats:["Home com KPIs consolidados","Módulo Indústria — visão mobile","Módulo Revenda — visão mobile","Progresso vs meta (gauge visual)","Push notifications (FCM)","Seletor de período Dia/Mês/Ano","Painel de alertas com severidade","Pull-to-refresh"]},
-    {abbr:"PIP",name:"Pipeline de Dados",bg:C.greenT,tags:["Protheus → API","ETL","2 abordagens"],feats:["Opção A: Parser e-mail Protheus","Opção B: Extração banco Protheus","Normalização em PostgreSQL","Modelagem dimensional","API REST (Node.js / FastAPI)","Autenticação JWT + perfis","Engine de alertas","Ciclo 2h espelhando Protheus"]},
+  const metrics=[
+    {label:"Sistemas",value:"3",sub:"PWA · Backoffice · Pipeline",accent:C.blue},
+    {label:"Prazo Estimado",value:"3 meses",sub:"Design · ETL · Dev · QA",accent:C.purple},
+    {label:"Perfis de Acesso",value:"3",sub:"Diretoria · Gerente · Backoffice",accent:C.green},
   ];
-  const profiles=[{abbr:"DIR",name:"Diretoria",desc:"App + Retaguarda · Visão total",bg:C.blueL,color:C.blueT},{abbr:"GER",name:"Gerente",desc:"App · Filtrado por área/cidade",bg:C.greenL,color:C.green},{abbr:"BKO",name:"Backoffice",desc:"Retaguarda · Controle de acessos",bg:C.grayL,color:C.gray}];
+  const systems=[
+    {
+      abbr:"PWA", name:"PWA — Imdepa", bg:C.navy,
+      tags:["Progressive Web App","Mobile-first","Diretoria","Gerente"],
+      feats:[
+        "Home com KPIs consolidados + gauge de meta",
+        "Módulo Indústria — faturamento e margem",
+        "Módulo Revenda — faturamento e margem",
+        "Filtros por gerente e área/cidade",
+        "Gráficos de evolução e comparativo",
+        "Central de alertas com severidade",
+        "Seletor de período Dia / Mês / Ano",
+        "Instalável na tela inicial (PWA)",
+      ],
+    },
+    {
+      abbr:"BKO", name:"Backoffice", bg:C.purple,
+      tags:["Web","Gestão de acessos","Backoffice"],
+      feats:[
+        "CRUD de usuários — criar, editar, desativar",
+        "Atribuição de perfil por usuário",
+        "Vinculação gerente ↔ área/cidade",
+        "Log de acessos e atividades",
+        "Histórico de último acesso",
+        "Configuração de thresholds de alertas",
+      ],
+    },
+    {
+      abbr:"API", name:"Pipeline & API", bg:C.greenT,
+      tags:["Protheus","ETL","Dados brutos"],
+      feats:[
+        "Extração dos dados diretamente do Protheus",
+        "Transformação e carga no banco analítico",
+        "API REST com endpoints por perfil e período",
+        "Autenticação JWT e controle de acesso",
+        "Engine de alertas com regras de negócio",
+        "Push notifications via Firebase FCM",
+        "Atualização periódica dos dados",
+        "Histórico granular para comparativos",
+      ],
+    },
+  ];
+  const profiles=[
+    {abbr:"DIR",name:"Diretoria",  desc:"PWA · Visão total de todas as áreas",          bg:C.blueL,  color:C.blueT},
+    {abbr:"GER",name:"Gerente",    desc:"PWA · Filtrado pela sua área/cidade",           bg:C.greenL, color:C.green},
+    {abbr:"BKO",name:"Backoffice", desc:"Backoffice Web · Gestão de acessos e configs",  bg:C.purpleL,color:C.purple},
+  ];
   return(
     <div style={{flex:1,overflowY:"auto",padding:24,display:"flex",gap:20,alignItems:"flex-start"}}>
       <div style={{flex:1,minWidth:0,display:"flex",flexDirection:"column",gap:16}}>
@@ -100,12 +145,16 @@ function PageOverview(){
           {profiles.map((p,i)=><div key={p.abbr} style={{display:"flex",alignItems:"flex-start",gap:10,padding:"9px 0",borderBottom:i<profiles.length-1?`0.5px solid ${C.border}`:"none"}}><Badge a={p.abbr} bg={p.bg} color={p.color}/><div><div style={{fontSize:12.5,fontWeight:600,color:C.text,marginBottom:2}}>{p.name}</div><div style={{fontSize:11,color:C.hint,lineHeight:1.4}}>{p.desc}</div></div></div>)}
         </div>
         <div style={{...card(),padding:16}}><ST>Abordagem de dados</ST>
-          <div style={{padding:"9px 12px",borderRadius:8,border:`0.5px solid ${C.border}`,borderLeft:`2.5px solid ${C.blue}`,marginBottom:8}}><div style={{fontSize:12,fontWeight:600,color:C.text,marginBottom:3}}>Opção A — E-mail Parser</div><div style={{fontSize:11,color:C.hint,lineHeight:1.5}}>Parse do relatório Protheus · MVP rápido · 2–4 semanas</div></div>
-          <div style={{padding:"9px 12px",borderRadius:8,border:`0.5px solid ${C.border}`,borderLeft:`2.5px solid ${C.greenT}`,marginBottom:8}}><div style={{fontSize:12,fontWeight:600,color:C.text,marginBottom:3}}>Opção B — Dados Brutos</div><div style={{fontSize:11,color:C.hint,lineHeight:1.5}}>ETL direto Protheus · Escalável · 2 meses full-time</div></div>
-          <div style={{padding:"9px 12px",backgroundColor:C.bg,borderRadius:8,fontSize:11,color:C.muted,lineHeight:1.5}}>Recomendação: A para MVP, migrar para B na evolução</div>
+          <div style={{padding:"9px 12px",borderRadius:8,border:`0.5px solid ${C.border}`,borderLeft:`2.5px solid ${C.greenT}`,marginBottom:8}}>
+            <div style={{fontSize:12,fontWeight:600,color:C.text,marginBottom:3}}>Extração Direta — Protheus</div>
+            <div style={{fontSize:11,color:C.hint,lineHeight:1.5}}>ETL direto do banco Protheus · Dados brutos · Granularidade total</div>
+          </div>
+          <div style={{padding:"9px 12px",backgroundColor:C.greenL,borderRadius:8,fontSize:11,color:C.green,lineHeight:1.5,fontWeight:500}}>
+            ✓ Extração direta do Protheus — abordagem definida
+          </div>
         </div>
         <div style={{...card(),padding:16}}><ST>Estimativas</ST>
-          {[{l:"Design UX/UI",v:"2m part-time",w:false},{l:"Dados (Op. B)",v:"2m full-time",w:false},{l:"Front + Back",v:"a estimar",w:true},{l:"Infra / DevOps",v:"a estimar",w:true}].map((e,i,arr)=>(
+          {[{l:"Design UX/UI",v:"2m part-time",w:false},{l:"Eng. Dados (ETL)",v:"2m full-time",w:false},{l:"Dev Backend",v:"3m part-time",w:false},{l:"Dev Frontend/Mobile",v:"3m full-time",w:false},{l:"QA / Testes",v:"2m full-time",w:false}].map((e,i,arr)=>(
             <div key={e.l} style={{display:"flex",justifyContent:"space-between",fontSize:12,padding:"5px 0",borderBottom:i<arr.length-1?`0.5px solid ${C.border}`:"none"}}><span style={{color:C.muted}}>{e.l}</span><span style={{color:e.w?C.amber:C.text,fontWeight:500}}>{e.v}</span></div>
           ))}
         </div>
@@ -115,154 +164,612 @@ function PageOverview(){
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// PAGE: ARCHITECTURE
+// PAGE: ARCHITECTURE — sitemap interativo
 // ═══════════════════════════════════════════════════════════════════════════════
 function PageArchitecture(){
-  const opts=[
-    {color:C.blue,label:"Opção A — Ingestão via E-mail (MVP)",pill:{label:"Recomendada p/ MVP",color:C.blueT,bg:C.blueL},feats:["Protheus gera e-mail com tabela a cada 2h","Microserviço lê e-mail via IMAP / webhook","Parser extrai e normaliza dados da tabela","Armazenamento em PostgreSQL","API REST expõe os dados ao app","Ciclo de atualização: 2h (espelha Protheus)","Implementação: 2–4 semanas","Zero impacto no ambiente Protheus"],pros:["Baixa complexidade","Entrega rápida"],cons:["Formato do e-mail","Granularidade limitada"]},
-    {color:C.greenT,label:"Opção B — Extração Direta do Protheus (Evolução)",pill:{label:"Fase 4",color:C.green,bg:C.greenL},feats:["Conector direto: SQL Server / Oracle","Pipeline ETL com orquestração (Airflow)","Staging → transformação → data warehouse","Modelagem dimensional: fatos + dimensões","Dimensões: tempo, produto, gerente, área","API analítica com filtros granulares","Histórico profundo para comparativos","2 meses full-time · Eng. Dados Pleno"],pros:["Granularidade total","Analytics avançado"],cons:["Alta complexidade","Mapeamento tabelas Protheus"]},
-  ];
+  const [selected,setSelected]=useState(null);
+
+  const SYSTEMS={
+    pwa:{
+      abbr:"PWA", label:"PWA — Imdepa", sub:"Progressive Web App · Mobile-first",
+      color:"#1A3A5C", colorL:"#D0DCE8",
+      profiles:["DIR · Diretoria","GER · Gerente"],
+      desc:"Aplicação web progressiva acessada pelo celular (ou desktop) pela diretoria e gerentes. Mobile-first, instalável na tela inicial como um app nativo.",
+      screens:[
+        {p:"Diretoria",items:["Login","Home — KPIs totais (Indústria + Revenda)","Módulo Indústria — faturamento, margem, % MC","Módulo Revenda — faturamento, margem, % MC","Filtros por gerente e área","Central de alertas — todas as áreas","Seletor de período Dia / Mês / Ano"]},
+        {p:"Gerente",items:["Login","Home — KPIs da sua área + ritmo diário","Módulo da sua área (Indústria ou Revenda)","Filtros dentro da sua área/cidade","Central de alertas da área","Evolução mensal"]},
+      ],
+    },
+    backoffice:{
+      abbr:"BKO", label:"Backoffice", sub:"Web · Gestão de acessos",
+      color:"#534AB7", colorL:"#EEEDFE",
+      profiles:["BKO · Backoffice"],
+      desc:"Interface web de administração exclusiva para o perfil Backoffice. Gerencia usuários, perfis e vinculações de áreas. Não tem acesso a dados comerciais.",
+      screens:[
+        {p:"Backoffice",items:["Login","CRUD de usuários — criar, editar, desativar","Atribuição de perfil por usuário (DIR / GER / BKO)","Vinculação gerente ↔ área/cidade","Log de acessos e atividades","Histórico de último acesso por usuário","Configuração de thresholds de alertas"]},
+      ],
+    },
+    pipeline:{
+      abbr:"API", label:"Pipeline & API", sub:"Protheus → ETL → API",
+      color:"#3B6D11", colorL:"#EAF3DE",
+      profiles:["Extração Protheus","Transformação","Exposição via API"],
+      desc:"Extração direta dos dados brutos do banco Protheus, transformação e disponibilização via API para o PWA e o Backoffice.",
+      screens:[
+        {p:"Fonte",items:["Banco Protheus (SQL Server / Oracle)","Dados brutos de faturamento, margem e KPIs"]},
+        {p:"Pipeline",items:["Extração programada dos dados do Protheus","Transformação e carga no banco analítico","Atualização periódica dos dados"]},
+        {p:"API",items:["Endpoints de KPIs por perfil e período","Autenticação JWT + controle de perfis","Engine de alertas com regras de negócio","Push notifications via Firebase FCM"]},
+      ],
+    },
+  };
+
+  const sel=selected?SYSTEMS[selected]:null;
+
+  // Connector line helper
+  function VLine(){
+    return <div style={{width:1,height:32,backgroundColor:"rgba(0,0,0,0.12)",margin:"0 auto"}}/>;
+  }
+  function HLine(){
+    return <div style={{flex:1,height:1,backgroundColor:"rgba(0,0,0,0.12)",marginTop:16}}/>;
+  }
+
   return(
-    <div style={{flex:1,overflowY:"auto",padding:24,display:"flex",gap:20,alignItems:"flex-start"}}>
-      <div style={{flex:1,minWidth:0,display:"flex",flexDirection:"column",gap:16}}>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12}}>
-          {[{abbr:"ERP",label:"Protheus ERP",sub:"Fonte de dados",bg:C.grayL,color:C.gray},{abbr:"ETL",label:"Pipeline",sub:"Parser / ETL",bg:C.blueL,color:C.blueT},{abbr:"API",label:"Backend API",sub:"Node.js / FastAPI",bg:C.greenL,color:C.green},{abbr:"APP",label:"Clientes",sub:"Web + Mobile",bg:C.purpleL,color:C.purple}].map((s,i)=>(
-            <div key={s.abbr} style={{...card(),padding:"14px 16px",display:"flex",flexDirection:"column",gap:6,position:"relative"}}>
-              <div style={{...pill(s.bg,s.color),alignSelf:"flex-start"}}>{s.abbr}</div>
-              <div style={{fontSize:13,fontWeight:600,color:C.text}}>{s.label}</div>
-              <div style={{fontSize:11,color:C.hint}}>{s.sub}</div>
-              {i<3&&<div style={{position:"absolute",right:-9,top:"50%",transform:"translateY(-50%)",fontSize:16,color:C.hint}}>›</div>}
-            </div>
-          ))}
+    <div style={{flex:1,overflowY:"auto",backgroundColor:C.bg}}>
+      <div style={{padding:"10px 24px 0",backgroundColor:C.white,borderBottom:`0.5px solid ${C.border}`}}>
+        <div style={{fontSize:11,color:C.hint,marginBottom:8}}>Arquitetura / Visão de sistemas e perfis de acesso</div>
+      </div>
+
+      <div style={{padding:"24px 40px 32px",display:"flex",flexDirection:"column",alignItems:"center"}}>
+
+        {/* Hint */}
+        <div style={{fontSize:12,color:C.hint,marginBottom:28,letterSpacing:"0.02em"}}>
+          Clique em qualquer sistema para ver detalhes e funcionalidades
         </div>
-        {opts.map(opt=>(
-          <div key={opt.label} style={card({overflow:"hidden"})}>
-            <div style={{padding:"12px 18px 10px",borderBottom:`0.5px solid ${C.border}`,display:"flex",alignItems:"center",gap:10}}>
-              <div style={{width:10,height:10,borderRadius:"50%",background:opt.color,flexShrink:0}}/>
-              <span style={{fontSize:13,fontWeight:600,color:C.text,flex:1}}>{opt.label}</span>
-              <SP label={opt.pill.label} color={opt.pill.color} bg={opt.pill.bg}/>
+
+        {/* Top node — Pipeline (fonte de dados) */}
+        <div style={{display:"flex",flexDirection:"column",alignItems:"center",width:"100%",maxWidth:900}}>
+
+          {/* Pipeline node */}
+          <SitemapNode sys={SYSTEMS.pipeline} id="pipeline" selected={selected} onSelect={setSelected}/>
+          <VLine/>
+
+          {/* API labels branching */}
+          <div style={{display:"flex",alignItems:"center",width:"100%",gap:0}}>
+            <HLine/>
+            <div style={{...pill(C.greenL,C.green),margin:"0 8px",flexShrink:0}}>API</div>
+            <div style={{width:80}}/>
+            <div style={{...pill(C.greenL,C.green),margin:"0 8px",flexShrink:0}}>API</div>
+            <HLine/>
+          </div>
+
+          {/* Bottom row — PWA + Backoffice */}
+          <div style={{display:"flex",gap:40,marginTop:0,width:"100%",justifyContent:"center"}}>
+            <div style={{display:"flex",flexDirection:"column",alignItems:"center",flex:1,maxWidth:380}}>
+              <VLine/>
+              <SitemapNode sys={SYSTEMS.pwa} id="pwa" selected={selected} onSelect={setSelected}/>
             </div>
-            <FeatGrid items={opt.feats} color={opt.color}/>
-            <div style={{padding:"0 18px 13px",display:"flex",gap:12,flexWrap:"wrap"}}>
-              {opt.pros.map(p=><span key={p} style={{fontSize:11,color:C.green}}>✓ {p}</span>)}
-              {opt.cons.map(c_=><span key={c_} style={{fontSize:11,color:C.amber}}>⚠ {c_}</span>)}
+            <div style={{display:"flex",flexDirection:"column",alignItems:"center",flex:1,maxWidth:380}}>
+              <VLine/>
+              <SitemapNode sys={SYSTEMS.backoffice} id="backoffice" selected={selected} onSelect={setSelected}/>
             </div>
           </div>
+        </div>
+
+        {/* Detail panel — shown when a node is selected */}
+        {sel&&(
+          <div style={{marginTop:32,width:"100%",maxWidth:900,...card({overflow:"hidden"})}}>
+            <div style={{padding:"14px 20px",borderBottom:`0.5px solid ${C.border}`,display:"flex",alignItems:"center",gap:12,backgroundColor:`${sel.colorL}66`}}>
+              <div style={{width:32,height:32,borderRadius:8,background:sel.color,display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:700,color:"#fff",flexShrink:0}}>{sel.abbr}</div>
+              <div style={{flex:1}}>
+                <div style={{fontSize:14,fontWeight:600,color:C.text}}>{sel.label}</div>
+                <div style={{fontSize:11,color:C.hint,marginTop:1}}>{sel.sub}</div>
+              </div>
+              <button onClick={()=>setSelected(null)} style={{border:"none",background:"rgba(0,0,0,0.06)",borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:11,color:C.muted}}>fechar</button>
+            </div>
+            <div style={{padding:"16px 20px",display:"grid",gridTemplateColumns:"2fr 1fr",gap:20}}>
+              <div>
+                <div style={{fontSize:11,color:C.hint,fontWeight:600,textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:12}}>Telas e funcionalidades por perfil</div>
+                <div style={{display:"flex",flexDirection:"column",gap:12}}>
+                  {sel.screens.map(sc=>(
+                    <div key={sc.p}>
+                      <div style={{fontSize:11,fontWeight:600,color:sel.color,marginBottom:6}}>{sc.p}</div>
+                      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"3px 16px"}}>
+                        {sc.items.map(it=>(
+                          <div key={it} style={{fontSize:12,color:"#555",display:"flex",gap:6,alignItems:"flex-start",padding:"2px 0"}}>
+                            <span style={{width:4,height:4,borderRadius:"50%",background:sel.color,flexShrink:0,marginTop:5}}/>
+                            {it}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div style={{fontSize:11,color:C.hint,fontWeight:600,textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:12}}>Perfis de acesso</div>
+                {sel.profiles.map(p=>(
+                  <div key={p} style={{padding:"6px 10px",background:`${sel.colorL}88`,borderRadius:6,marginBottom:6,fontSize:12,color:sel.color,fontWeight:500}}>{p}</div>
+                ))}
+                <div style={{marginTop:14,fontSize:12,color:C.muted,lineHeight:1.6}}>{sel.desc}</div>
+              </div>
+            </div>
+          </div>
+        )}
+
+      </div>
+    </div>
+  );
+}
+
+function SitemapNode({sys,id,selected,onSelect}){
+  const isSelected=selected===id;
+  return(
+    <div onClick={()=>onSelect(isSelected?null:id)}
+      style={{
+        width:"100%",maxWidth:380,
+        backgroundColor:C.white,
+        border:`1.5px solid ${isSelected?sys.color:C.border}`,
+        borderRadius:12,
+        padding:"16px 18px",
+        cursor:"pointer",
+        transition:"border-color 0.15s, box-shadow 0.15s",
+        boxShadow:isSelected?`0 0 0 3px ${sys.colorL}`:"none",
+        position:"relative",
+      }}>
+      <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12}}>
+        <div style={{width:32,height:32,borderRadius:8,background:sys.color,display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:700,color:"#fff",flexShrink:0}}>{sys.abbr}</div>
+        <div>
+          <div style={{fontSize:14,fontWeight:600,color:C.text}}>{sys.label}</div>
+          <div style={{fontSize:11,color:C.hint,marginTop:1}}>{sys.sub}</div>
+        </div>
+        <div style={{marginLeft:"auto",width:22,height:22,borderRadius:"50%",border:`1px solid ${C.border}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,color:C.hint,flexShrink:0}}>{isSelected?"−":"+"}</div>
+      </div>
+      <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
+        {sys.profiles.map(p=>(
+          <span key={p} style={{fontSize:10.5,padding:"3px 8px",borderRadius:20,backgroundColor:`${sys.colorL}`,color:sys.color,fontWeight:500,border:`0.5px solid ${sys.color}33`}}>{p}</span>
         ))}
-        <div><ST>Stack tecnológica</ST>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
-            {[{c:"App Mobile",t:"React Native",n:"iOS + Android"},{c:"Backend",t:"Node.js + Fastify",n:"ou Python FastAPI"},{c:"Banco",t:"PostgreSQL",n:"Queries analíticas"},{c:"Push",t:"Firebase FCM",n:"Multiplataforma"},{c:"ETL",t:"Airflow + dbt",n:"Orquestração"},{c:"Auth",t:"JWT + OAuth2",n:"Padrão mercado"},{c:"Infra",t:"AWS / GCP",n:"Escalável"},{c:"CI/CD",t:"GitHub Actions",n:"Automação deploys"}].map(s=>(
-              <div key={s.c} style={{...card(),padding:"11px 14px",display:"flex",alignItems:"center",gap:12}}><div style={{fontSize:11,color:C.hint,width:90,flexShrink:0}}>{s.c}</div><div><div style={{fontSize:12.5,fontWeight:600,color:C.text}}>{s.t}</div><div style={{fontSize:11,color:C.hint}}>{s.n}</div></div></div>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// PAGE: ROADMAP — Gantt style
+// ═══════════════════════════════════════════════════════════════════════════════
+function PageRoadmap(){
+  // M1–M6 = meses do projeto. Cada feature tem start(0-based) e span (em meses).
+  // Legenda de sistemas
+  const SYS = {
+    discovery:  { label:"Discovery",          color:"#5F5E5A", bg:"#F1EFE8" },
+    design:     { label:"Design UX/UI",       color:"#534AB7", bg:"#EEEDFE" },
+    dados:      { label:"Pipeline Protheus",  color:"#3B6D11", bg:"#EAF3DE" },
+    backend:    { label:"Backend & API",      color:"#185FA5", bg:"#E6F1FB" },
+    app:        { label:"PWA",                color:"#2E6DA4", bg:"#D6E4F2" },
+    retaguarda: { label:"Dashboard Web",      color:"#1A3A5C", bg:"#D0DCE8" },
+    alertas:    { label:"Alertas & Notif.",   color:"#BA7517", bg:"#FAEEDA" },
+  };
+
+  // 3 meses visíveis
+  const MONTHS = [
+    { id:"M1", label:"M1", fase:"Discovery + Design" },
+    { id:"M2", label:"M2", fase:"Design + Dev" },
+    { id:"M3", label:"M3", fase:"Dev + Homolog." },
+  ];
+
+  // Marcos de entrega
+  const MARCOS = [
+    { at:"M1", label:"M1", title:"Discovery concluído", desc:"Áreas mapeadas, abordagem de dados definida, stack aprovada", color:"#5F5E5A" },
+    { at:"M2", label:"M2", title:"Design aprovado", desc:"Wireframes e protótipos validados pela diretoria. Dev inicia.", color:"#534AB7" },
+    { at:"M3", label:"M3", title:"MVP Go-live", desc:"PWA + Backoffice em produção — alertas ativos", color:"#185FA5" },
+    { at:"M3", label:"M3", title:"Homologação completa", desc:"QA finalizado, dados validados, entrega ao cliente", color:"#BA7517" },
+  ];
+
+  // Features: start (0-based), span em meses (3 total)
+  const GROUPS = [
+    {
+      group:"F0 · DISCOVERY", sys:"discovery", abbr:"F0",
+      rows:[
+        { label:"Mapeamento de áreas por gerente",           sys:"discovery", start:0, span:1, ml:"M1" },
+        { label:"Levantamento de acesso ao banco Protheus",   sys:"discovery", start:0, span:1, ml:"M1" },
+        { label:"Refinamento técnico (Front + Back)",        sys:"discovery", start:0, span:1, ml:"M1" },
+        { label:"Definição cloud provider + stack",          sys:"discovery", start:0, span:1, ml:"M1" },
+      ]
+    },
+    {
+      group:"F1 · DESIGN UX/UI", sys:"design", abbr:"F1",
+      rows:[
+        { label:"Wireframes mobile-first — todas as telas",  sys:"design", start:0, span:2, ml:"M2" },
+        { label:"Sistema de design & biblioteca de comp.",   sys:"design", start:0, span:1, ml:"M1" },
+        { label:"Protótipos navegáveis + validação diret.",  sys:"design", start:1, span:1, ml:"M2" },
+        { label:"Handoff para desenvolvimento (Figma)",      sys:"design", start:1, span:1, ml:"M2" },
+      ]
+    },
+    {
+      group:"F2 · PIPELINE DE DADOS (OP. B)", sys:"dados", abbr:"F2",
+      rows:[
+        { label:"Mapeamento tabelas banco Protheus",          sys:"dados",   start:0, span:1, ml:"M1" },
+        { label:"Conector ETL: SQL Server / Oracle",          sys:"dados",   start:0, span:2, ml:"M2" },
+        { label:"Pipeline staging → DW (Airflow + dbt)",     sys:"dados",   start:0, span:2, ml:"M2" },
+        { label:"Modelagem dimensional: fatos + dimensões",  sys:"dados",   start:1, span:1, ml:"M2" },
+        { label:"API REST — endpoints de KPIs",              sys:"backend", start:1, span:2, ml:"M3" },
+        { label:"Autenticação JWT + perfis de acesso",       sys:"backend", start:1, span:1, ml:"M2" },
+      ]
+    },
+    {
+      group:"F3 · APP MOBILE", sys:"app", abbr:"F3",
+      rows:[
+        { label:"Login, perfis e navegação base",            sys:"app", start:1, span:1, ml:"M2" },
+        { label:"Home — KPIs consolidados + gauge",          sys:"app", start:1, span:2, ml:"M3" },
+        { label:"Módulo Indústria — telas e filtros",        sys:"app", start:1, span:2, ml:"M3" },
+        { label:"Módulo Revenda — telas e filtros",          sys:"app", start:2, span:1, ml:"M3" },
+        { label:"Integração App ↔ API + testes E2E",         sys:"app", start:2, span:1, ml:"M3" },
+      ]
+    },
+    {
+      group:"F4 · DASHBOARD WEB", sys:"retaguarda", abbr:"F4",
+      rows:[
+        { label:"Dashboard Web — controle de acessos (BKO)", sys:"retaguarda", start:1, span:2, ml:"M3" },
+        { label:"Dashboard Web — KPIs Diretoria (todas áreas)",sys:"retaguarda", start:1, span:2, ml:"M3" },
+        { label:"Dashboard Web — KPIs Gerente (área filtrada)",sys:"retaguarda", start:2, span:1, ml:"M3" },
+        { label:"Vinculação gerente ↔ área/cidade",           sys:"retaguarda", start:1, span:1, ml:"M2" },
+      ]
+    },
+    {
+      group:"F5 · ALERTAS & HOMOLOGAÇÃO", sys:"alertas", abbr:"F5",
+      rows:[
+        { label:"Engine de alertas com regras de negócio",   sys:"alertas", start:2, span:1, ml:"M3" },
+        { label:"Push notifications — Firebase FCM",         sys:"alertas", start:2, span:1, ml:"M3" },
+        { label:"Alertas: Fat., Quinzena, Margem, % MC",     sys:"alertas", start:2, span:1, ml:"M3" },
+        { label:"Painel in-app + thresholds configuráveis",  sys:"alertas", start:2, span:1, ml:"M3" },
+        { label:"Homologação + QA final",                    sys:"alertas", start:2, span:1, ml:"M3" },
+      ]
+    },
+  ];
+
+  const TOTAL_M = 3;
+  const COL_W = 160; // px per month — 3 months, more room
+  const LABEL_W = 210; // left label column
+
+  const barColor = (sys) => SYS[sys]?.color || C.navy;
+  const barBg    = (sys) => SYS[sys]?.bg    || C.blueL;
+
+  return(
+    <div style={{flex:1,overflowY:"auto",backgroundColor:C.bg}}>
+      {/* Sub-header */}
+      <div style={{padding:"10px 24px 0",borderBottom:`0.5px solid ${C.border}`,backgroundColor:C.white}}>
+        <div style={{fontSize:11,color:C.hint,marginBottom:8}}>
+          Roadmap / Feature by feature · 3 meses · discovery M1 · design M1–M2 · ETL Protheus M1–M2 · dev M2–M3 · alertas M3 · homologação M3
+        </div>
+      </div>
+
+      <div style={{padding:"20px 24px 32px"}}>
+
+        {/* Marcos de entrega */}
+        <div style={{marginBottom:20}}>
+          <div style={{fontSize:11,fontWeight:600,color:C.text,marginBottom:12}}>Marcos de Entrega</div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12}}>
+            {MARCOS.map(m=>(
+              <div key={m.at} style={{backgroundColor:C.white,border:`0.5px solid ${C.border}`,borderRadius:10,padding:"14px 16px",borderTop:`2.5px solid ${m.color}`}}>
+                <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:6}}>
+                  <div style={{width:8,height:8,borderRadius:"50%",background:m.color,flexShrink:0}}/>
+                  <span style={{fontSize:10,fontWeight:700,color:m.color,textTransform:"uppercase",letterSpacing:"0.05em"}}>{m.at}</span>
+                </div>
+                <div style={{fontSize:13,fontWeight:600,color:C.text,marginBottom:4}}>{m.title}</div>
+                <div style={{fontSize:11,color:C.hint,lineHeight:1.4}}>{m.desc}</div>
+              </div>
             ))}
           </div>
         </div>
-      </div>
-      <div style={{width:220,minWidth:220,display:"flex",flexDirection:"column",gap:12}}>
-        <div style={{...card(),padding:16}}><ST>Alertas mapeados</ST>
-          {[{n:"Fat. Diário Abaixo",s:"⚠",sc:C.amber,sb:C.amberL},{n:"Alerta de Quinzena",s:"!",sc:C.red,sb:C.redL},{n:"Margem Abaixo Piso",s:"!",sc:C.red,sb:C.redL},{n:"% MC Fora da Faixa",s:"⚠",sc:C.amber,sb:C.amberL},{n:"Meta Mensal em Risco",s:"!",sc:C.red,sb:C.redL},{n:"Atualização de Dados",s:"i",sc:C.blueT,sb:C.blueL}].map((a,i,arr)=>(
-            <div key={a.n} style={{display:"flex",alignItems:"center",gap:8,padding:"7px 0",borderBottom:i<arr.length-1?`0.5px solid ${C.border}`:"none"}}>
-              <div style={{width:20,height:20,borderRadius:5,background:a.sb,color:a.sc,display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:700,flexShrink:0}}>{a.s}</div>
-              <div style={{fontSize:12,color:C.text}}>{a.n}</div>
+
+        {/* Legenda */}
+        <div style={{backgroundColor:C.white,border:`0.5px solid ${C.border}`,borderRadius:10,padding:"10px 16px",marginBottom:20,display:"flex",alignItems:"center",gap:6,flexWrap:"wrap"}}>
+          {Object.entries(SYS).map(([k,v])=>(
+            <div key={k} style={{display:"flex",alignItems:"center",gap:5,marginRight:8}}>
+              <div style={{width:10,height:10,borderRadius:2,backgroundColor:v.color,flexShrink:0}}/>
+              <span style={{fontSize:11,color:C.muted}}>{v.label}</span>
             </div>
           ))}
         </div>
-        <div style={{...card(),padding:16}}><ST>KPIs monitorados</ST>
-          {["Faturamento s/ IPI","Meta Orç. Mês","Realizado Total Dia","Realizado Total Mês","Diferença do Mês","Dif. Meta Orç. Ano Acum.","% Índice MC","Margem"].map((k,i,arr)=>(
-            <div key={k} style={{fontSize:12,color:C.muted,padding:"4px 0",borderBottom:i<arr.length-1?`0.5px solid ${C.border}`:"none"}}>{k}</div>
-          ))}
+
+        {/* Gantt table */}
+        <div style={{backgroundColor:C.white,border:`0.5px solid ${C.border}`,borderRadius:12,overflow:"hidden"}}>
+        <div style={{overflowX:"auto",WebkitOverflowScrolling:"touch"}}>
+        <div style={{minWidth:LABEL_W+MONTHS.length*COL_W}}>
+
+          {/* Header row: FEATURE label + month columns */}
+          <div style={{display:"flex",borderBottom:`0.5px solid ${C.border}`,backgroundColor:"#FAFAFA"}}>
+            <div style={{width:LABEL_W,minWidth:LABEL_W,padding:"8px 16px",fontSize:10,fontWeight:600,color:C.hint,textTransform:"uppercase",letterSpacing:"0.06em",borderRight:`0.5px solid ${C.border}`,flexShrink:0,position:"sticky",left:0,backgroundColor:"#FAFAFA",zIndex:2}}>
+              FEATURE
+            </div>
+            {MONTHS.map((m,i)=>(
+              <div key={m.id} style={{width:COL_W,minWidth:COL_W,borderRight:i<MONTHS.length-1?`0.5px solid ${C.border}`:"none",textAlign:"center",padding:"4px 0",flexShrink:0}}>
+                <div style={{fontSize:13,fontWeight:700,color:C.amber}}>{m.id}</div>
+                <div style={{fontSize:10,color:C.hint,marginTop:1}}>{m.fase}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Groups + rows */}
+          {GROUPS.map((g,gi)=>{
+            const s=SYS[g.sys];
+            return(
+              <div key={g.group}>
+                {/* Group header */}
+                <div style={{display:"flex",alignItems:"center",borderBottom:`0.5px solid ${C.border}`,backgroundColor:"#F8F9FA"}}>
+                  <div style={{width:LABEL_W,minWidth:LABEL_W,padding:"7px 16px",display:"flex",alignItems:"center",gap:8,borderRight:`0.5px solid ${C.border}`,flexShrink:0,position:"sticky",left:0,backgroundColor:"#F8F9FA",zIndex:1}}>
+                    <div style={{width:18,height:18,borderRadius:4,background:s.color,display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:700,color:"#fff",flexShrink:0}}>{g.abbr}</div>
+                    <span style={{fontSize:11,fontWeight:700,color:C.text,textTransform:"uppercase",letterSpacing:"0.04em"}}>{g.group}</span>
+                  </div>
+                  {MONTHS.map((m,i)=>(
+                    <div key={m.id} style={{width:COL_W,minWidth:COL_W,borderRight:i<MONTHS.length-1?`0.5px solid ${C.border}`:"none",flexShrink:0}}/>
+                  ))}
+                </div>
+
+                {/* Feature rows */}
+                {g.rows.map((row,ri)=>(
+                  <div key={row.label} style={{display:"flex",alignItems:"center",borderBottom:ri<g.rows.length-1||gi<GROUPS.length-1?`0.5px solid rgba(0,0,0,0.04)`:"none",minHeight:36}}>
+                    {/* Label — sticky */}
+                    <div style={{width:LABEL_W,minWidth:LABEL_W,padding:"6px 16px 6px 28px",borderRight:`0.5px solid ${C.border}`,flexShrink:0,display:"flex",alignItems:"center",gap:6,position:"sticky",left:0,backgroundColor:ri%2===0?C.white:"#FAFBFC",zIndex:1}}>
+                      <div style={{width:5,height:5,borderRadius:"50%",background:barColor(row.sys),flexShrink:0}}/>
+                      <span style={{fontSize:11,color:C.muted,lineHeight:1.3}}>{row.label}</span>
+                    </div>
+
+                    {/* Month cells + bar */}
+                    <div style={{display:"flex",position:"relative",alignItems:"center",height:36,width:MONTHS.length*COL_W,minWidth:MONTHS.length*COL_W,flexShrink:0}}>
+                      {/* Grid lines */}
+                      {MONTHS.map((m,i)=>(
+                        <div key={m.id} style={{width:COL_W,minWidth:COL_W,height:"100%",borderRight:i<MONTHS.length-1?`0.5px solid rgba(0,0,0,0.05)`:"none",flexShrink:0,
+                          backgroundColor: i%2===0?"transparent":"rgba(0,0,0,0.008)"
+                        }}/>
+                      ))}
+                      {/* Bar */}
+                      <div style={{
+                        position:"absolute",
+                        left: row.start * COL_W + 6,
+                        width: row.span * COL_W - 12,
+                        height:22,
+                        borderRadius:5,
+                        backgroundColor:barColor(row.sys),
+                        display:"flex",
+                        alignItems:"center",
+                        justifyContent:"center",
+                        overflow:"hidden",
+                      }}>
+                        {row.ml&&<span style={{fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.85)"}}>{row.ml}</span>}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            );
+          })}
+
         </div>
+        </div>
+        </div>
+
+        {/* Bottom: decisões + riscos */}
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,marginTop:20}}>
+          <div style={{...card(),padding:16}}>
+            <ST>Decisões abertas</ST>
+            {[
+              {n:"1",d:"Acesso ao banco Protheus: SQL Server ou Oracle?",who:"TI Imdepa + Eng. Dados"},
+              {n:"2",d:"Mapeamento de áreas por gerente (cidade/filial)",who:"Operações Imdepa"},
+              {n:"3",d:"Cloud provider: AWS, GCP ou Azure?",who:"TI + DevOps"},
+              {n:"4",d:"Framework PWA: Next.js, Vite ou CRA?",who:"Tech Lead Front"},
+              {n:"5",d:"Notificações também por e-mail além do push?",who:"Diretoria"},
+              {n:"6",d:"Integração futura com outros módulos Protheus?",who:"Diretoria"},
+            ].map((d,i,arr)=>(
+              <div key={d.n} style={{padding:"7px 0",borderBottom:i<arr.length-1?`0.5px solid ${C.border}`:"none"}}>
+                <div style={{display:"flex",gap:7,alignItems:"flex-start"}}>
+                  <span style={{...pill(C.amberL,C.amber),flexShrink:0,marginTop:1}}>{d.n}</span>
+                  <span style={{fontSize:12,color:C.text,lineHeight:1.4}}>{d.d}</span>
+                </div>
+                <div style={{fontSize:10.5,color:C.hint,marginTop:2,paddingLeft:24}}>{d.who}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{...card(),padding:16}}>
+            <ST>Riscos principais</ST>
+            {[
+              {r:"Acesso ao banco Protheus negado ou restrito",   prob:"Média",imp:"Alto"},
+              {r:"Tabelas Protheus sem documentação",            prob:"Alta", imp:"Alto"},
+              {r:"Áreas de gerente sem mapeamento",              prob:"Alta", imp:"Médio"},
+              {r:"Estimativas de dev subestimadas",              prob:"Média",imp:"Alto"},
+              {r:"Baixa adoção pelos diretores",                 prob:"Baixa",imp:"Alto"},
+              {r:"Schema Protheus diferente entre versões",      prob:"Média",imp:"Alto"},
+            ].map((r,i,arr)=>(
+              <div key={r.r} style={{padding:"7px 0",borderBottom:i<arr.length-1?`0.5px solid ${C.border}`:"none"}}>
+                <div style={{fontSize:12,color:C.text,marginBottom:4}}>{r.r}</div>
+                <div style={{display:"flex",gap:6}}>
+                  <span style={pill(C.grayL,C.gray)}>Prob: {r.prob}</span>
+                  <span style={pill(r.imp==="Alto"?C.redL:C.amberL,r.imp==="Alto"?C.red:C.amber)}>Imp: {r.imp}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
     </div>
   );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// PAGE: ROADMAP
+// PAGE: TEAM — Gantt dedication view
 // ═══════════════════════════════════════════════════════════════════════════════
-function PageRoadmap(){
-  const phases=[
-    {phase:"Fase 0",name:"Discovery",duration:"1–2 sem.",color:C.gray,colorL:C.grayL,status:"Pendente",sc:C.amber,sb:C.amberL,dep:"Acesso ao time Imdepa",items:["Mapeamento de áreas por gerente (cidade/filial)","Validação do formato de dados Protheus (e-mail)","Avaliação técnica acesso banco Protheus (Op. B)","Definição: Opção A, B ou híbrida","Definição do cloud provider","Refinamento técnico Front + Back + Infra"]},
-    {phase:"Fase 1",name:"Design UX/UI",duration:"2 meses",color:C.purple,colorL:C.purpleL,status:"Part-time",sc:C.purple,sb:C.purpleL,dep:"Fase 0 concluída",items:["Wireframes mobile-first — todas as telas","Sistema de design: tokens e componentes","Protótipos navegáveis para validação","Telas: Home, Indústria, Revenda, Alertas","Telas Backoffice: Acessos, Configurações","Aprovação final e handoff para dev"]},
-    {phase:"Fase 2",name:"MVP — Backend + App",duration:"A definir",color:C.blue,colorL:C.blueL,status:"A estimar",sc:C.amber,sb:C.amberL,dep:"Design aprovado + Fase 0",items:["Infra cloud + CI/CD + ambientes","Backend: API REST, JWT, gestão de perfis","Pipeline Opção A: parser e-mail + banco","App mobile: Home, Indústria, Revenda","App mobile: login, perfis, navegação","Integração App ↔ API + testes E2E"]},
-    {phase:"Fase 3",name:"Notificações & Alertas",duration:"A definir",color:C.amber,colorL:C.amberL,status:"A estimar",sc:C.amber,sb:C.amberL,dep:"MVP estável em produção",items:["Engine de alertas com regras configuráveis","Integração Firebase FCM push notifications","Painel in-app de notificações com histórico","Config. de thresholds via Backoffice","Alertas: Fat. Diário, Quinzena, Margem, % MC","Testes de carga do sistema de alertas"]},
-    {phase:"Fase 4",name:"Evolução — Dados Brutos",duration:"2+ meses",color:C.green,colorL:C.greenL,status:"Full-time pleno",sc:C.green,sb:C.greenL,dep:"MVP em produção · Eng. Dados Pleno",items:["Mapeamento de tabelas do banco Protheus","Extração ETL direto do Protheus (Op. B)","Modelagem dimensional no data warehouse","Migração da API para dados brutos","Analytics avançado: histórico e comparativos","Desativação gradual do pipeline Op. A"]},
+function PageTeam(){
+  const MONTHS=[
+    {id:"M1",fase:"Discovery\n+ Design"},
+    {id:"M2",fase:"Design\n+ Dev"},
+    {id:"M3",fase:"Dev +\nHomolog."},
   ];
-  return(
-    <div style={{flex:1,overflowY:"auto",padding:24,display:"flex",gap:20,alignItems:"flex-start"}}>
-      <div style={{flex:1,minWidth:0,display:"flex",flexDirection:"column",gap:12}}>
-        <ST>Fases de entrega</ST>
-        {phases.map(p=>(
-          <div key={p.phase} style={card({overflow:"hidden"})}>
-            <div style={{padding:"12px 18px 10px",borderBottom:`0.5px solid ${C.border}`,display:"flex",alignItems:"center",gap:10,flexWrap:"wrap"}}>
-              <span style={{...pill(p.colorL,p.color),fontSize:11}}>{p.phase}</span>
-              <span style={{fontSize:13,fontWeight:600,color:C.text}}>{p.name}</span>
-              <span style={{fontSize:12,color:C.hint}}>· {p.duration}</span>
-              <div style={{marginLeft:"auto"}}><SP label={p.status} color={p.sc} bg={p.sb}/></div>
-            </div>
-            <FeatGrid items={p.items} color={p.color}/>
-            <div style={{padding:"0 18px 11px"}}><span style={{fontSize:11,color:C.hint}}>Dependência: </span><span style={{fontSize:11,color:C.muted}}>{p.dep}</span></div>
-          </div>
-        ))}
+  const COL=160; // px per month — 3 months, more breathing room
+  const ROLE_W=160;
+  const DED_W=148;
+
+  // segments: {s = start (0-based, supports 0.5 for mid-month), sp = span in months, t = "full"|"part"}
+  const ROLES=[
+    {
+      a:"UX",  label:"Designer UX/UI",
+      ded:"Part-time\nM1–M2",
+      color:"#6C63D4",
+      skills:"Figma · Mobile · Design System · Prototipação",
+      segs:[{s:0, sp:2, t:"part"}],
+    },
+    {
+      a:"BE",  label:"Dev Backend Pleno",
+      ded:"Part-time\nM1–M3",
+      color:"#1A3A5C",
+      skills:"Node.js · API REST · JWT · PostgreSQL · Docker",
+      segs:[{s:0, sp:3, t:"part"}],
+    },
+    {
+      a:"FE",  label:"Dev Frontend / Mobile",
+      ded:"Full-time\nM1 (15d) – M3",
+      color:"#2E6DA4",
+      skills:"React · PWA · TypeScript · Firebase FCM · CSS mobile-first",
+      segs:[{s:0.5, sp:2.5, t:"full"}],
+    },
+    {
+      a:"DE",  label:"Eng. de Dados",
+      ded:"Full-time\nM1–M2",
+      color:"#3B6D11",
+      skills:"Python · SQL · Airflow · dbt · PostgreSQL · SQL Server · TOTVS/Protheus",
+      segs:[{s:0, sp:2, t:"full"}],
+    },
+    {
+      a:"QA",  label:"QA / Testes",
+      ded:"Full-time\nM2–M3",
+      color:"#BA7517",
+      skills:"Testes funcionais · Regressão · E2E · Performance",
+      segs:[{s:1, sp:2, t:"full"}],
+    },
+  ];
+
+  const monthBg=["#FFF8F0","#F0F7FF","#F5FFF0"];
+  const monthFaseColor=["#E8A020","#2E6DA4","#3B8C2A"];
+
+  function Bar({seg,color}){
+    const isFull=seg.t==="full";
+    return(
+      <div style={{
+        position:"absolute",
+        left:seg.s*COL+5,
+        width:seg.sp*COL-10,
+        top:"50%",transform:"translateY(-50%)",
+        height:24,
+        borderRadius:5,
+        backgroundColor:isFull?color:`${color}28`,
+        border:isFull?"none":`1.5px dashed ${color}`,
+        backgroundImage:isFull?"none":
+          `repeating-linear-gradient(45deg,${color}22 0px,${color}22 4px,transparent 4px,transparent 10px)`,
+        display:"flex",alignItems:"center",justifyContent:"flex-end",
+        paddingRight:8,
+        overflow:"hidden",
+      }}>
+        <span style={{fontSize:9.5,fontWeight:700,color:isFull?"rgba(255,255,255,0.85)":color,whiteSpace:"nowrap"}}>
+          {isFull?"Full time":"Part time"}
+        </span>
       </div>
-      <div style={{width:220,minWidth:220,display:"flex",flexDirection:"column",gap:12}}>
-        <div style={{...card(),padding:16}}><ST>Decisões abertas</ST>
-          {[{n:"1",d:"Opção A, B ou híbrida para dados?",who:"Diretoria + Tech"},{n:"2",d:"Mapeamento de áreas por gerente",who:"Operações Imdepa"},{n:"3",d:"Cloud provider: AWS, GCP ou Azure?",who:"TI + DevOps"},{n:"4",d:"React Native ou Flutter?",who:"Tech Lead Front"},{n:"5",d:"Notificações também por e-mail?",who:"Diretoria"},{n:"6",d:"Integração futura outros módulos ERP?",who:"Diretoria"}].map((d,i,arr)=>(
-            <div key={d.n} style={{padding:"8px 0",borderBottom:i<arr.length-1?`0.5px solid ${C.border}`:"none"}}>
-              <div style={{display:"flex",gap:7,alignItems:"flex-start"}}><span style={{...pill(C.amberL,C.amber),flexShrink:0,marginTop:1}}>{d.n}</span><span style={{fontSize:12,color:C.text,lineHeight:1.4}}>{d.d}</span></div>
-              <div style={{fontSize:11,color:C.hint,marginTop:3,paddingLeft:24}}>{d.who}</div>
+    );
+  }
+
+  return(
+    <div style={{flex:1,overflowY:"auto",backgroundColor:C.bg}}>
+      <div style={{padding:"10px 24px 0",backgroundColor:C.white,borderBottom:`0.5px solid ${C.border}`}}>
+        <div style={{fontSize:11,color:C.hint}}>Equipe / Composição do time e dedicação por mês</div>
+      </div>
+
+      <div style={{padding:"20px 24px 32px"}}>
+
+        {/* Metric cards */}
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:12,marginBottom:20}}>
+          {[
+            {accent:"#3B6D11", lbl:"PESSOAS NO TIME",   val:"5",        sub:"Papéis distintos e complementares"},
+            {accent:"#2E6DA4", lbl:"PERÍODO",           val:"3 meses",  sub:"M1–M3 · discovery → dev → homologação"},
+            {accent:"#BA7517", lbl:"GO-LIVE",           val:"M3",       sub:"PWA + Backoffice em produção"},
+          ].map(m=>(
+            <div key={m.lbl} style={{backgroundColor:C.white,border:`0.5px solid ${C.border}`,borderRadius:10,padding:"16px 20px",borderTop:`2.5px solid ${m.accent}`}}>
+              <div style={{fontSize:10,fontWeight:600,color:C.hint,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:8}}>{m.lbl}</div>
+              <div style={{fontSize:28,fontWeight:500,color:C.text,lineHeight:1,marginBottom:6}}>{m.val}</div>
+              <div style={{fontSize:11,color:C.hint}}>{m.sub}</div>
             </div>
           ))}
         </div>
-        <div style={{...card(),padding:16}}><ST>Riscos principais</ST>
-          {[{r:"Formato do e-mail muda",prob:"Média",imp:"Alto"},{r:"Tabelas Protheus não mapeadas",prob:"Alta",imp:"Alto"},{r:"Áreas sem mapeamento",prob:"Alta",imp:"Médio"},{r:"Estimativas subestimadas",prob:"Média",imp:"Alto"},{r:"Baixa adoção diretores",prob:"Baixa",imp:"Alto"}].map((r,i,arr)=>(
-            <div key={r.r} style={{padding:"7px 0",borderBottom:i<arr.length-1?`0.5px solid ${C.border}`:"none"}}>
-              <div style={{fontSize:12,color:C.text,marginBottom:4}}>{r.r}</div>
-              <div style={{display:"flex",gap:6}}>
-                <span style={pill(C.grayL,C.gray)}>Prob: {r.prob}</span>
-                <span style={pill(r.imp==="Alto"?C.redL:C.amberL,r.imp==="Alto"?C.red:C.amber)}>Imp: {r.imp}</span>
+
+        {/* Table */}
+        <div style={{fontSize:12,fontWeight:600,color:C.text,marginBottom:12}}>Composição e Dedicação por Mês</div>
+        <div style={{backgroundColor:C.white,border:`0.5px solid ${C.border}`,borderRadius:12,overflow:"hidden"}}>
+        <div style={{overflowX:"auto",WebkitOverflowScrolling:"touch"}}>
+        <div style={{minWidth:ROLE_W+DED_W+MONTHS.length*COL}}>
+
+          {/* Column header */}
+          <div style={{display:"flex",borderBottom:`0.5px solid ${C.border}`,backgroundColor:"#FAFAFA"}}>
+            <div style={{width:ROLE_W,minWidth:ROLE_W,padding:"8px 14px",fontSize:10,fontWeight:600,color:C.hint,textTransform:"uppercase",letterSpacing:"0.06em",borderRight:`0.5px solid ${C.border}`,flexShrink:0,position:"sticky",left:0,backgroundColor:"#FAFAFA",zIndex:2}}>PAPEL</div>
+            <div style={{width:DED_W,minWidth:DED_W,padding:"8px 12px",fontSize:10,fontWeight:600,color:C.hint,textTransform:"uppercase",letterSpacing:"0.06em",borderRight:`0.5px solid ${C.border}`,flexShrink:0,position:"sticky",left:ROLE_W,backgroundColor:"#FAFAFA",zIndex:2}}>DEDICAÇÃO</div>
+            {MONTHS.map((m,i)=>(
+              <div key={m.id} style={{width:COL,minWidth:COL,borderRight:i<MONTHS.length-1?`0.5px solid ${C.border}`:"none",textAlign:"center",padding:"6px 4px",backgroundColor:monthBg[i],flexShrink:0}}>
+                <div style={{fontSize:13,fontWeight:700,color:monthFaseColor[i]}}>{m.id}</div>
+                <div style={{fontSize:9,color:C.hint,marginTop:2,whiteSpace:"pre-line",lineHeight:1.3}}>{m.fase}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Rows */}
+          {ROLES.map((r,ri)=>(
+            <div key={r.label} style={{display:"flex",alignItems:"stretch",borderBottom:ri<ROLES.length-1?`0.5px solid rgba(0,0,0,0.05)`:"none",minHeight:52}}>
+              {/* Role label — sticky */}
+              <div style={{width:ROLE_W,minWidth:ROLE_W,padding:"0 14px",borderRight:`0.5px solid ${C.border}`,flexShrink:0,display:"flex",alignItems:"center",gap:8,position:"sticky",left:0,backgroundColor:ri%2===0?C.white:"#FAFBFC",zIndex:1}}>
+                <div style={{width:24,height:24,borderRadius:6,background:r.color,display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:700,color:"#fff",flexShrink:0}}>{r.a}</div>
+                <span style={{fontSize:12,fontWeight:500,color:C.text,lineHeight:1.3}}>{r.label}</span>
+              </div>
+              {/* Dedication — sticky */}
+              <div style={{width:DED_W,minWidth:DED_W,padding:"0 12px",borderRight:`0.5px solid ${C.border}`,flexShrink:0,display:"flex",alignItems:"center",position:"sticky",left:ROLE_W,backgroundColor:ri%2===0?C.white:"#FAFBFC",zIndex:1}}>
+                <span style={{fontSize:10.5,color:C.muted,lineHeight:1.6,whiteSpace:"pre-line"}}>{r.ded}</span>
+              </div>
+              {/* Bar cells */}
+              <div style={{position:"relative",display:"flex",width:MONTHS.length*COL,minWidth:MONTHS.length*COL,flexShrink:0}}>
+                {MONTHS.map((m,i)=>(
+                  <div key={m.id} style={{width:COL,minWidth:COL,height:"100%",borderRight:i<MONTHS.length-1?`0.5px solid rgba(0,0,0,0.04)`:"none",flexShrink:0,backgroundColor:i%2===0?"transparent":"rgba(0,0,0,0.008)"}}/>
+                ))}
+                {r.segs.map((seg,si)=><Bar key={si} seg={seg} color={r.color}/>)}
               </div>
             </div>
           ))}
-        </div>
-      </div>
-    </div>
-  );
-}
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// PAGE: TEAM
-// ═══════════════════════════════════════════════════════════════════════════════
-function PageTeam(){
-  const roles=[
-    {a:"UX",role:"Designer UX/UI",regime:"Part-time",prazo:"2 meses",bg:C.purpleL,color:C.purple,status:"Contratar",sc:C.amber,sb:C.amberL,resp:["Wireframes mobile-first (iOS + Android)","Sistema de design e componentes","Protótipos navegáveis para validação","Handoff para desenvolvimento (Figma)","Telas: Home, Indústria, Revenda, Alertas, BKO"],skills:["Figma","Mobile Design","UX Research","Design System"]},
-    {a:"DE",role:"Engenheiro de Dados",regime:"Full-time",prazo:"2 meses",bg:C.greenL,color:C.green,status:"Contratar",sc:C.amber,sb:C.amberL,resp:["Parser automático do e-mail Protheus (Op. A)","Extração ETL banco Protheus (Op. B — Fase 4)","Modelagem dimensional: fatos e dimensões","Pipeline: staging → transformação → DW","Monitoramento e qualidade dos dados"],skills:["Python","SQL","Airflow/Prefect","dbt","PostgreSQL","TOTVS"]},
-    {a:"BE",role:"Desenvolvedor Backend",regime:"A definir",prazo:"A estimar",bg:C.blueL,color:C.blueT,status:"A contratar",sc:C.amber,sb:C.amberL,resp:["API REST: KPIs, perfis e alertas","Autenticação JWT e permissões por perfil","Engine de alertas com regras de negócio","Integração com pipeline de dados","Infraestrutura e deploy (cloud + CI/CD)"],skills:["Node.js","REST APIs","JWT","PostgreSQL","Docker","CI/CD"]},
-    {a:"FE",role:"Dev Frontend / Mobile",regime:"A definir",prazo:"A estimar",bg:C.blueL,color:C.blueT,status:"A contratar",sc:C.amber,sb:C.amberL,resp:["App React Native: iOS + Android","Telas Home, Indústria, Revenda, Login, Alertas","Integração com API REST do backend","Push notifications via Firebase FCM","Retaguarda web: Backoffice e dashboards"],skills:["React Native","React","TypeScript","Firebase FCM","REST"]},
-  ];
-  return(
-    <div style={{flex:1,overflowY:"auto",padding:24,display:"flex",gap:20,alignItems:"flex-start"}}>
-      <div style={{flex:1,minWidth:0,display:"flex",flexDirection:"column",gap:12}}>
-        <ST>Composição da equipe</ST>
-        {roles.map(r=>(
-          <div key={r.role} style={card({overflow:"hidden"})}>
-            <div style={{padding:"12px 18px 10px",borderBottom:`0.5px solid ${C.border}`,display:"flex",alignItems:"center",gap:10}}>
-              <Badge a={r.a} bg={r.bg} color={r.color}/><div style={{flex:1}}><div style={{fontSize:13,fontWeight:600,color:C.text}}>{r.role}</div><div style={{fontSize:11,color:C.hint,marginTop:2}}>{r.regime} · {r.prazo}</div></div>
-              <SP label={r.status} color={r.sc} bg={r.sb}/>
+          {/* Legend */}
+          <div style={{padding:"10px 16px",borderTop:`0.5px solid ${C.border}`,backgroundColor:"#FAFAFA",display:"flex",alignItems:"center",gap:20}}>
+            <div style={{display:"flex",alignItems:"center",gap:6}}>
+              <div style={{width:28,height:12,borderRadius:3,backgroundColor:"#1A3A5C"}}/>
+              <span style={{fontSize:11,color:C.muted}}>Full time</span>
             </div>
-            <FeatGrid items={r.resp} color={r.color}/>
-            <div style={{padding:"0 18px 12px",display:"flex",gap:6,flexWrap:"wrap"}}>{r.skills.map(s=><span key={s} style={pill(r.bg,r.color)}>{s}</span>)}</div>
+            <div style={{display:"flex",alignItems:"center",gap:6}}>
+              <div style={{width:28,height:12,borderRadius:3,border:"1.5px dashed #6C63D4",backgroundImage:"repeating-linear-gradient(45deg,rgba(108,99,212,0.15) 0px,rgba(108,99,212,0.15) 3px,transparent 3px,transparent 8px)"}}/>
+              <span style={{fontSize:11,color:C.muted}}>Part time / apoio</span>
+            </div>
+            <div style={{marginLeft:"auto",fontSize:11,color:C.hint}}>3 meses · M1–M3 · discovery → dev → alertas → homologação</div>
           </div>
-        ))}
-      </div>
-      <div style={{width:220,minWidth:220,display:"flex",flexDirection:"column",gap:12}}>
-        <div style={{...card(),padding:16}}><ST>Resumo de esforço</ST>
-          {[{role:"Designer UX/UI",regime:"Part-time",prazo:"2m",ok:true},{role:"Eng. de Dados",regime:"Full-time",prazo:"2m",ok:true},{role:"Dev Backend",regime:"—",prazo:"estimar",ok:false},{role:"Dev Frontend/Mobile",regime:"—",prazo:"estimar",ok:false},{role:"QA / Testes",regime:"—",prazo:"estimar",ok:false},{role:"DevOps / Infra",regime:"—",prazo:"estimar",ok:false}].map((e,i,arr)=>(
-            <div key={e.role} style={{display:"flex",alignItems:"center",gap:8,padding:"7px 0",borderBottom:i<arr.length-1?`0.5px solid ${C.border}`:"none"}}>
-              <div style={{width:18,height:18,borderRadius:4,background:e.ok?C.greenL:C.amberL,color:e.ok?C.green:C.amber,display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,fontWeight:700,flexShrink:0}}>{e.ok?"✓":"?"}</div>
-              <div style={{flex:1}}><div style={{fontSize:12,color:C.text}}>{e.role}</div><div style={{fontSize:10.5,color:C.hint}}>{e.regime} · {e.prazo}</div></div>
-            </div>
-          ))}
+
         </div>
+        </div>
+        </div>
+
+        {/* Skills row */}
+        <div style={{marginTop:16,display:"flex",flexDirection:"column",gap:8}}>
+          <div style={{fontSize:11,fontWeight:600,color:C.hint,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:4}}>Skills por papel</div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10}}>
+            {ROLES.map(r=>(
+              <div key={r.label} style={{...card(),padding:"12px 14px",display:"flex",gap:10,alignItems:"flex-start"}}>
+                <div style={{width:24,height:24,borderRadius:6,background:r.color,display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:700,color:"#fff",flexShrink:0,marginTop:1}}>{r.a}</div>
+                <div>
+                  <div style={{fontSize:12,fontWeight:600,color:C.text,marginBottom:3}}>{r.label}</div>
+                  <div style={{fontSize:11,color:C.hint}}>{r.skills}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
     </div>
   );
@@ -272,18 +779,49 @@ function PageTeam(){
 // PAGE: SCOPE
 // ═══════════════════════════════════════════════════════════════════════════════
 function PageScope(){
-  const SC2={MVP:{color:C.blueT,bg:C.blueL},Fase3:{color:C.amber,bg:C.amberL},Fase4:{color:C.green,bg:C.greenL},Futuro:{color:C.gray,bg:C.grayL}};
-  const SL={MVP:"MVP",Fase3:"Fase 3",Fase4:"Fase 4",Futuro:"Futuro"};
+  const SC2={MVP:{color:C.blueT,bg:C.blueL},Fase3:{color:C.amber,bg:C.amberL},Futuro:{color:C.gray,bg:C.grayL}};
+  const SL={MVP:"MVP",Fase3:"Fase 3",Futuro:"Futuro"};
   const modules=[
-    {a:"AU",mod:"Autenticação",bg:C.grayL,color:C.gray,items:[{f:"Login com e-mail e senha",s:"MVP"},{f:"Sessão persistente com JWT",s:"MVP"},{f:"Recuperação de senha por e-mail",s:"MVP"},{f:"Logout manual",s:"MVP"},{f:"Biometria / Face ID",s:"Futuro"}]},
-    {a:"HM",mod:"Home — Dashboard Geral",bg:C.blueL,color:C.blueT,items:[{f:"KPIs consolidados (Indústria + Revenda)",s:"MVP"},{f:"Barra de progresso vs meta",s:"MVP"},{f:"Seletor de período Dia/Mês/Ano",s:"MVP"},{f:"Cards de alertas ativos",s:"MVP"},{f:"Bottom navigation (4 abas)",s:"MVP"},{f:"Modo escuro",s:"Futuro"}]},
-    {a:"IN",mod:"Módulo Indústria",bg:C.navy,color:"#fff",items:[{f:"KPIs: Meta, Realizado Dia/Mês, Diferença",s:"MVP"},{f:"% Índice MC — Meta, Dia, Mês",s:"MVP"},{f:"Gráfico evolução diária no mês",s:"MVP"},{f:"Filtro por gerente (Diretoria)",s:"MVP"},{f:"Tabs: Dia / Mês / Acumulado",s:"MVP"},{f:"Comparativo histórico meses",s:"Fase4"}]},
-    {a:"RV",mod:"Módulo Revenda",bg:C.greenL,color:C.green,items:[{f:"KPIs: Meta, Realizado Dia/Mês, Diferença",s:"MVP"},{f:"% Índice MC — Meta, Dia, Mês",s:"MVP"},{f:"Gráfico evolução diária no mês",s:"MVP"},{f:"Filtro por gerente (Diretoria)",s:"MVP"},{f:"Tabs: Dia / Mês / Acumulado",s:"MVP"},{f:"Comparativo histórico meses",s:"Fase4"}]},
-    {a:"NO",mod:"Notificações & Alertas",bg:C.amberL,color:C.amber,items:[{f:"Push notification via FCM",s:"Fase3"},{f:"Painel in-app com histórico",s:"Fase3"},{f:"Alerta: Fat. diário abaixo do necessário",s:"Fase3"},{f:"Alerta: 1ª quinzena < 45% da meta",s:"Fase3"},{f:"Alerta: Margem abaixo de threshold",s:"Fase3"},{f:"Alerta: % MC fora da faixa",s:"Fase3"},{f:"Alerta: Meta mensal em risco",s:"Fase3"},{f:"Thresholds configuráveis via BKO",s:"Fase3"}]},
-    {a:"BK",mod:"Backoffice",bg:C.grayL,color:C.gray,items:[{f:"CRUD de usuários",s:"MVP"},{f:"Atribuição de perfil",s:"MVP"},{f:"Vinculação gerente ↔ área/cidade",s:"MVP"},{f:"Log de acessos",s:"MVP"},{f:"Histórico de último acesso",s:"MVP"},{f:"Config. de thresholds",s:"Fase3"}]},
+    {a:"AU",mod:"Autenticação — Todos os sistemas",bg:C.grayL,color:C.gray,items:[{f:"Login com e-mail e senha",s:"MVP"},{f:"Sessão persistente com JWT",s:"MVP"},{f:"Recuperação de senha por e-mail",s:"MVP"},{f:"Controle de acesso por perfil",s:"MVP"},{f:"Biometria / Face ID",s:"Futuro"}]},
+    {a:"DW",mod:"PWA — Imdepa",bg:C.blueL,color:C.navy,items:[
+      {f:"Home — KPIs consolidados por perfil",s:"MVP"},
+      {f:"Módulo Indústria — faturamento e margem",s:"MVP"},
+      {f:"Módulo Revenda — faturamento e margem",s:"MVP"},
+      {f:"Filtros por gerente e área/cidade",s:"MVP"},
+      {f:"Gráficos de evolução e comparativo",s:"MVP"},
+      {f:"Seletor de período Dia / Mês / Ano",s:"MVP"},
+      {f:"Instalável na tela inicial (PWA)",s:"MVP"},
+      {f:"Configuração de thresholds de alertas",s:"Fase3"},
+    ]},
+    {a:"BKO",mod:"Backoffice",bg:C.purpleL,color:C.purple,items:[
+      {f:"CRUD de usuários",s:"MVP"},
+      {f:"Atribuição de perfil",s:"MVP"},
+      {f:"Vinculação gerente ↔ área/cidade",s:"MVP"},
+      {f:"Log de acessos",s:"MVP"},
+      {f:"Histórico de último acesso",s:"MVP"},
+      {f:"Config. de thresholds de alertas",s:"Fase3"},
+    ]},
+    {a:"API",mod:"Pipeline & API — Protheus",bg:C.greenL,color:C.green,items:[
+      {f:"Extração dos dados diretamente do Protheus",s:"MVP"},
+      {f:"Transformação e carga no banco analítico",s:"MVP"},
+      {f:"API REST — endpoints por perfil e período",s:"MVP"},
+      {f:"Autenticação JWT + controle de acesso",s:"MVP"},
+      {f:"Engine de alertas com regras de negócio",s:"Fase3"},
+      {f:"Atualização periódica dos dados",s:"MVP"},
+    ]},
+    {a:"NO",mod:"Notificações & Alertas",bg:C.amberL,color:C.amber,items:[
+      {f:"Push notification via FCM",s:"Fase3"},
+      {f:"Painel in-app com histórico de alertas",s:"Fase3"},
+      {f:"Alerta: fat. médio diário abaixo do ritmo",s:"Fase3"},
+      {f:"Alerta: 1ª quinzena abaixo do esperado",s:"Fase3"},
+      {f:"Alerta: margem abaixo do piso",s:"Fase3"},
+      {f:"Alerta: % MC fora da faixa",s:"Fase3"},
+      {f:"Alerta: meta mensal em risco",s:"Fase3"},
+      {f:"Thresholds configuráveis no Backoffice",s:"Fase3"},
+    ]},
   ];
   const all=modules.flatMap(m=>m.items);
-  const counts=[{k:"MVP"},{k:"Fase3"},{k:"Fase4"},{k:"Futuro"}].map(c=>({...c,count:all.filter(i=>i.s===c.k).length}));
+  const counts=[{k:"MVP"},{k:"Fase3"},{k:"Futuro"}].map(c=>({...c,count:all.filter(i=>i.s===c.k).length}));
   return(
     <div style={{flex:1,overflowY:"auto",padding:24,display:"flex",gap:20,alignItems:"flex-start"}}>
       <div style={{flex:1,minWidth:0,display:"flex",flexDirection:"column",gap:12}}>
@@ -316,7 +854,7 @@ function PageScope(){
           </div>
         </div>
         <div style={{...card(),padding:16}}><ST>Fora do escopo (v1)</ST>
-          {["Integração com estoque Protheus","Integração financeiro ERP","Relatórios PDF / Excel","Multi-tenant","Biometria / Face ID","Modo offline completo"].map((s,i,arr)=>(
+          {["Parser de e-mail Protheus (descartado)","Integração com módulo de estoque Protheus","Integração com módulo financeiro Protheus","Relatórios exportáveis (PDF / Excel)","Multi-tenant / multi-empresa","Biometria / Face ID no app","Modo offline completo no app"].map((s,i,arr)=>(
             <div key={s} style={{fontSize:12,color:C.hint,padding:"5px 0",borderBottom:i<arr.length-1?`0.5px solid ${C.border}`:"none",display:"flex",gap:6}}><span style={{color:C.red,fontWeight:700,flexShrink:0}}>✕</span>{s}</div>
           ))}
         </div>
