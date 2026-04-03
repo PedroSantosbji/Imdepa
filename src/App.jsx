@@ -22,10 +22,10 @@ function FeatGrid({items,color}){return(<div style={{display:"grid",gridTemplate
 // ─── Sidebar ─────────────────────────────────────────────────────────────────
 const NAV=[
   {section:"Produto",items:[{key:"overview",label:"Visão Geral"},{key:"architecture",label:"Arquitetura"}]},
-  {section:"Entrega",items:[{key:"roadmap",label:"Roadmap"},{key:"team",label:"Equipe"},{key:"scope",label:"Escopo"}]},
+  {section:"Entrega",items:[{key:"roadmap",label:"Roadmap"},{key:"team",label:"Equipe"}]},
   {section:"Protótipo",items:[{key:"proto_dir",label:"Diretoria"},{key:"proto_ger",label:"Gerente"}]},
 ];
-const PAGE_LABELS={overview:"Visão Geral",architecture:"Arquitetura",roadmap:"Roadmap",team:"Equipe",scope:"Escopo",proto_dir:"Protótipo · Diretoria",proto_ger:"Protótipo · Gerente"};
+const PAGE_LABELS={overview:"Visão Geral",architecture:"Arquitetura",roadmap:"Roadmap",team:"Equipe",proto_dir:"Protótipo · Diretoria",proto_ger:"Protótipo · Gerente"};
 
 function Sidebar({active,setActive}){
   return(
@@ -69,14 +69,14 @@ function Topbar({active}){
 // ═══════════════════════════════════════════════════════════════════════════════
 function PageOverview(){
   const metrics=[
-    {label:"Sistemas",value:"3",sub:"PWA · Backoffice · Pipeline",accent:C.blue},
+    {label:"Sistemas",value:"3",sub:"App · Backoffice · Pipeline",accent:C.blue},
     {label:"Prazo Estimado",value:"3 meses",sub:"Design · ETL · Dev · QA",accent:C.purple},
     {label:"Perfis de Acesso",value:"3",sub:"Diretoria · Gerente · Backoffice",accent:C.green},
   ];
   const systems=[
     {
-      abbr:"PWA", name:"PWA — Imdepa", bg:C.navy,
-      tags:["Progressive Web App","Mobile-first","Diretoria","Gerente"],
+      abbr:"APP", name:"App Imdepa", bg:C.navy,
+      tags:["App Mobile","Mobile-first","Diretoria","Gerente"],
       feats:[
         "Home com KPIs consolidados + gauge de meta",
         "Módulo Indústria — faturamento e margem",
@@ -85,7 +85,7 @@ function PageOverview(){
         "Gráficos de evolução e comparativo",
         "Central de alertas com severidade",
         "Seletor de período Dia / Mês / Ano",
-        "Instalável na tela inicial (PWA)",
+        "",
       ],
     },
     {
@@ -116,8 +116,8 @@ function PageOverview(){
     },
   ];
   const profiles=[
-    {abbr:"DIR",name:"Diretoria",  desc:"PWA · Visão total de todas as áreas",          bg:C.blueL,  color:C.blueT},
-    {abbr:"GER",name:"Gerente",    desc:"PWA · Filtrado pela sua área/cidade",           bg:C.greenL, color:C.green},
+    {abbr:"DIR",name:"Diretoria",  desc:"App · Visão total de todas as áreas",          bg:C.blueL,  color:C.blueT},
+    {abbr:"GER",name:"Gerente",    desc:"App · Filtrado pela sua área/cidade",           bg:C.greenL, color:C.green},
     {abbr:"BKO",name:"Backoffice", desc:"Backoffice Web · Gestão de acessos e configs",  bg:C.purpleL,color:C.purple},
   ];
   return(
@@ -154,8 +154,17 @@ function PageOverview(){
           </div>
         </div>
         <div style={{...card(),padding:16}}><ST>Estimativas</ST>
-          {[{l:"Design UX/UI",v:"2m part-time",w:false},{l:"Eng. Dados (ETL)",v:"2m full-time",w:false},{l:"Dev Backend",v:"3m part-time",w:false},{l:"Dev Frontend/Mobile",v:"3m full-time",w:false},{l:"QA / Testes",v:"2m full-time",w:false}].map((e,i,arr)=>(
-            <div key={e.l} style={{display:"flex",justifyContent:"space-between",fontSize:12,padding:"5px 0",borderBottom:i<arr.length-1?`0.5px solid ${C.border}`:"none"}}><span style={{color:C.muted}}>{e.l}</span><span style={{color:e.w?C.amber:C.text,fontWeight:500}}>{e.v}</span></div>
+          {[
+            {l:"Designer UX/UI",       v:"2m part-time", w:false},
+            {l:"Eng. de Dados (ETL)",  v:"2m full-time", w:false},
+            {l:"Dev Backend",          v:"3m part-time", w:false},
+            {l:"Dev Frontend",          v:"3m full-time", w:false},
+            {l:"QA / Testes",          v:"1m part-time", w:false},
+          ].map((e,i,arr)=>(
+            <div key={e.l} style={{display:"flex",justifyContent:"space-between",fontSize:12,padding:"5px 0",borderBottom:i<arr.length-1?`0.5px solid ${C.border}`:"none"}}>
+              <span style={{color:C.muted}}>{e.l}</span>
+              <span style={{color:e.w?C.amber:C.text,fontWeight:500}}>{e.v}</span>
+            </div>
           ))}
         </div>
       </div>
@@ -171,7 +180,7 @@ function PageArchitecture(){
 
   const SYSTEMS={
     pwa:{
-      abbr:"PWA", label:"PWA — Imdepa", sub:"Progressive Web App · Mobile-first",
+      abbr:"APP", label:"App Imdepa", sub:"App · Mobile-first",
       color:"#1A3A5C", colorL:"#D0DCE8",
       profiles:["DIR · Diretoria","GER · Gerente"],
       desc:"Aplicação web progressiva acessada pelo celular (ou desktop) pela diretoria e gerentes. Mobile-first, instalável na tela inicial como um app nativo.",
@@ -193,7 +202,7 @@ function PageArchitecture(){
       abbr:"API", label:"Pipeline & API", sub:"Protheus → ETL → API",
       color:"#3B6D11", colorL:"#EAF3DE",
       profiles:["Extração Protheus","Transformação","Exposição via API"],
-      desc:"Extração direta dos dados brutos do banco Protheus, transformação e disponibilização via API para o PWA e o Backoffice.",
+      desc:"Extração direta dos dados brutos do banco Protheus, transformação e disponibilização via API para o App e o Backoffice.",
       screens:[
         {p:"Fonte",items:["Banco Protheus (SQL Server / Oracle)","Dados brutos de faturamento, margem e KPIs"]},
         {p:"Pipeline",items:["Extração programada dos dados do Protheus","Transformação e carga no banco analítico","Atualização periódica dos dados"]},
@@ -241,7 +250,7 @@ function PageArchitecture(){
             <HLine/>
           </div>
 
-          {/* Bottom row — PWA + Backoffice */}
+          {/* Bottom row — App + Backoffice */}
           <div style={{display:"flex",gap:40,marginTop:0,width:"100%",justifyContent:"center"}}>
             <div style={{display:"flex",flexDirection:"column",alignItems:"center",flex:1,maxWidth:380}}>
               <VLine/>
@@ -336,98 +345,82 @@ function SitemapNode({sys,id,selected,onSelect}){
 // PAGE: ROADMAP — Gantt style
 // ═══════════════════════════════════════════════════════════════════════════════
 function PageRoadmap(){
-  // M1–M6 = meses do projeto. Cada feature tem start(0-based) e span (em meses).
-  // Legenda de sistemas
   const SYS = {
-    discovery:  { label:"Discovery",          color:"#5F5E5A", bg:"#F1EFE8" },
-    design:     { label:"Design UX/UI",       color:"#534AB7", bg:"#EEEDFE" },
-    dados:      { label:"Pipeline Protheus",  color:"#3B6D11", bg:"#EAF3DE" },
-    backend:    { label:"Backend & API",      color:"#185FA5", bg:"#E6F1FB" },
-    app:        { label:"PWA",                color:"#2E6DA4", bg:"#D6E4F2" },
-    retaguarda: { label:"Dashboard Web",      color:"#1A3A5C", bg:"#D0DCE8" },
-    alertas:    { label:"Alertas & Notif.",   color:"#BA7517", bg:"#FAEEDA" },
+    design:  { label:"Design UX/UI",       color:"#534AB7", bg:"#EEEDFE" },
+    dados:   { label:"Pipeline Protheus",  color:"#3B6D11", bg:"#EAF3DE" },
+    backend: { label:"Backend & API",      color:"#185FA5", bg:"#E6F1FB" },
+    pwa:     { label:"App",                color:"#1A3A5C", bg:"#D0DCE8" },
+    bko:     { label:"Backoffice",         color:"#534AB7", bg:"#EEEDFE" },
+    alertas: { label:"Alertas & Notif.",   color:"#BA7517", bg:"#FAEEDA" },
+    qa:      { label:"QA / Testes",        color:"#A32D2D", bg:"#FCEBEB" },
   };
 
-  // 3 meses visíveis
   const MONTHS = [
-    { id:"M1", label:"M1", fase:"Discovery + Design" },
-    { id:"M2", label:"M2", fase:"Design + Dev" },
-    { id:"M3", label:"M3", fase:"Dev + Homolog." },
+    { id:"M1", fase:"Design +\nPipeline" },
+    { id:"M2", fase:"Design +\nDev" },
+    { id:"M3", fase:"Dev +\nQA + Go-live" },
   ];
 
-  // Marcos de entrega
   const MARCOS = [
-    { at:"M1", label:"M1", title:"Discovery concluído", desc:"Áreas mapeadas, abordagem de dados definida, stack aprovada", color:"#5F5E5A" },
-    { at:"M2", label:"M2", title:"Design aprovado", desc:"Wireframes e protótipos validados pela diretoria. Dev inicia.", color:"#534AB7" },
-    { at:"M3", label:"M3", title:"MVP Go-live", desc:"PWA + Backoffice em produção — alertas ativos", color:"#185FA5" },
-    { at:"M3", label:"M3", title:"Homologação completa", desc:"QA finalizado, dados validados, entrega ao cliente", color:"#BA7517" },
+    { at:"M1", title:"Design em andamento", desc:"Prototipação das telas principais em validação com diretoria. Pipeline iniciado.", color:"#534AB7" },
+    { at:"M2", title:"Handoff + Dev pleno", desc:"Design entrega handoff. Desenvolvimento App + Backend + Backoffice em curso.", color:"#185FA5" },
+    { at:"M3", title:"MVP — Go-live",       desc:"App + Backoffice em produção. QA concluído. Alertas ativos.", color:"#3B6D11" },
   ];
 
-  // Features: start (0-based), span em meses (3 total)
   const GROUPS = [
-    {
-      group:"F0 · DISCOVERY", sys:"discovery", abbr:"F0",
-      rows:[
-        { label:"Mapeamento de áreas por gerente",           sys:"discovery", start:0, span:1, ml:"M1" },
-        { label:"Levantamento de acesso ao banco Protheus",   sys:"discovery", start:0, span:1, ml:"M1" },
-        { label:"Refinamento técnico (Front + Back)",        sys:"discovery", start:0, span:1, ml:"M1" },
-        { label:"Definição cloud provider + stack",          sys:"discovery", start:0, span:1, ml:"M1" },
-      ]
-    },
     {
       group:"F1 · DESIGN UX/UI", sys:"design", abbr:"F1",
       rows:[
-        { label:"Wireframes mobile-first — todas as telas",  sys:"design", start:0, span:2, ml:"M2" },
-        { label:"Sistema de design & biblioteca de comp.",   sys:"design", start:0, span:1, ml:"M1" },
-        { label:"Protótipos navegáveis + validação diret.",  sys:"design", start:1, span:1, ml:"M2" },
-        { label:"Handoff para desenvolvimento (Figma)",      sys:"design", start:1, span:1, ml:"M2" },
-      ]
+        { label:"Prototipação das telas — App (todas as telas)",  sys:"design", start:0, span:2, ml:"M2" },
+        { label:"Sistema de design & componentes",                sys:"design", start:0, span:1, ml:"M1" },
+        { label:"Validação dos protótipos com diretoria",         sys:"design", start:0, span:2, ml:"M2" },
+        { label:"Handoff completo para desenvolvimento",          sys:"design", start:1, span:1, ml:"M2" },
+      ],
     },
     {
-      group:"F2 · PIPELINE DE DADOS (OP. B)", sys:"dados", abbr:"F2",
+      group:"F2 · PIPELINE & API — PROTHEUS", sys:"dados", abbr:"F2",
       rows:[
-        { label:"Mapeamento tabelas banco Protheus",          sys:"dados",   start:0, span:1, ml:"M1" },
-        { label:"Conector ETL: SQL Server / Oracle",          sys:"dados",   start:0, span:2, ml:"M2" },
-        { label:"Pipeline staging → DW (Airflow + dbt)",     sys:"dados",   start:0, span:2, ml:"M2" },
-        { label:"Modelagem dimensional: fatos + dimensões",  sys:"dados",   start:1, span:1, ml:"M2" },
-        { label:"API REST — endpoints de KPIs",              sys:"backend", start:1, span:2, ml:"M3" },
-        { label:"Autenticação JWT + perfis de acesso",       sys:"backend", start:1, span:1, ml:"M2" },
-      ]
+        { label:"Extração dos dados diretamente do Protheus",     sys:"dados",   start:0, span:2, ml:"M2" },
+        { label:"Transformação e carga no banco analítico",       sys:"dados",   start:0, span:2, ml:"M2" },
+        { label:"API REST — endpoints por perfil e período",      sys:"backend", start:1, span:2, ml:"M3" },
+        { label:"Autenticação JWT + controle de acesso",          sys:"backend", start:1, span:1, ml:"M2" },
+        { label:"Engine de alertas com regras de negócio",        sys:"alertas", start:2, span:1, ml:"M3" },
+      ],
     },
     {
-      group:"F3 · APP MOBILE", sys:"app", abbr:"F3",
+      group:"F3 · APP — DIRETORIA & GERENTE", sys:"pwa", abbr:"F3",
       rows:[
-        { label:"Login, perfis e navegação base",            sys:"app", start:1, span:1, ml:"M2" },
-        { label:"Home — KPIs consolidados + gauge",          sys:"app", start:1, span:2, ml:"M3" },
-        { label:"Módulo Indústria — telas e filtros",        sys:"app", start:1, span:2, ml:"M3" },
-        { label:"Módulo Revenda — telas e filtros",          sys:"app", start:2, span:1, ml:"M3" },
-        { label:"Integração App ↔ API + testes E2E",         sys:"app", start:2, span:1, ml:"M3" },
-      ]
+        { label:"Login e controle de acesso por perfil",          sys:"pwa", start:1, span:2, ml:"M3" },
+        { label:"Home — KPIs consolidados + gauge de meta",       sys:"pwa", start:1, span:2, ml:"M3" },
+        { label:"Módulo Indústria — faturamento e margem",        sys:"pwa", start:1, span:2, ml:"M3" },
+        { label:"Módulo Revenda — faturamento e margem",          sys:"pwa", start:2, span:1, ml:"M3" },
+        { label:"Filtros por área/cidade (Diretoria)",            sys:"pwa", start:2, span:1, ml:"M3" },
+        { label:"Central de alertas + push notifications",        sys:"alertas", start:2, span:1, ml:"M3" },
+      ],
     },
     {
-      group:"F4 · DASHBOARD WEB", sys:"retaguarda", abbr:"F4",
+      group:"F4 · BACKOFFICE", sys:"bko", abbr:"F4",
       rows:[
-        { label:"Dashboard Web — controle de acessos (BKO)", sys:"retaguarda", start:1, span:2, ml:"M3" },
-        { label:"Dashboard Web — KPIs Diretoria (todas áreas)",sys:"retaguarda", start:1, span:2, ml:"M3" },
-        { label:"Dashboard Web — KPIs Gerente (área filtrada)",sys:"retaguarda", start:2, span:1, ml:"M3" },
-        { label:"Vinculação gerente ↔ área/cidade",           sys:"retaguarda", start:1, span:1, ml:"M2" },
-      ]
+        { label:"CRUD de usuários e atribuição de perfis",        sys:"bko", start:1, span:2, ml:"M3" },
+        { label:"Vinculação gerente ↔ área/cidade",              sys:"bko", start:1, span:1, ml:"M2" },
+        { label:"Configuração de thresholds de alertas",          sys:"alertas", start:2, span:1, ml:"M3" },
+        { label:"Log de acessos e atividades",                    sys:"bko", start:2, span:1, ml:"M3" },
+      ],
     },
     {
-      group:"F5 · ALERTAS & HOMOLOGAÇÃO", sys:"alertas", abbr:"F5",
+      group:"F5 · QA & HOMOLOGAÇÃO", sys:"qa", abbr:"F5",
       rows:[
-        { label:"Engine de alertas com regras de negócio",   sys:"alertas", start:2, span:1, ml:"M3" },
-        { label:"Push notifications — Firebase FCM",         sys:"alertas", start:2, span:1, ml:"M3" },
-        { label:"Alertas: Fat., Quinzena, Margem, % MC",     sys:"alertas", start:2, span:1, ml:"M3" },
-        { label:"Painel in-app + thresholds configuráveis",  sys:"alertas", start:2, span:1, ml:"M3" },
-        { label:"Homologação + QA final",                    sys:"alertas", start:2, span:1, ml:"M3" },
-      ]
+        { label:"Testes funcionais — App + Backoffice",           sys:"qa", start:2, span:1, ml:"M3" },
+        { label:"Testes de integração API ↔ Protheus",           sys:"qa", start:2, span:1, ml:"M3" },
+        { label:"Testes de alertas e notificações",               sys:"qa", start:2, span:1, ml:"M3" },
+        { label:"Homologação com usuários reais (diretoria)",     sys:"qa", start:2, span:1, ml:"M3" },
+      ],
     },
   ];
 
   const TOTAL_M = 3;
-  const COL_W = 160; // px per month — 3 months, more room
-  const LABEL_W = 210; // left label column
+  const COL_W = 175;
+  const LABEL_W = 210;
 
   const barColor = (sys) => SYS[sys]?.color || C.navy;
   const barBg    = (sys) => SYS[sys]?.bg    || C.blueL;
@@ -437,7 +430,7 @@ function PageRoadmap(){
       {/* Sub-header */}
       <div style={{padding:"10px 24px 0",borderBottom:`0.5px solid ${C.border}`,backgroundColor:C.white}}>
         <div style={{fontSize:11,color:C.hint,marginBottom:8}}>
-          Roadmap / Feature by feature · 3 meses · discovery M1 · design M1–M2 · ETL Protheus M1–M2 · dev M2–M3 · alertas M3 · homologação M3
+          Roadmap / Feature by feature · 3 meses · design M1–M2 (prototipação + handoff) · pipeline M1–M2 · dev M2–M3 · QA M3 · go-live M3
         </div>
       </div>
 
@@ -446,7 +439,7 @@ function PageRoadmap(){
         {/* Marcos de entrega */}
         <div style={{marginBottom:20}}>
           <div style={{fontSize:11,fontWeight:600,color:C.text,marginBottom:12}}>Marcos de Entrega</div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12}}>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
             {MARCOS.map(m=>(
               <div key={m.at} style={{backgroundColor:C.white,border:`0.5px solid ${C.border}`,borderRadius:10,padding:"14px 16px",borderTop:`2.5px solid ${m.color}`}}>
                 <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:6}}>
@@ -552,12 +545,12 @@ function PageRoadmap(){
           <div style={{...card(),padding:16}}>
             <ST>Decisões abertas</ST>
             {[
-              {n:"1",d:"Acesso ao banco Protheus: SQL Server ou Oracle?",who:"TI Imdepa + Eng. Dados"},
-              {n:"2",d:"Mapeamento de áreas por gerente (cidade/filial)",who:"Operações Imdepa"},
-              {n:"3",d:"Cloud provider: AWS, GCP ou Azure?",who:"TI + DevOps"},
-              {n:"4",d:"Framework PWA: Next.js, Vite ou CRA?",who:"Tech Lead Front"},
-              {n:"5",d:"Notificações também por e-mail além do push?",who:"Diretoria"},
-              {n:"6",d:"Integração futura com outros módulos Protheus?",who:"Diretoria"},
+              {n:"1",d:"Acesso ao banco Protheus: SQL Server ou Oracle?", who:"TI Imdepa + Eng. Dados"},
+              {n:"2",d:"Mapeamento de áreas por gerente (cidade/filial)",  who:"Operações Imdepa"},
+              {n:"3",d:"Cloud provider: AWS, GCP ou Azure?",               who:"TI Imdepa"},
+              {n:"4",d:"Framework frontend: React, Next.js ou Vite?",             who:"Dev Frontend"},
+              {n:"5",d:"Notificações também por e-mail além do push?",     who:"Diretoria"},
+              {n:"6",d:"Integração futura com outros módulos Protheus?",   who:"Diretoria"},
             ].map((d,i,arr)=>(
               <div key={d.n} style={{padding:"7px 0",borderBottom:i<arr.length-1?`0.5px solid ${C.border}`:"none"}}>
                 <div style={{display:"flex",gap:7,alignItems:"flex-start"}}>
@@ -574,9 +567,6 @@ function PageRoadmap(){
               {r:"Acesso ao banco Protheus negado ou restrito",   prob:"Média",imp:"Alto"},
               {r:"Tabelas Protheus sem documentação",            prob:"Alta", imp:"Alto"},
               {r:"Áreas de gerente sem mapeamento",              prob:"Alta", imp:"Médio"},
-              {r:"Estimativas de dev subestimadas",              prob:"Média",imp:"Alto"},
-              {r:"Baixa adoção pelos diretores",                 prob:"Baixa",imp:"Alto"},
-              {r:"Schema Protheus diferente entre versões",      prob:"Média",imp:"Alto"},
             ].map((r,i,arr)=>(
               <div key={r.r} style={{padding:"7px 0",borderBottom:i<arr.length-1?`0.5px solid ${C.border}`:"none"}}>
                 <div style={{fontSize:12,color:C.text,marginBottom:4}}>{r.r}</div>
@@ -599,36 +589,22 @@ function PageRoadmap(){
 // ═══════════════════════════════════════════════════════════════════════════════
 function PageTeam(){
   const MONTHS=[
-    {id:"M1",fase:"Discovery\n+ Design"},
-    {id:"M2",fase:"Design\n+ Dev"},
-    {id:"M3",fase:"Dev +\nHomolog."},
+    {id:"M1",fase:"Design +\nPipeline"},
+    {id:"M2",fase:"Design +\nDev"},
+    {id:"M3",fase:"Dev + QA\n+ Go-live"},
   ];
-  const COL=160; // px per month — 3 months, more breathing room
-  const ROLE_W=160;
-  const DED_W=148;
+  const COL=170;
+  const ROLE_W=168;
+  const DED_W=152;
 
-  // segments: {s = start (0-based, supports 0.5 for mid-month), sp = span in months, t = "full"|"part"}
+  // Segmentos: {s = start 0-based, sp = span, t = "full"|"part"}
   const ROLES=[
     {
       a:"UX",  label:"Designer UX/UI",
       ded:"Part-time\nM1–M2",
-      color:"#6C63D4",
-      skills:"Figma · Mobile · Design System · Prototipação",
+      color:"#534AB7",
+      skills:"Figma · Prototipação · Sistema de design · Handoff",
       segs:[{s:0, sp:2, t:"part"}],
-    },
-    {
-      a:"BE",  label:"Dev Backend Pleno",
-      ded:"Part-time\nM1–M3",
-      color:"#1A3A5C",
-      skills:"Node.js · API REST · JWT · PostgreSQL · Docker",
-      segs:[{s:0, sp:3, t:"part"}],
-    },
-    {
-      a:"FE",  label:"Dev Frontend / Mobile",
-      ded:"Full-time\nM1 (15d) – M3",
-      color:"#2E6DA4",
-      skills:"React · PWA · TypeScript · Firebase FCM · CSS mobile-first",
-      segs:[{s:0.5, sp:2.5, t:"full"}],
     },
     {
       a:"DE",  label:"Eng. de Dados",
@@ -638,11 +614,25 @@ function PageTeam(){
       segs:[{s:0, sp:2, t:"full"}],
     },
     {
+      a:"BE",  label:"Dev Backend",
+      ded:"Part-time\nM1–M3",
+      color:"#1A3A5C",
+      skills:"Node.js · API REST · JWT · PostgreSQL · Docker · CI/CD",
+      segs:[{s:0, sp:3, t:"part"}],
+    },
+    {
+      a:"FE",  label:"Dev Frontend",
+      ded:"Full-time\nM1 (15d) – M3",
+      color:"#2E6DA4",
+      skills:"React · TypeScript · Firebase FCM · CSS mobile-first",
+      segs:[{s:0.5, sp:2.5, t:"full"}],
+    },
+    {
       a:"QA",  label:"QA / Testes",
-      ded:"Full-time\nM2–M3",
-      color:"#BA7517",
+      ded:"Part-time\nM3",
+      color:"#A32D2D",
       skills:"Testes funcionais · Regressão · E2E · Performance",
-      segs:[{s:1, sp:2, t:"full"}],
+      segs:[{s:2, sp:1, t:"part"}],
     },
   ];
 
@@ -685,9 +675,9 @@ function PageTeam(){
         {/* Metric cards */}
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:12,marginBottom:20}}>
           {[
-            {accent:"#3B6D11", lbl:"PESSOAS NO TIME",   val:"5",        sub:"Papéis distintos e complementares"},
-            {accent:"#2E6DA4", lbl:"PERÍODO",           val:"3 meses",  sub:"M1–M3 · discovery → dev → homologação"},
-            {accent:"#BA7517", lbl:"GO-LIVE",           val:"M3",       sub:"PWA + Backoffice em produção"},
+            {accent:"#3B6D11", lbl:"PESSOAS NO TIME",  val:"5",        sub:"Papéis distintos e complementares"},
+            {accent:"#2E6DA4", lbl:"PERÍODO",          val:"3 meses",  sub:"M1–M3 · design → dev → QA → go-live"},
+            {accent:"#C8102E", lbl:"GO-LIVE",          val:"M3",       sub:"App + Backoffice em produção"},
           ].map(m=>(
             <div key={m.lbl} style={{backgroundColor:C.white,border:`0.5px solid ${C.border}`,borderRadius:10,padding:"16px 20px",borderTop:`2.5px solid ${m.accent}`}}>
               <div style={{fontSize:10,fontWeight:600,color:C.hint,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:8}}>{m.lbl}</div>
@@ -697,7 +687,7 @@ function PageTeam(){
           ))}
         </div>
 
-        {/* Table */}
+        {/* Gantt table */}
         <div style={{fontSize:12,fontWeight:600,color:C.text,marginBottom:12}}>Composição e Dedicação por Mês</div>
         <div style={{backgroundColor:C.white,border:`0.5px solid ${C.border}`,borderRadius:12,overflow:"hidden"}}>
         <div style={{overflowX:"auto",WebkitOverflowScrolling:"touch"}}>
@@ -718,16 +708,13 @@ function PageTeam(){
           {/* Rows */}
           {ROLES.map((r,ri)=>(
             <div key={r.label} style={{display:"flex",alignItems:"stretch",borderBottom:ri<ROLES.length-1?`0.5px solid rgba(0,0,0,0.05)`:"none",minHeight:52}}>
-              {/* Role label — sticky */}
               <div style={{width:ROLE_W,minWidth:ROLE_W,padding:"0 14px",borderRight:`0.5px solid ${C.border}`,flexShrink:0,display:"flex",alignItems:"center",gap:8,position:"sticky",left:0,backgroundColor:ri%2===0?C.white:"#FAFBFC",zIndex:1}}>
                 <div style={{width:24,height:24,borderRadius:6,background:r.color,display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:700,color:"#fff",flexShrink:0}}>{r.a}</div>
                 <span style={{fontSize:12,fontWeight:500,color:C.text,lineHeight:1.3}}>{r.label}</span>
               </div>
-              {/* Dedication — sticky */}
               <div style={{width:DED_W,minWidth:DED_W,padding:"0 12px",borderRight:`0.5px solid ${C.border}`,flexShrink:0,display:"flex",alignItems:"center",position:"sticky",left:ROLE_W,backgroundColor:ri%2===0?C.white:"#FAFBFC",zIndex:1}}>
                 <span style={{fontSize:10.5,color:C.muted,lineHeight:1.6,whiteSpace:"pre-line"}}>{r.ded}</span>
               </div>
-              {/* Bar cells */}
               <div style={{position:"relative",display:"flex",width:MONTHS.length*COL,minWidth:MONTHS.length*COL,flexShrink:0}}>
                 {MONTHS.map((m,i)=>(
                   <div key={m.id} style={{width:COL,minWidth:COL,height:"100%",borderRight:i<MONTHS.length-1?`0.5px solid rgba(0,0,0,0.04)`:"none",flexShrink:0,backgroundColor:i%2===0?"transparent":"rgba(0,0,0,0.008)"}}/>
@@ -743,11 +730,7 @@ function PageTeam(){
               <div style={{width:28,height:12,borderRadius:3,backgroundColor:"#1A3A5C"}}/>
               <span style={{fontSize:11,color:C.muted}}>Full time</span>
             </div>
-            <div style={{display:"flex",alignItems:"center",gap:6}}>
-              <div style={{width:28,height:12,borderRadius:3,border:"1.5px dashed #6C63D4",backgroundImage:"repeating-linear-gradient(45deg,rgba(108,99,212,0.15) 0px,rgba(108,99,212,0.15) 3px,transparent 3px,transparent 8px)"}}/>
-              <span style={{fontSize:11,color:C.muted}}>Part time / apoio</span>
-            </div>
-            <div style={{marginLeft:"auto",fontSize:11,color:C.hint}}>3 meses · M1–M3 · discovery → dev → alertas → homologação</div>
+            <div style={{marginLeft:"auto",fontSize:11,color:C.hint}}>3 meses · M1–M3 · design → pipeline → dev → QA → go-live</div>
           </div>
 
         </div>
@@ -776,399 +759,361 @@ function PageTeam(){
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// PAGE: SCOPE
 // ═══════════════════════════════════════════════════════════════════════════════
-function PageScope(){
-  const SC2={MVP:{color:C.blueT,bg:C.blueL},Fase3:{color:C.amber,bg:C.amberL},Futuro:{color:C.gray,bg:C.grayL}};
-  const SL={MVP:"MVP",Fase3:"Fase 3",Futuro:"Futuro"};
-  const modules=[
-    {a:"AU",mod:"Autenticação — Todos os sistemas",bg:C.grayL,color:C.gray,items:[{f:"Login com e-mail e senha",s:"MVP"},{f:"Sessão persistente com JWT",s:"MVP"},{f:"Recuperação de senha por e-mail",s:"MVP"},{f:"Controle de acesso por perfil",s:"MVP"},{f:"Biometria / Face ID",s:"Futuro"}]},
-    {a:"DW",mod:"PWA — Imdepa",bg:C.blueL,color:C.navy,items:[
-      {f:"Home — KPIs consolidados por perfil",s:"MVP"},
-      {f:"Módulo Indústria — faturamento e margem",s:"MVP"},
-      {f:"Módulo Revenda — faturamento e margem",s:"MVP"},
-      {f:"Filtros por gerente e área/cidade",s:"MVP"},
-      {f:"Gráficos de evolução e comparativo",s:"MVP"},
-      {f:"Seletor de período Dia / Mês / Ano",s:"MVP"},
-      {f:"Instalável na tela inicial (PWA)",s:"MVP"},
-      {f:"Configuração de thresholds de alertas",s:"Fase3"},
-    ]},
-    {a:"BKO",mod:"Backoffice",bg:C.purpleL,color:C.purple,items:[
-      {f:"CRUD de usuários",s:"MVP"},
-      {f:"Atribuição de perfil",s:"MVP"},
-      {f:"Vinculação gerente ↔ área/cidade",s:"MVP"},
-      {f:"Log de acessos",s:"MVP"},
-      {f:"Histórico de último acesso",s:"MVP"},
-      {f:"Config. de thresholds de alertas",s:"Fase3"},
-    ]},
-    {a:"API",mod:"Pipeline & API — Protheus",bg:C.greenL,color:C.green,items:[
-      {f:"Extração dos dados diretamente do Protheus",s:"MVP"},
-      {f:"Transformação e carga no banco analítico",s:"MVP"},
-      {f:"API REST — endpoints por perfil e período",s:"MVP"},
-      {f:"Autenticação JWT + controle de acesso",s:"MVP"},
-      {f:"Engine de alertas com regras de negócio",s:"Fase3"},
-      {f:"Atualização periódica dos dados",s:"MVP"},
-    ]},
-    {a:"NO",mod:"Notificações & Alertas",bg:C.amberL,color:C.amber,items:[
-      {f:"Push notification via FCM",s:"Fase3"},
-      {f:"Painel in-app com histórico de alertas",s:"Fase3"},
-      {f:"Alerta: fat. médio diário abaixo do ritmo",s:"Fase3"},
-      {f:"Alerta: 1ª quinzena abaixo do esperado",s:"Fase3"},
-      {f:"Alerta: margem abaixo do piso",s:"Fase3"},
-      {f:"Alerta: % MC fora da faixa",s:"Fase3"},
-      {f:"Alerta: meta mensal em risco",s:"Fase3"},
-      {f:"Thresholds configuráveis no Backoffice",s:"Fase3"},
-    ]},
-  ];
-  const all=modules.flatMap(m=>m.items);
-  const counts=[{k:"MVP"},{k:"Fase3"},{k:"Futuro"}].map(c=>({...c,count:all.filter(i=>i.s===c.k).length}));
+// IMDEPA BRAND TOKENS
+// ═══════════════════════════════════════════════════════════════════════════════
+const IM = {
+  red:    "#C8102E",
+  redD:   "#9E0C23",
+  redL:   "#FDECEA",
+  black:  "#111111",
+  dark:   "#1A1A1A",
+  gray:   "#F4F4F4",
+  grayM:  "#E0E0E0",
+  grayT:  "#999999",
+  white:  "#FFFFFF",
+  green:  "#1A7A3A",
+  greenL: "#E8F5EE",
+  amber:  "#C97A00",
+  amberL: "#FFF3DC",
+};
+
+// ─── Brand logo mark (SVG inline) ────────────────────────────────────────────
+function ImdepaLogo({size=28,white=false}){
+  const c=white?"#fff":IM.red;
   return(
-    <div style={{flex:1,overflowY:"auto",padding:24,display:"flex",gap:20,alignItems:"flex-start"}}>
-      <div style={{flex:1,minWidth:0,display:"flex",flexDirection:"column",gap:12}}>
-        <ST>Funcionalidades por módulo</ST>
-        {modules.map(m=>(
-          <div key={m.mod} style={card({overflow:"hidden"})}>
-            <div style={{padding:"11px 18px 9px",borderBottom:`0.5px solid ${C.border}`,display:"flex",alignItems:"center",gap:10}}>
-              <Badge a={m.a} bg={m.bg} color={m.a==="IN"?"#fff":m.color}/><div style={{fontSize:13,fontWeight:600,color:C.text}}>{m.mod}</div>
-            </div>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",padding:"10px 18px 12px",gap:"3px 16px"}}>
-              {m.items.map(it=>{const sc=SC2[it.s]||SC2.Futuro;return(
-                <div key={it.f} style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:8,padding:"3px 0"}}>
-                  <div style={{fontSize:12,color:"#555",display:"flex",gap:6,alignItems:"flex-start",flex:1}}><span style={{width:4,height:4,borderRadius:"50%",background:C.hint,flexShrink:0,marginTop:5}}/>{it.f}</div>
-                  <span style={{...pill(sc.bg,sc.color),flexShrink:0}}>{SL[it.s]}</span>
-                </div>
-              );})}
-            </div>
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
+      <path d="M20 75 C20 75 35 30 50 20 C60 14 72 18 75 30 C78 42 68 52 55 48 C45 45 42 35 50 28" stroke={c} strokeWidth="9" strokeLinecap="round" fill="none"/>
+      <path d="M50 28 C58 22 70 26 72 38 C74 50 62 60 50 56" stroke={c} strokeWidth="7" strokeLinecap="round" fill="none" opacity="0.6"/>
+    </svg>
+  );
+}
+
+// ─── Phone frame ─────────────────────────────────────────────────────────────
+function PhoneFrame({label,children}){
+  return(
+    <div style={{flex:1,overflowY:"auto",padding:"28px 32px 40px",display:"flex",alignItems:"flex-start",justifyContent:"center",backgroundColor:"#ECECEC"}}>
+      <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:14}}>
+        <div style={{fontSize:10,color:"#888",letterSpacing:"0.1em",textTransform:"uppercase",fontWeight:600}}>{label||"Protótipo App · dados mockados"}</div>
+        {/* Phone shell */}
+        <div style={{width:375,backgroundColor:"#1A1A1A",borderRadius:48,padding:"14px 8px 18px",boxShadow:"0 32px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.08)"}}>
+          {/* Dynamic island */}
+          <div style={{display:"flex",justifyContent:"center",marginBottom:6}}>
+            <div style={{width:108,height:32,backgroundColor:"#111",borderRadius:20}}/>
           </div>
-        ))}
-      </div>
-      <div style={{width:220,minWidth:220,display:"flex",flexDirection:"column",gap:12}}>
-        <div style={{...card(),padding:16}}><ST>Contagem por fase</ST>
-          {counts.map((c,i,arr)=>{const sc=SC2[c.k];return(
-            <div key={c.k} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"7px 0",borderBottom:i<arr.length-1?`0.5px solid ${C.border}`:"none"}}>
-              <SP label={SL[c.k]} color={sc.color} bg={sc.bg}/><span style={{fontSize:16,fontWeight:500,color:C.text}}>{c.count}</span>
-            </div>
-          );})}
-          <div style={{marginTop:10,padding:"8px 10px",backgroundColor:C.bg,borderRadius:8,textAlign:"center"}}>
-            <div style={{fontSize:11,color:C.hint}}>Total</div><div style={{fontSize:20,fontWeight:500,color:C.text}}>{all.length}</div>
+          {/* Screen */}
+          <div style={{borderRadius:38,overflow:"hidden",height:740,backgroundColor:IM.gray,display:"flex",flexDirection:"column"}}>
+            {children}
           </div>
-        </div>
-        <div style={{...card(),padding:16}}><ST>Fora do escopo (v1)</ST>
-          {["Parser de e-mail Protheus (descartado)","Integração com módulo de estoque Protheus","Integração com módulo financeiro Protheus","Relatórios exportáveis (PDF / Excel)","Multi-tenant / multi-empresa","Biometria / Face ID no app","Modo offline completo no app"].map((s,i,arr)=>(
-            <div key={s} style={{fontSize:12,color:C.hint,padding:"5px 0",borderBottom:i<arr.length-1?`0.5px solid ${C.border}`:"none",display:"flex",gap:6}}><span style={{color:C.red,fontWeight:700,flexShrink:0}}>✕</span>{s}</div>
-          ))}
+          {/* Home bar */}
+          <div style={{display:"flex",justifyContent:"center",marginTop:12}}>
+            <div style={{width:100,height:4,backgroundColor:"rgba(255,255,255,0.3)",borderRadius:2}}/>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// PROTOTYPE SHELL — wraps mobile frame
-// ═══════════════════════════════════════════════════════════════════════════════
-function PhoneFrame({children}){
+// ─── Shared mock data ─────────────────────────────────────────────────────────
+const MOCK_DIR = {
+  mes:"Junho 2025",
+  metaMes:54215310.78, realizadoMes:33983157.02,
+  realizadoDia:1746639.91, diferenca:20232153.76,
+  margemMes:5636191.42, margemMeta:9460377.88,
+  mcMes:16.58, mcMeta:17.44,
+  ind:{metaMes:16581984.91,realizadoMes:13621000,realizadoDia:444394.24,mc:17.2},
+  rev:{metaMes:37633325.87,realizadoMes:20362157.02,realizadoDia:1302245.67,mc:16.1},
+  areas:[
+    {label:"Todas as áreas",ind:{meta:16581984,real:13621000},rev:{meta:37633325,real:20362157}},
+    {label:"São Paulo - SP",ind:{meta:8200000,real:7100000},rev:{meta:18000000,real:11500000}},
+    {label:"Campinas - SP",ind:{meta:4500000,real:3800000},rev:{meta:10000000,real:6200000}},
+    {label:"Ribeirão Preto",ind:{meta:3881984,real:2721000},rev:{meta:9633325,real:2662157}},
+  ],
+  evolucao:[62,71,68,75,80,72,69,77,83,78,86,81,74,82,86,88,84,79,83,89,85,87,82,86,84,88,85,90,87,86],
+};
+const MOCK_GER={
+  nome:"Carlos Mendes",area:"São Paulo - SP",segmento:"Indústria",mes:"Junho 2025",
+  metaMes:16581984.91,realizadoMes:13621000,realizadoDia:444394.24,
+  diferenca:2960984.91,difAnoAcum:3200000,margemMes:2340000,margemMeta:3040000,
+  mcMeta:17.44,mcDia:17.37,mcMes:17.20,
+  evolucao:[55,63,70,66,72,68,75,79,74,82,78,84,80,83,86,88,82,87,84,89,85,88,82,86],
+};
+
+function fmt(v){return"R$ "+v.toLocaleString("pt-BR",{minimumFractionDigits:0,maximumFractionDigits:0});}
+function fmtM(v){return"R$\u00A0"+(v/1000000).toFixed(2).replace(".",",")+"M";}
+function pct(v,t){return Math.min(100,Math.round((v/t)*100));}
+
+// ─── Shared sub-components ────────────────────────────────────────────────────
+function MiniBar({value,max,color}){
+  const p=Math.min(100,Math.round((value/max)*100));
   return(
-    <div style={{flex:1,overflowY:"auto",padding:32,display:"flex",alignItems:"flex-start",justifyContent:"center",backgroundColor:C.bg}}>
-      <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:16}}>
-        <div style={{fontSize:11,color:C.hint,letterSpacing:"0.06em",textTransform:"uppercase",fontWeight:600}}>Protótipo Mobile — dados mockados</div>
-        {/* Phone shell */}
-        <div style={{width:375,backgroundColor:"#0F1923",borderRadius:44,padding:"12px 8px",boxShadow:"0 24px 64px rgba(0,0,0,0.35)"}}>
-          {/* Notch */}
-          <div style={{display:"flex",justifyContent:"center",marginBottom:8}}>
-            <div style={{width:120,height:34,backgroundColor:"#0F1923",borderRadius:20,display:"flex",alignItems:"center",justifyContent:"center",gap:6}}>
-              <div style={{width:10,height:10,borderRadius:"50%",background:"#1a2530"}}/>
-              <div style={{width:50,height:8,borderRadius:4,background:"#1a2530"}}/>
-            </div>
-          </div>
-          {/* Screen */}
-          <div style={{borderRadius:36,overflow:"hidden",height:760,backgroundColor:"#F2F3F7",display:"flex",flexDirection:"column"}}>
-            {children}
-          </div>
-          {/* Home indicator */}
-          <div style={{display:"flex",justifyContent:"center",marginTop:10}}>
-            <div style={{width:120,height:5,backgroundColor:"rgba(255,255,255,0.25)",borderRadius:3}}/>
-          </div>
-        </div>
-      </div>
+    <div style={{height:3,backgroundColor:"rgba(0,0,0,0.08)",borderRadius:2,overflow:"hidden",marginTop:5}}>
+      <div style={{width:`${p}%`,height:"100%",backgroundColor:color,borderRadius:2}}/>
     </div>
+  );
+}
+function Gauge({pct:p,color="#C8102E",size=44}){
+  const r=16,cx=size/2,cy=size/2,circ=2*Math.PI*r,dash=(p/100)*circ;
+  return(
+    <svg width={size} height={size} style={{transform:"rotate(-90deg)"}}>
+      <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(0,0,0,0.08)" strokeWidth={4}/>
+      <circle cx={cx} cy={cy} r={r} fill="none" stroke={color} strokeWidth={4} strokeDasharray={`${dash} ${circ}`} strokeLinecap="round"/>
+    </svg>
+  );
+}
+function Spark({data,color,w=290,h=44}){
+  const pts=data.slice(-14),mn=Math.min(...pts),mx=Math.max(...pts),rng=mx-mn||1;
+  const coords=pts.map((v,i)=>`${(i/(pts.length-1))*w},${h-((v-mn)/rng)*(h-6)+3}`).join(" ");
+  return(
+    <svg width={w} height={h} style={{overflow:"visible"}}>
+      <polyline points={coords} fill="none" stroke={color} strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round"/>
+      <circle cx={w} cy={h-((pts[pts.length-1]-mn)/rng)*(h-6)+3} r="4" fill={color}/>
+    </svg>
   );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // PROTOTYPE: DIRETORIA
 // ═══════════════════════════════════════════════════════════════════════════════
-const MOCK_DIR = {
-  mes: "Junho 2025",
-  metaMes: 54215310.78,
-  realizadoMes: 33983157.02,
-  realizadoDia: 1746639.91,
-  diferenca: 20232153.76,
-  margemMes: 5636191.42,
-  margemMeta: 9460377.88,
-  mcMes: 16.58,
-  mcMeta: 17.44,
-  ind: { metaMes: 16581984.91, realizadoMes: 13621000.00, realizadoDia: 444394.24, mc: 17.2 },
-  rev: { metaMes: 37633325.87, realizadoMes: 20362157.02, realizadoDia: 1302245.67, mc: 16.1 },
-  evolucao: [62,71,68,75,80,72,69,77,83,78,86,81,74,82,86,88,84,79,83,89,85,87,82,86,84,88,85,90,87,86],
-  alertas: [
-    {tipo:"!", texto:"Fat. diário abaixo do ritmo necessário para bater meta", cor:"#C0392B", bg:"#FCEBEB"},
-    {tipo:"⚠", texto:"Margem mês em 59,6% da meta — atenção", cor:"#BA7517", bg:"#FAEEDA"},
-    {tipo:"i", texto:"Dados atualizados há 18 min", cor:"#185FA5", bg:"#E6F1FB"},
-  ],
-};
-
-function fmt(v){return"R$ "+v.toLocaleString("pt-BR",{minimumFractionDigits:0,maximumFractionDigits:0});}
-function fmtM(v){return"R$ "+(v/1000000).toFixed(2).replace(".",",")+" M";}
-function pct(v,t){return Math.min(100,Math.round((v/t)*100));}
-
-function MiniBar({value,max,color}){
-  const p=Math.min(100,Math.round((value/max)*100));
-  return(
-    <div style={{height:4,backgroundColor:"rgba(0,0,0,0.07)",borderRadius:2,overflow:"hidden",marginTop:4}}>
-      <div style={{width:`${p}%`,height:"100%",backgroundColor:color,borderRadius:2,transition:"width 0.4s ease"}}/>
-    </div>
-  );
-}
-
 function PagePrototypeDir(){
   const [tab,setTab]=useState("home");
   const [periodo,setPeriodo]=useState("mes");
+  const [areaIdx,setAreaIdx]=useState(0);
   const d=MOCK_DIR;
-  const pctFat=pct(d.realizadoMes,d.metaMes);
+  const area=d.areas[areaIdx];
+  const fatReal=areaIdx===0?d.realizadoMes:(area.ind.real+area.rev.real);
+  const fatMeta=areaIdx===0?d.metaMes:(area.ind.meta+area.rev.meta);
+  const pctFat=pct(fatReal,fatMeta);
   const pctMarg=pct(d.margemMes,d.margemMeta);
 
-  // Mini sparkline using inline SVG
-  const SparkLine=({data,color})=>{
-    const w=290,h=48,pts=data.slice(-14);
-    const mn=Math.min(...pts),mx=Math.max(...pts),rng=mx-mn||1;
-    const coords=pts.map((v,i)=>`${(i/(pts.length-1))*w},${h-((v-mn)/rng)*(h-8)+4}`).join(" ");
-    return(
-      <svg width={w} height={h} style={{overflow:"visible"}}>
-        <polyline points={coords} fill="none" stroke={color} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round"/>
-        {pts.map((v,i)=>i===pts.length-1&&<circle key={i} cx={(i/(pts.length-1))*w} cy={h-((v-mn)/rng)*(h-8)+4} r="3.5" fill={color}/>)}
-      </svg>
-    );
-  };
-
-  // Gauge arc SVG
-  const Gauge=({pct:p,color,size=88})=>{
-    const r=36,cx=size/2,cy=size/2,circ=2*Math.PI*r;
-    const dash=(p/100)*circ;
-    return(
-      <svg width={size} height={size} style={{transform:"rotate(-90deg)"}}>
-        <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(0,0,0,0.07)" strokeWidth={6}/>
-        <circle cx={cx} cy={cy} r={r} fill="none" stroke={color} strokeWidth={6}
-          strokeDasharray={`${dash} ${circ}`} strokeLinecap="round"/>
-      </svg>
-    );
-  };
-
-  const TabBtn=({k,label})=>(
-    <button onClick={()=>setTab(k)} style={{flex:1,border:"none",padding:"10px 0",backgroundColor:"transparent",fontSize:11,fontWeight:tab===k?600:400,color:tab===k?C.navy:C.hint,borderBottom:`2px solid ${tab===k?C.navy:"transparent"}`,cursor:"pointer",transition:"all 0.15s"}}>
+  const PBtn=({k,label})=>(
+    <button onClick={()=>setPeriodo(k)} style={{padding:"4px 12px",borderRadius:5,border:"none",fontSize:10.5,fontWeight:600,backgroundColor:periodo===k?IM.white:"transparent",color:periodo===k?IM.red:IM.white,cursor:"pointer",opacity:periodo===k?1:0.65,transition:"all 0.15s"}}>
       {label}
     </button>
   );
-
-  const PeriodBtn=({k,label})=>(
-    <button onClick={()=>setPeriodo(k)} style={{padding:"4px 10px",borderRadius:6,border:"none",fontSize:10.5,fontWeight:500,backgroundColor:periodo===k?C.navy:"transparent",color:periodo===k?"#fff":C.hint,cursor:"pointer"}}>
-      {label}
+  const NavBtn=({k,icon,label})=>(
+    <button onClick={()=>setTab(k)} style={{flex:1,border:"none",backgroundColor:"transparent",display:"flex",flexDirection:"column",alignItems:"center",gap:2,cursor:"pointer",padding:"6px 0"}}>
+      <div style={{fontSize:17,lineHeight:1}}>{icon}</div>
+      <div style={{fontSize:9,fontWeight:tab===k?700:400,color:tab===k?IM.red:IM.grayT,marginTop:1}}>{label}</div>
+      {tab===k&&<div style={{width:16,height:2.5,borderRadius:2,background:IM.red,marginTop:1}}/>}
     </button>
   );
 
   return(
-    <PhoneFrame>
+    <PhoneFrame label="Diretoria · App Imdepa">
       {/* Status bar */}
-      <div style={{backgroundColor:C.navy,padding:"6px 20px",display:"flex",justifyContent:"space-between",alignItems:"center",flexShrink:0}}>
-        <span style={{fontSize:11,color:"rgba(255,255,255,0.8)",fontWeight:500}}>09:41</span>
-        <span style={{fontSize:10,color:"rgba(255,255,255,0.6)"}}>▲▲▲ ⬡ 92%</span>
+      <div style={{backgroundColor:IM.black,padding:"6px 20px 4px",display:"flex",justifyContent:"space-between",alignItems:"center",flexShrink:0}}>
+        <span style={{fontSize:11,color:"rgba(255,255,255,0.75)",fontWeight:600}}>09:41</span>
+        <span style={{fontSize:10,color:"rgba(255,255,255,0.5)"}}>▲▲▲ ⬡ 92%</span>
       </div>
 
-      {tab==="home" && (
-        <div style={{flex:1,overflowY:"auto",backgroundColor:"#F2F3F7"}}>
-          {/* Header */}
-          <div style={{background:`linear-gradient(160deg, ${C.navy} 0%, #2E6DA4 100%)`,padding:"20px 20px 28px"}}>
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
-              <div>
-                <div style={{fontSize:11,color:"rgba(255,255,255,0.6)",marginBottom:2}}>Bom dia,</div>
-                <div style={{fontSize:17,fontWeight:700,color:"#fff"}}>Diretoria</div>
+      {/* ── HOME ── */}
+      {tab==="home"&&(
+        <div style={{flex:1,overflowY:"auto",backgroundColor:IM.gray}}>
+          {/* Header Imdepa red */}
+          <div style={{backgroundColor:IM.red,padding:"16px 18px 24px"}}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:14}}>
+              <div style={{display:"flex",alignItems:"center",gap:8}}>
+                <ImdepaLogo size={24} white/>
+                <div>
+                  <div style={{fontSize:10,color:"rgba(255,255,255,0.65)",letterSpacing:"0.05em"}}>Bom dia,</div>
+                  <div style={{fontSize:17,fontWeight:800,color:IM.white,letterSpacing:"-0.02em"}}>Diretoria</div>
+                </div>
               </div>
               <div style={{position:"relative"}}>
-                <div style={{width:38,height:38,borderRadius:"50%",background:"rgba(255,255,255,0.15)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18}}>🔔</div>
-                <div style={{position:"absolute",top:0,right:0,width:10,height:10,borderRadius:"50%",background:"#E24B4A",border:"2px solid #1A3A5C"}}/>
+                <div style={{width:36,height:36,borderRadius:"50%",background:"rgba(0,0,0,0.2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16}}>🔔</div>
+                <div style={{position:"absolute",top:0,right:0,width:9,height:9,borderRadius:"50%",background:"#FFD700",border:"2px solid "+IM.red}}/>
               </div>
             </div>
+
             {/* Período */}
-            <div style={{display:"flex",gap:4,background:"rgba(0,0,0,0.2)",borderRadius:8,padding:3,marginBottom:16}}>
-              <PeriodBtn k="dia" label="Hoje"/><PeriodBtn k="mes" label="Mês"/><PeriodBtn k="ano" label="Ano"/>
+            <div style={{display:"flex",gap:2,background:"rgba(0,0,0,0.25)",borderRadius:7,padding:3,marginBottom:12}}>
+              <PBtn k="dia" label="Hoje"/><PBtn k="mes" label="Mês"/><PBtn k="ano" label="Ano"/>
             </div>
-            {/* Big KPI */}
-            <div style={{background:"rgba(255,255,255,0.12)",borderRadius:16,padding:"16px 18px"}}>
-              <div style={{fontSize:11,color:"rgba(255,255,255,0.6)",marginBottom:4}}>Faturamento Total — {d.mes}</div>
-              <div style={{fontSize:28,fontWeight:700,color:"#fff",marginBottom:4}}>{fmtM(d.realizadoMes)}</div>
-              <div style={{height:6,backgroundColor:"rgba(255,255,255,0.15)",borderRadius:3,overflow:"hidden",marginBottom:6}}>
-                <div style={{width:`${pctFat}%`,height:"100%",background:"linear-gradient(90deg,#5BC87F,#2ECC71)",borderRadius:3}}/>
+
+            {/* Filtro de área */}
+            <div style={{marginBottom:14}}>
+              <div style={{fontSize:9.5,color:"rgba(255,255,255,0.6)",fontWeight:600,letterSpacing:"0.06em",marginBottom:6}}>FILTRAR POR ÁREA</div>
+              <div style={{display:"flex",gap:6,overflowX:"auto",paddingBottom:2}}>
+                {d.areas.map((a,i)=>(
+                  <button key={i} onClick={()=>setAreaIdx(i)} style={{padding:"5px 12px",borderRadius:20,border:`1.5px solid ${areaIdx===i?"#fff":"rgba(255,255,255,0.35)"}`,backgroundColor:areaIdx===i?"#fff":"transparent",color:areaIdx===i?IM.red:"rgba(255,255,255,0.9)",fontSize:10.5,fontWeight:areaIdx===i?700:500,cursor:"pointer",whiteSpace:"nowrap",flexShrink:0}}>
+                    {a.label==="Todas as áreas"?"Todas":a.label.split(" - ")[0]}
+                  </button>
+                ))}
               </div>
-              <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:"rgba(255,255,255,0.6)"}}>
-                <span>{pctFat}% da meta</span><span>Meta: {fmtM(d.metaMes)}</span>
+            </div>
+
+            {/* Big KPI card */}
+            <div style={{background:"rgba(0,0,0,0.2)",borderRadius:14,padding:"14px 16px"}}>
+              <div style={{fontSize:10,color:"rgba(255,255,255,0.65)",marginBottom:3,letterSpacing:"0.04em"}}>FATURAMENTO TOTAL · {area.label.toUpperCase()}</div>
+              <div style={{fontSize:30,fontWeight:800,color:IM.white,letterSpacing:"-0.03em",marginBottom:6}}>{fmtM(fatReal)}</div>
+              <div style={{height:5,backgroundColor:"rgba(255,255,255,0.2)",borderRadius:3,overflow:"hidden",marginBottom:5}}>
+                <div style={{width:`${pctFat}%`,height:"100%",background:pctFat>=80?"#4ADE80":"#FFD700",borderRadius:3}}/>
+              </div>
+              <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:"rgba(255,255,255,0.65)"}}>
+                <span style={{fontWeight:700,color:pctFat>=80?"#4ADE80":"#FFD700"}}>{pctFat}% da meta</span>
+                <span>Meta: {fmtM(fatMeta)}</span>
               </div>
             </div>
           </div>
 
-          {/* Negative offset cards */}
-          <div style={{padding:"0 16px",marginTop:-16}}>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:14}}>
-              {/* Indústria */}
-              <div style={{background:C.white,borderRadius:14,padding:"14px 14px",boxShadow:"0 2px 8px rgba(0,0,0,0.07)"}}>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
-                  <span style={{fontSize:10,fontWeight:600,color:C.hint,textTransform:"uppercase",letterSpacing:"0.05em"}}>Indústria</span>
-                  <div style={{position:"relative",width:42,height:42}}>
-                    <Gauge pct={pct(d.ind.realizadoMes,d.ind.metaMes)} color={C.blue} size={42}/>
-                    <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:700,color:C.navy,transform:"rotate(90deg)"}}>{pct(d.ind.realizadoMes,d.ind.metaMes)}%</div>
+          <div style={{padding:"0 14px",marginTop:-14}}>
+            {/* Indústria + Revenda cards */}
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:12}}>
+              {[
+                {label:"Indústria",real:area.ind.real,meta:area.ind.meta,color:IM.red},
+                {label:"Revenda",  real:area.rev.real,meta:area.rev.meta,color:"#1A1A1A"},
+              ].map(s=>(
+                <div key={s.label} style={{background:IM.white,borderRadius:14,padding:"13px 13px",boxShadow:"0 2px 10px rgba(0,0,0,0.07)",borderTop:`3px solid ${s.color}`}}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
+                    <span style={{fontSize:10,fontWeight:700,color:IM.black,textTransform:"uppercase",letterSpacing:"0.04em"}}>{s.label}</span>
+                    <div style={{position:"relative",width:44,height:44}}>
+                      <Gauge pct={pct(s.real,s.meta)} color={s.color} size={44}/>
+                      <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:8.5,fontWeight:800,color:s.color,transform:"rotate(90deg)"}}>{pct(s.real,s.meta)}%</div>
+                    </div>
                   </div>
+                  <div style={{fontSize:15,fontWeight:800,color:IM.black}}>{fmtM(s.real)}</div>
+                  <div style={{fontSize:10,color:IM.grayT}}>Meta {fmtM(s.meta)}</div>
+                  <MiniBar value={s.real} max={s.meta} color={s.color}/>
                 </div>
-                <div style={{fontSize:15,fontWeight:700,color:C.text}}>{fmtM(d.ind.realizadoMes)}</div>
-                <div style={{fontSize:10,color:C.hint}}>Meta {fmtM(d.ind.metaMes)}</div>
-                <MiniBar value={d.ind.realizadoMes} max={d.ind.metaMes} color={C.blue}/>
-              </div>
-              {/* Revenda */}
-              <div style={{background:C.white,borderRadius:14,padding:"14px 14px",boxShadow:"0 2px 8px rgba(0,0,0,0.07)"}}>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
-                  <span style={{fontSize:10,fontWeight:600,color:C.hint,textTransform:"uppercase",letterSpacing:"0.05em"}}>Revenda</span>
-                  <div style={{position:"relative",width:42,height:42}}>
-                    <Gauge pct={pct(d.rev.realizadoMes,d.rev.metaMes)} color={C.greenT} size={42}/>
-                    <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:700,color:C.navy,transform:"rotate(90deg)"}}>{pct(d.rev.realizadoMes,d.rev.metaMes)}%</div>
-                  </div>
-                </div>
-                <div style={{fontSize:15,fontWeight:700,color:C.text}}>{fmtM(d.rev.realizadoMes)}</div>
-                <div style={{fontSize:10,color:C.hint}}>Meta {fmtM(d.rev.metaMes)}</div>
-                <MiniBar value={d.rev.realizadoMes} max={d.rev.metaMes} color={C.greenT}/>
-              </div>
+              ))}
             </div>
 
             {/* Margem + MC */}
-            <div style={{background:C.white,borderRadius:14,padding:"14px 16px",marginBottom:14,boxShadow:"0 2px 8px rgba(0,0,0,0.07)"}}>
-              <div style={{fontSize:11,fontWeight:600,color:C.hint,textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:12}}>Margem & % MC</div>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:12}}>
-                <div><div style={{fontSize:10,color:C.hint,marginBottom:3}}>Margem Mês</div><div style={{fontSize:14,fontWeight:700,color:C.text}}>{fmtM(d.margemMes)}</div><div style={{fontSize:9,color:pctMarg<70?C.red:C.green}}>{pctMarg}% da meta</div></div>
-                <div><div style={{fontSize:10,color:C.hint,marginBottom:3}}>% MC Mês</div><div style={{fontSize:14,fontWeight:700,color:C.text}}>{d.mcMes}%</div><div style={{fontSize:9,color:C.hint}}>Meta {d.mcMeta}%</div></div>
-                <div><div style={{fontSize:10,color:C.hint,marginBottom:3}}>Realiz. Dia</div><div style={{fontSize:13,fontWeight:700,color:C.text}}>{(d.realizadoDia/1000).toFixed(0)}K</div><div style={{fontSize:9,color:C.hint}}>hoje</div></div>
+            <div style={{background:IM.white,borderRadius:14,padding:"13px 15px",marginBottom:12,boxShadow:"0 2px 10px rgba(0,0,0,0.07)"}}>
+              <div style={{fontSize:10,fontWeight:700,color:IM.black,textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:10}}>Margem & % MC</div>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10}}>
+                {[
+                  {l:"Margem Mês",v:fmtM(d.margemMes),sub:`${pctMarg}% meta`,c:pctMarg<70?IM.red:IM.green},
+                  {l:"% MC Mês",v:`${d.mcMes}%`,sub:`Meta ${d.mcMeta}%`,c:IM.black},
+                  {l:"Realiz. Dia",v:`${(d.realizadoDia/1000).toFixed(0)}K`,sub:"hoje",c:IM.grayT},
+                ].map(k=>(
+                  <div key={k.l} style={{textAlign:"center"}}>
+                    <div style={{fontSize:13,fontWeight:800,color:k.c}}>{k.v}</div>
+                    <div style={{fontSize:9,color:IM.grayT,marginTop:2}}>{k.l}</div>
+                    <div style={{fontSize:8.5,color:k.c,marginTop:1}}>{k.sub}</div>
+                  </div>
+                ))}
               </div>
             </div>
 
             {/* Sparkline */}
-            <div style={{background:C.white,borderRadius:14,padding:"14px 16px",marginBottom:14,boxShadow:"0 2px 8px rgba(0,0,0,0.07)"}}>
+            <div style={{background:IM.white,borderRadius:14,padding:"13px 15px",marginBottom:12,boxShadow:"0 2px 10px rgba(0,0,0,0.07)"}}>
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
-                <span style={{fontSize:11,fontWeight:600,color:C.hint,textTransform:"uppercase",letterSpacing:"0.05em"}}>Evolução — últimos 14 dias</span>
-                <span style={{fontSize:10,color:C.hint}}>% da meta</span>
+                <span style={{fontSize:10,fontWeight:700,color:IM.black,textTransform:"uppercase",letterSpacing:"0.05em"}}>Evolução — 14 dias</span>
+                <span style={{fontSize:9,color:IM.grayT}}>% da meta</span>
               </div>
-              <SparkLine data={d.evolucao} color={C.blue}/>
-              <div style={{display:"flex",justifyContent:"space-between",marginTop:4,fontSize:9,color:C.hint}}>
-                <span>há 14d</span><span>hoje</span>
+              <Spark data={d.evolucao} color={IM.red}/>
+              <div style={{display:"flex",justifyContent:"space-between",marginTop:4,fontSize:8.5,color:IM.grayT}}>
+                <span>14 dias atrás</span><span>hoje</span>
               </div>
             </div>
 
             {/* Alertas */}
-            {d.alertas.length>0&&(
-              <div style={{marginBottom:20}}>
-                <div style={{fontSize:11,fontWeight:600,color:C.hint,textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:10}}>Alertas ativos</div>
-                {d.alertas.map((a,i)=>(
-                  <div key={i} style={{background:a.bg,borderRadius:12,padding:"10px 14px",marginBottom:8,display:"flex",gap:10,alignItems:"flex-start"}}>
-                    <div style={{width:22,height:22,borderRadius:6,background:a.cor,color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:700,flexShrink:0}}>{a.tipo}</div>
-                    <div style={{fontSize:12,color:a.cor,lineHeight:1.4,fontWeight:500}}>{a.texto}</div>
-                  </div>
-                ))}
-              </div>
-            )}
+            <div style={{marginBottom:20}}>
+              <div style={{fontSize:10,fontWeight:700,color:IM.black,textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:10}}>Alertas ativos</div>
+              {[
+                {t:"!",msg:"Fat. diário R$ 1,75M abaixo do ritmo necessário",cor:IM.red,bg:IM.redL},
+                {t:"⚠",msg:"Margem mês em 59,6% da meta — atenção",cor:IM.amber,bg:IM.amberL},
+                {t:"i",msg:"Dados atualizados há 18 min — Protheus",cor:"#1A5FA5",bg:"#E6F1FB"},
+              ].map((a,i)=>(
+                <div key={i} style={{background:a.bg,borderRadius:12,padding:"10px 13px",marginBottom:8,display:"flex",gap:10,alignItems:"flex-start",borderLeft:`3px solid ${a.cor}`}}>
+                  <div style={{width:22,height:22,borderRadius:6,background:a.cor,color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:800,flexShrink:0}}>{a.t}</div>
+                  <div style={{fontSize:11.5,color:a.cor,lineHeight:1.4,fontWeight:600}}>{a.msg}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
 
+      {/* ── INDÚSTRIA ── */}
       {tab==="industria"&&(
-        <div style={{flex:1,overflowY:"auto",backgroundColor:"#F2F3F7"}}>
-          <div style={{background:`linear-gradient(160deg,${C.navy} 0%,#2E6DA4 100%)`,padding:"20px 20px 24px"}}>
-            <div style={{fontSize:12,color:"rgba(255,255,255,0.6)",marginBottom:4}}>Módulo</div>
-            <div style={{fontSize:20,fontWeight:700,color:"#fff",marginBottom:16}}>Indústria</div>
-            <div style={{display:"flex",gap:4,background:"rgba(0,0,0,0.2)",borderRadius:8,padding:3}}>
-              <PeriodBtn k="dia" label="Dia"/><PeriodBtn k="mes" label="Mês"/><PeriodBtn k="ano" label="Acum."/>
+        <div style={{flex:1,overflowY:"auto",backgroundColor:IM.gray}}>
+          <div style={{backgroundColor:IM.black,padding:"16px 18px 20px"}}>
+            <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
+              <ImdepaLogo size={20} white/>
+              <div style={{fontSize:11,color:"rgba(255,255,255,0.5)",letterSpacing:"0.05em"}}>Módulo</div>
+              <div style={{fontSize:16,fontWeight:800,color:IM.white}}>Indústria</div>
+            </div>
+            <div style={{display:"flex",gap:3,background:"rgba(255,255,255,0.08)",borderRadius:7,padding:3}}>
+              {["dia","mes","ano"].map(k=>(
+                <button key={k} onClick={()=>setPeriodo(k)} style={{flex:1,padding:"4px 0",borderRadius:5,border:"none",fontSize:10.5,fontWeight:600,backgroundColor:periodo===k?IM.red:"transparent",color:IM.white,cursor:"pointer",opacity:periodo===k?1:0.55}}>
+                  {k==="dia"?"Hoje":k==="mes"?"Mês":"Acum."}
+                </button>
+              ))}
             </div>
           </div>
-          <div style={{padding:"16px 16px 24px",marginTop:-8}}>
+          <div style={{padding:"14px 14px 24px"}}>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:12}}>
               {[
-                {l:"Meta Orç. Mês",v:fmtM(d.ind.metaMes),sub:"orçado",c:C.navy},
-                {l:"Realizado Mês",v:fmtM(d.ind.realizadoMes),sub:`${pct(d.ind.realizadoMes,d.ind.metaMes)}% da meta`,c:C.blue},
-                {l:"Realizado Dia",v:fmt(d.ind.realizadoDia),sub:"hoje",c:C.greenT},
-                {l:"Diferença Mês",v:fmtM(d.ind.metaMes-d.ind.realizadoMes),sub:"gap para meta",c:C.red},
+                {l:"Meta Orç. Mês",v:fmtM(d.ind.metaMes),c:IM.black},
+                {l:"Realizado Mês",v:fmtM(d.ind.realizadoMes),c:IM.red,sub:`${pct(d.ind.realizadoMes,d.ind.metaMes)}% da meta`},
+                {l:"Realizado Dia",v:fmt(d.ind.realizadoDia),c:IM.green},
+                {l:"Gap para Meta",v:fmtM(d.ind.metaMes-d.ind.realizadoMes),c:IM.red},
               ].map(k=>(
-                <div key={k.l} style={{background:C.white,borderRadius:14,padding:"14px 14px",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
-                  <div style={{fontSize:10,color:C.hint,marginBottom:4}}>{k.l}</div>
-                  <div style={{fontSize:14,fontWeight:700,color:k.c}}>{k.v}</div>
-                  <div style={{fontSize:10,color:C.hint,marginTop:2}}>{k.sub}</div>
+                <div key={k.l} style={{background:IM.white,borderRadius:12,padding:"13px 13px",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
+                  <div style={{fontSize:9.5,color:IM.grayT,marginBottom:4,textTransform:"uppercase",letterSpacing:"0.04em"}}>{k.l}</div>
+                  <div style={{fontSize:14,fontWeight:800,color:k.c}}>{k.v}</div>
+                  {k.sub&&<div style={{fontSize:9,color:IM.grayT,marginTop:2}}>{k.sub}</div>}
                 </div>
               ))}
             </div>
-            {/* % MC */}
-            <div style={{background:C.white,borderRadius:14,padding:"14px 16px",marginBottom:12,boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
-              <div style={{fontSize:11,fontWeight:600,color:C.hint,textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:10}}>% Índice MC</div>
+            <div style={{background:IM.white,borderRadius:12,padding:"13px 14px",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
+              <div style={{fontSize:10,fontWeight:700,color:IM.black,textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:10}}>% Índice MC</div>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8}}>
-                {[{l:"Meta",v:"17,44%",c:C.navy},{l:"Realiz. Dia",v:"17,37%",c:C.blue},{l:"Realiz. Mês",v:`${d.ind.mc}%`,c:C.greenT}].map(m=>(
-                  <div key={m.l} style={{textAlign:"center",padding:"10px 6px",background:"#F8F9FA",borderRadius:10}}>
-                    <div style={{fontSize:15,fontWeight:700,color:m.c}}>{m.v}</div>
-                    <div style={{fontSize:10,color:C.hint,marginTop:2}}>{m.l}</div>
+                {[{l:"Meta",v:"17,44%"},{l:"Realiz. Dia",v:"17,37%"},{l:"Realiz. Mês",v:`${d.ind.mc}%`}].map((m,i)=>(
+                  <div key={m.l} style={{textAlign:"center",padding:"10px 6px",background:IM.gray,borderRadius:10}}>
+                    <div style={{fontSize:15,fontWeight:800,color:i===0?IM.black:i===1?IM.green:IM.red}}>{m.v}</div>
+                    <div style={{fontSize:9,color:IM.grayT,marginTop:2}}>{m.l}</div>
                   </div>
                 ))}
               </div>
-            </div>
-            {/* Evolução */}
-            <div style={{background:C.white,borderRadius:14,padding:"14px 16px",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
-              <div style={{fontSize:11,fontWeight:600,color:C.hint,textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:10}}>Evolução do mês — Indústria</div>
-              <svg width={295} height={80} style={{overflow:"visible"}}>
-                {(() => {
-                  const data=d.evolucao.slice(0,22).map(v=>v*0.95+Math.random()*4);
-                  const mn=Math.min(...data),mx=Math.max(...data),rng=mx-mn||1;
-                  const pts=data.map((v,i)=>`${(i/(data.length-1))*295},${70-((v-mn)/rng)*62}`);
-                  return <>
-                    <polyline points={pts.join(" ")} fill="none" stroke={C.blue} strokeWidth="2" strokeLinejoin="round"/>
-                    <circle cx={(data.length-1)/(data.length-1)*295} cy={70-((data[data.length-1]-mn)/rng)*62} r="4" fill={C.blue}/>
-                  </>;
-                })()}
-              </svg>
             </div>
           </div>
         </div>
       )}
 
+      {/* ── REVENDA ── */}
       {tab==="revenda"&&(
-        <div style={{flex:1,overflowY:"auto",backgroundColor:"#F2F3F7"}}>
-          <div style={{background:`linear-gradient(160deg,#1E5C2A 0%,#3B8C42 100%)`,padding:"20px 20px 24px"}}>
-            <div style={{fontSize:12,color:"rgba(255,255,255,0.6)",marginBottom:4}}>Módulo</div>
-            <div style={{fontSize:20,fontWeight:700,color:"#fff",marginBottom:16}}>Revenda</div>
-            <div style={{display:"flex",gap:4,background:"rgba(0,0,0,0.2)",borderRadius:8,padding:3}}>
-              <PeriodBtn k="dia" label="Dia"/><PeriodBtn k="mes" label="Mês"/><PeriodBtn k="ano" label="Acum."/>
+        <div style={{flex:1,overflowY:"auto",backgroundColor:IM.gray}}>
+          <div style={{backgroundColor:IM.dark,padding:"16px 18px 20px"}}>
+            <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
+              <ImdepaLogo size={20} white/>
+              <div style={{fontSize:11,color:"rgba(255,255,255,0.5)",letterSpacing:"0.05em"}}>Módulo</div>
+              <div style={{fontSize:16,fontWeight:800,color:IM.white}}>Revenda</div>
+            </div>
+            <div style={{display:"flex",gap:3,background:"rgba(255,255,255,0.08)",borderRadius:7,padding:3}}>
+              {["dia","mes","ano"].map(k=>(
+                <button key={k} onClick={()=>setPeriodo(k)} style={{flex:1,padding:"4px 0",borderRadius:5,border:"none",fontSize:10.5,fontWeight:600,backgroundColor:periodo===k?IM.red:"transparent",color:IM.white,cursor:"pointer",opacity:periodo===k?1:0.55}}>
+                  {k==="dia"?"Hoje":k==="mes"?"Mês":"Acum."}
+                </button>
+              ))}
             </div>
           </div>
-          <div style={{padding:"16px 16px 24px",marginTop:-8}}>
+          <div style={{padding:"14px 14px 24px"}}>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:12}}>
               {[
-                {l:"Meta Orç. Mês",v:fmtM(d.rev.metaMes),sub:"orçado",c:C.navy},
-                {l:"Realizado Mês",v:fmtM(d.rev.realizadoMes),sub:`${pct(d.rev.realizadoMes,d.rev.metaMes)}% da meta`,c:C.greenT},
-                {l:"Realizado Dia",v:fmt(d.rev.realizadoDia),sub:"hoje",c:C.blue},
-                {l:"Diferença Mês",v:fmtM(d.rev.metaMes-d.rev.realizadoMes),sub:"gap para meta",c:C.red},
+                {l:"Meta Orç. Mês",v:fmtM(d.rev.metaMes),c:IM.black},
+                {l:"Realizado Mês",v:fmtM(d.rev.realizadoMes),c:IM.red,sub:`${pct(d.rev.realizadoMes,d.rev.metaMes)}% da meta`},
+                {l:"Realizado Dia",v:fmt(d.rev.realizadoDia),c:IM.green},
+                {l:"Gap para Meta",v:fmtM(d.rev.metaMes-d.rev.realizadoMes),c:IM.red},
               ].map(k=>(
-                <div key={k.l} style={{background:C.white,borderRadius:14,padding:"14px 14px",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
-                  <div style={{fontSize:10,color:C.hint,marginBottom:4}}>{k.l}</div>
-                  <div style={{fontSize:14,fontWeight:700,color:k.c}}>{k.v}</div>
-                  <div style={{fontSize:10,color:C.hint,marginTop:2}}>{k.sub}</div>
+                <div key={k.l} style={{background:IM.white,borderRadius:12,padding:"13px 13px",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
+                  <div style={{fontSize:9.5,color:IM.grayT,marginBottom:4,textTransform:"uppercase",letterSpacing:"0.04em"}}>{k.l}</div>
+                  <div style={{fontSize:14,fontWeight:800,color:k.c}}>{k.v}</div>
+                  {k.sub&&<div style={{fontSize:9,color:IM.grayT,marginTop:2}}>{k.sub}</div>}
                 </div>
               ))}
             </div>
-            <div style={{background:C.white,borderRadius:14,padding:"14px 16px",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
-              <div style={{fontSize:11,fontWeight:600,color:C.hint,textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:10}}>% Índice MC</div>
+            <div style={{background:IM.white,borderRadius:12,padding:"13px 14px",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
+              <div style={{fontSize:10,fontWeight:700,color:IM.black,textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:10}}>% Índice MC</div>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8}}>
-                {[{l:"Meta",v:"17,44%",c:C.navy},{l:"Realiz. Dia",v:"16,8%",c:C.blue},{l:"Realiz. Mês",v:`${d.rev.mc}%`,c:C.greenT}].map(m=>(
-                  <div key={m.l} style={{textAlign:"center",padding:"10px 6px",background:"#F8F9FA",borderRadius:10}}>
-                    <div style={{fontSize:15,fontWeight:700,color:m.c}}>{m.v}</div>
-                    <div style={{fontSize:10,color:C.hint,marginTop:2}}>{m.l}</div>
+                {[{l:"Meta",v:"17,44%"},{l:"Realiz. Dia",v:"16,8%"},{l:"Realiz. Mês",v:`${d.rev.mc}%`}].map((m,i)=>(
+                  <div key={m.l} style={{textAlign:"center",padding:"10px 6px",background:IM.gray,borderRadius:10}}>
+                    <div style={{fontSize:15,fontWeight:800,color:i===0?IM.black:i===1?IM.green:IM.red}}>{m.v}</div>
+                    <div style={{fontSize:9,color:IM.grayT,marginTop:2}}>{m.l}</div>
                   </div>
                 ))}
               </div>
@@ -1177,26 +1122,29 @@ function PagePrototypeDir(){
         </div>
       )}
 
+      {/* ── ALERTAS ── */}
       {tab==="alertas"&&(
-        <div style={{flex:1,overflowY:"auto",backgroundColor:"#F2F3F7"}}>
-          <div style={{background:`linear-gradient(160deg,#7A2020 0%,#B83030 100%)`,padding:"20px 20px 24px"}}>
-            <div style={{fontSize:12,color:"rgba(255,255,255,0.6)",marginBottom:4}}>Central de</div>
-            <div style={{fontSize:20,fontWeight:700,color:"#fff"}}>Alertas</div>
+        <div style={{flex:1,overflowY:"auto",backgroundColor:IM.gray}}>
+          <div style={{backgroundColor:IM.red,padding:"16px 18px 20px"}}>
+            <div style={{display:"flex",alignItems:"center",gap:8}}>
+              <ImdepaLogo size={20} white/>
+              <div style={{fontSize:16,fontWeight:800,color:IM.white}}>Alertas</div>
+            </div>
           </div>
-          <div style={{padding:"16px",marginTop:-8}}>
+          <div style={{padding:"14px 14px 24px"}}>
             {[
-              {tipo:"!",texto:"Faturamento médio diário R$ 1,75M abaixo do necessário (R$ 2,28M/dia para bater meta)",tempo:"Agora",cor:"#C0392B",bg:"#FCEBEB"},
-              {tipo:"!",texto:"1ª quinzena: 62,7% da meta. Piso recomendado: 45%. Situação controlada mas monitorar.",tempo:"2h atrás",cor:"#C0392B",bg:"#FCEBEB"},
-              {tipo:"⚠",texto:"Margem mês em 59,6% da meta de margem. Revenda puxando para baixo.",tempo:"4h atrás",cor:"#BA7517",bg:"#FAEEDA"},
-              {tipo:"⚠",texto:"% MC Indústria (17,2%) abaixo da meta (17,44%). Diferença de 0,24 pp.",tempo:"Ontem",cor:"#BA7517",bg:"#FAEEDA"},
-              {tipo:"i",texto:"Dados sincronizados com sucesso — Protheus 08:32",tempo:"08:32",cor:"#185FA5",bg:"#E6F1FB"},
-              {tipo:"i",texto:"Dados sincronizados com sucesso — Protheus 06:32",tempo:"06:32",cor:"#185FA5",bg:"#E6F1FB"},
+              {t:"!",msg:"Fat. médio diário R$ 1,75M — precisa R$ 2,28M/dia para bater meta",tempo:"Agora",cor:IM.red,bg:IM.redL},
+              {t:"!",msg:"1ª quinzena 62,7% da meta. Monitorar ritmo da 2ª quinzena.",tempo:"2h atrás",cor:IM.red,bg:IM.redL},
+              {t:"⚠",msg:"Margem mês em 59,6% da meta. Revenda abaixo do esperado.",tempo:"4h atrás",cor:IM.amber,bg:IM.amberL},
+              {t:"⚠",msg:"% MC Indústria (17,2%) abaixo da meta (17,44%). Dif. de 0,24 pp.",tempo:"Ontem",cor:IM.amber,bg:IM.amberL},
+              {t:"i",msg:"Dados sincronizados — Protheus 08:32",tempo:"08:32",cor:"#1A5FA5",bg:"#E6F1FB"},
+              {t:"i",msg:"Dados sincronizados — Protheus 06:32",tempo:"06:32",cor:"#1A5FA5",bg:"#E6F1FB"},
             ].map((a,i)=>(
-              <div key={i} style={{background:a.bg,borderRadius:14,padding:"12px 14px",marginBottom:10,display:"flex",gap:10,alignItems:"flex-start",boxShadow:"0 1px 4px rgba(0,0,0,0.06)"}}>
-                <div style={{width:26,height:26,borderRadius:8,background:a.cor,color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:700,flexShrink:0}}>{a.tipo}</div>
+              <div key={i} style={{background:a.bg,borderRadius:12,padding:"12px 13px",marginBottom:9,display:"flex",gap:10,alignItems:"flex-start",borderLeft:`3px solid ${a.cor}`}}>
+                <div style={{width:24,height:24,borderRadius:6,background:a.cor,color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:800,flexShrink:0}}>{a.t}</div>
                 <div style={{flex:1}}>
-                  <div style={{fontSize:12,color:a.cor,lineHeight:1.45,fontWeight:500,marginBottom:4}}>{a.texto}</div>
-                  <div style={{fontSize:10,color:"rgba(0,0,0,0.35)"}}>{a.tempo}</div>
+                  <div style={{fontSize:12,color:a.cor,lineHeight:1.4,fontWeight:600,marginBottom:3}}>{a.msg}</div>
+                  <div style={{fontSize:9.5,color:"rgba(0,0,0,0.35)"}}>{a.tempo}</div>
                 </div>
               </div>
             ))}
@@ -1205,13 +1153,9 @@ function PagePrototypeDir(){
       )}
 
       {/* Bottom nav */}
-      <div style={{backgroundColor:C.white,borderTop:"0.5px solid rgba(0,0,0,0.08)",display:"flex",padding:"8px 0 16px",flexShrink:0}}>
+      <div style={{backgroundColor:IM.white,borderTop:`1px solid ${IM.grayM}`,display:"flex",padding:"6px 0 12px",flexShrink:0}}>
         {[{k:"home",icon:"⊞",label:"Home"},{k:"industria",icon:"🏭",label:"Indústria"},{k:"revenda",icon:"🏪",label:"Revenda"},{k:"alertas",icon:"🔔",label:"Alertas"}].map(n=>(
-          <button key={n.k} onClick={()=>setTab(n.k)} style={{flex:1,border:"none",backgroundColor:"transparent",display:"flex",flexDirection:"column",alignItems:"center",gap:3,cursor:"pointer",padding:"4px 0"}}>
-            <span style={{fontSize:18}}>{n.icon}</span>
-            <span style={{fontSize:9.5,fontWeight:tab===n.k?700:400,color:tab===n.k?C.navy:C.hint}}>{n.label}</span>
-            {tab===n.k&&<div style={{width:20,height:2.5,borderRadius:2,background:C.navy}}/>}
-          </button>
+          <NavBtn key={n.k} k={n.k} icon={n.icon} label={n.label}/>
         ))}
       </div>
     </PhoneFrame>
@@ -1221,172 +1165,155 @@ function PagePrototypeDir(){
 // ═══════════════════════════════════════════════════════════════════════════════
 // PROTOTYPE: GERENTE
 // ═══════════════════════════════════════════════════════════════════════════════
-const MOCK_GER = {
-  nome: "Carlos Mendes",
-  area: "São Paulo - SP",
-  segmento: "Indústria",
-  mes: "Junho 2025",
-  metaMes: 16581984.91,
-  realizadoMes: 13621000.00,
-  realizadoDia: 444394.24,
-  diferenca: 2960984.91,
-  difAnoAcum: 3200000.00,
-  margemMes: 2340000.00,
-  margemMeta: 3040000.00,
-  mcMeta: 17.44,
-  mcDia: 17.37,
-  mcMes: 17.20,
-  evolucao: [55,63,70,66,72,68,75,79,74,82,78,84,80,83,86,88,82,87,84,89,85,88,82,86],
-};
-
 function PagePrototypeGer(){
   const [tab,setTab]=useState("home");
   const [periodo,setPeriodo]=useState("mes");
   const g=MOCK_GER;
   const pctFat=pct(g.realizadoMes,g.metaMes);
   const pctMarg=pct(g.margemMes,g.margemMeta);
+  const diasRestantes=14;
+  const ritmoNecessario=(g.metaMes-g.realizadoMes)/diasRestantes;
 
-  const SparkLine=({data,color})=>{
-    const w=290,h=48,pts=data.slice(-12);
-    const mn=Math.min(...pts),mx=Math.max(...pts),rng=mx-mn||1;
-    const coords=pts.map((v,i)=>`${(i/(pts.length-1))*w},${h-((v-mn)/rng)*(h-8)+4}`).join(" ");
-    return(
-      <svg width={w} height={h} style={{overflow:"visible"}}>
-        <polyline points={coords} fill="none" stroke={color} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round"/>
-        {pts.map((v,i)=>i===pts.length-1&&<circle key={i} cx={(i/(pts.length-1))*w} cy={h-((v-mn)/rng)*(h-8)+4} r="3.5" fill={color}/>)}
-      </svg>
-    );
-  };
-
-  const PeriodBtn=({k,label})=>(
-    <button onClick={()=>setPeriodo(k)} style={{padding:"4px 10px",borderRadius:6,border:"none",fontSize:10.5,fontWeight:500,backgroundColor:periodo===k?"#fff":"transparent",color:periodo===k?C.navy:C.hint,cursor:"pointer"}}>
-      {label}
+  const NavBtn=({k,icon,label})=>(
+    <button onClick={()=>setTab(k)} style={{flex:1,border:"none",backgroundColor:"transparent",display:"flex",flexDirection:"column",alignItems:"center",gap:2,cursor:"pointer",padding:"6px 0"}}>
+      <div style={{fontSize:17,lineHeight:1}}>{icon}</div>
+      <div style={{fontSize:9,fontWeight:tab===k?700:400,color:tab===k?IM.red:IM.grayT,marginTop:1}}>{label}</div>
+      {tab===k&&<div style={{width:16,height:2.5,borderRadius:2,background:IM.red,marginTop:1}}/>}
     </button>
   );
 
   return(
-    <PhoneFrame>
+    <PhoneFrame label="Gerente · App Imdepa">
       {/* Status bar */}
-      <div style={{backgroundColor:C.navy,padding:"6px 20px",display:"flex",justifyContent:"space-between",alignItems:"center",flexShrink:0}}>
-        <span style={{fontSize:11,color:"rgba(255,255,255,0.8)",fontWeight:500}}>09:41</span>
-        <span style={{fontSize:10,color:"rgba(255,255,255,0.6)"}}>▲▲▲ ⬡ 87%</span>
+      <div style={{backgroundColor:IM.black,padding:"6px 20px 4px",display:"flex",justifyContent:"space-between",alignItems:"center",flexShrink:0}}>
+        <span style={{fontSize:11,color:"rgba(255,255,255,0.75)",fontWeight:600}}>09:41</span>
+        <span style={{fontSize:10,color:"rgba(255,255,255,0.5)"}}>▲▲▲ ⬡ 87%</span>
       </div>
 
+      {/* ── HOME ── */}
       {tab==="home"&&(
-        <div style={{flex:1,overflowY:"auto",backgroundColor:"#F2F3F7"}}>
-          {/* Header */}
-          <div style={{background:`linear-gradient(160deg,#1E3A5A 0%,#2A5A8A 100%)`,padding:"20px 20px 28px"}}>
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
-              <div>
-                <div style={{fontSize:11,color:"rgba(255,255,255,0.55)",marginBottom:2}}>Olá,</div>
-                <div style={{fontSize:17,fontWeight:700,color:"#fff"}}>{g.nome}</div>
-                <div style={{fontSize:11,color:"rgba(255,255,255,0.55)",marginTop:2}}>📍 {g.area} · {g.segmento}</div>
-              </div>
-              <div style={{width:42,height:42,borderRadius:"50%",background:"rgba(255,255,255,0.15)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,fontWeight:700,color:"#fff"}}>CM</div>
-            </div>
-            {/* Período */}
-            <div style={{display:"flex",gap:4,background:"rgba(0,0,0,0.2)",borderRadius:8,padding:3,marginTop:16,marginBottom:16}}>
-              <PeriodBtn k="dia" label="Hoje"/><PeriodBtn k="mes" label="Mês"/><PeriodBtn k="ano" label="Ano"/>
-            </div>
-            {/* Big progress card */}
-            <div style={{background:"rgba(255,255,255,0.12)",borderRadius:16,padding:"16px 18px"}}>
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:6}}>
+        <div style={{flex:1,overflowY:"auto",backgroundColor:IM.gray}}>
+          {/* Header — igual ao da Diretoria: vermelho sólido */}
+          <div style={{backgroundColor:IM.red,padding:"16px 18px 24px"}}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:14}}>
+              <div style={{display:"flex",alignItems:"center",gap:8}}>
+                <ImdepaLogo size={24} white/>
                 <div>
-                  <div style={{fontSize:11,color:"rgba(255,255,255,0.6)",marginBottom:3}}>Faturamento — {g.mes}</div>
-                  <div style={{fontSize:26,fontWeight:700,color:"#fff"}}>{fmtM(g.realizadoMes)}</div>
-                </div>
-                <div style={{textAlign:"right"}}>
-                  <div style={{fontSize:22,fontWeight:700,color:pctFat>=80?"#5BC87F":"#FFC107"}}>{pctFat}%</div>
-                  <div style={{fontSize:10,color:"rgba(255,255,255,0.5)"}}>da meta</div>
+                  <div style={{fontSize:10,color:"rgba(255,255,255,0.65)",letterSpacing:"0.04em"}}>Olá,</div>
+                  <div style={{fontSize:17,fontWeight:800,color:IM.white,letterSpacing:"-0.02em"}}>{g.nome}</div>
+                  <div style={{fontSize:10,color:"rgba(255,255,255,0.55)",marginTop:1}}>📍 {g.area} · {g.segmento}</div>
                 </div>
               </div>
-              <div style={{height:6,backgroundColor:"rgba(255,255,255,0.15)",borderRadius:3,overflow:"hidden",marginBottom:6}}>
-                <div style={{width:`${pctFat}%`,height:"100%",background:pctFat>=80?"linear-gradient(90deg,#5BC87F,#2ECC71)":"linear-gradient(90deg,#FFC107,#FF9800)",borderRadius:3}}/>
+              <div style={{width:36,height:36,borderRadius:"50%",background:"rgba(0,0,0,0.2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:800,color:"#fff"}}>CM</div>
+            </div>
+
+            {/* Período — igual ao da Diretoria */}
+            <div style={{display:"flex",gap:2,background:"rgba(0,0,0,0.25)",borderRadius:7,padding:3,marginBottom:12}}>
+              {["dia","mes","ano"].map(k=>(
+                <button key={k} onClick={()=>setPeriodo(k)} style={{flex:1,padding:"4px 0",borderRadius:5,border:"none",fontSize:10.5,fontWeight:600,backgroundColor:periodo===k?IM.white:"transparent",color:periodo===k?IM.red:IM.white,cursor:"pointer",opacity:periodo===k?1:0.65,transition:"all 0.15s"}}>
+                  {k==="dia"?"Hoje":k==="mes"?"Mês":"Ano"}
+                </button>
+              ))}
+            </div>
+
+            {/* Big KPI card — igual ao da Diretoria */}
+            <div style={{background:"rgba(0,0,0,0.2)",borderRadius:14,padding:"14px 16px"}}>
+              <div style={{fontSize:10,color:"rgba(255,255,255,0.65)",marginBottom:3,letterSpacing:"0.04em"}}>FATURAMENTO · {g.mes.toUpperCase()}</div>
+              <div style={{fontSize:30,fontWeight:800,color:IM.white,letterSpacing:"-0.03em",marginBottom:6}}>{fmtM(g.realizadoMes)}</div>
+              <div style={{height:5,backgroundColor:"rgba(255,255,255,0.2)",borderRadius:3,overflow:"hidden",marginBottom:5}}>
+                <div style={{width:`${pctFat}%`,height:"100%",background:pctFat>=80?"#4ADE80":"#FFD700",borderRadius:3}}/>
               </div>
-              <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:"rgba(255,255,255,0.55)"}}>
-                <span>Falta: {fmtM(g.diferenca)}</span>
+              <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:"rgba(255,255,255,0.65)"}}>
+                <span style={{fontWeight:700,color:pctFat>=80?"#4ADE80":"#FFD700"}}>{pctFat}% da meta</span>
                 <span>Meta: {fmtM(g.metaMes)}</span>
               </div>
             </div>
           </div>
 
-          <div style={{padding:"0 16px",marginTop:-14}}>
-            {/* 4 KPI cards */}
+          <div style={{padding:"0 14px",marginTop:-14}}>
+            {/* 4 KPI cards — mesmo padrão da Diretoria: white, sem borderLeft */}
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:12}}>
               {[
-                {l:"Realiz. Dia",v:fmt(g.realizadoDia),sub:"hoje",c:C.blue,bg:"#EBF4FF"},
-                {l:"Diferença Mês",v:fmtM(g.diferenca),sub:"gap para meta",c:C.red,bg:"#FFF0F0"},
-                {l:"Margem Mês",v:fmtM(g.margemMes),sub:`${pctMarg}% da meta`,c:C.greenT,bg:"#F0FAF0"},
-                {l:"Dif. Ano Acum.",v:fmtM(g.difAnoAcum),sub:"ano a ano",c:C.amber,bg:"#FFFAF0"},
+                {l:"Realiz. Dia",     v:fmt(g.realizadoDia),          c:IM.green,  top:IM.green},
+                {l:"Gap para Meta",   v:fmtM(g.diferenca),            c:IM.red,    top:IM.red},
+                {l:"Margem Mês",      v:fmtM(g.margemMes),            c:IM.black,  top:IM.black, sub:`${pctMarg}% meta`},
+                {l:"Dif. Ano Acum.",  v:fmtM(g.difAnoAcum),           c:IM.amber,  top:IM.amber},
               ].map(k=>(
-                <div key={k.l} style={{background:C.white,borderRadius:14,padding:"13px 14px",boxShadow:"0 2px 8px rgba(0,0,0,0.06)",borderLeft:`3px solid ${k.c}`}}>
-                  <div style={{fontSize:10,color:C.hint,marginBottom:4}}>{k.l}</div>
-                  <div style={{fontSize:13,fontWeight:700,color:k.c}}>{k.v}</div>
-                  <div style={{fontSize:10,color:C.hint,marginTop:2}}>{k.sub}</div>
+                <div key={k.l} style={{background:IM.white,borderRadius:14,padding:"13px 13px",boxShadow:"0 2px 10px rgba(0,0,0,0.07)",borderTop:`3px solid ${k.top}`}}>
+                  <div style={{fontSize:9.5,color:IM.grayT,marginBottom:4,textTransform:"uppercase",letterSpacing:"0.04em"}}>{k.l}</div>
+                  <div style={{fontSize:14,fontWeight:800,color:k.c}}>{k.v}</div>
+                  {k.sub&&<div style={{fontSize:9,color:IM.grayT,marginTop:2}}>{k.sub}</div>}
                 </div>
               ))}
             </div>
 
-            {/* % MC */}
-            <div style={{background:C.white,borderRadius:14,padding:"14px 16px",marginBottom:12,boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
-              <div style={{fontSize:11,fontWeight:600,color:C.hint,textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:10}}>% Índice MC</div>
+            {/* % MC — igual ao da Diretoria */}
+            <div style={{background:IM.white,borderRadius:14,padding:"13px 14px",marginBottom:12,boxShadow:"0 2px 10px rgba(0,0,0,0.07)"}}>
+              <div style={{fontSize:10,fontWeight:700,color:IM.black,textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:10}}>% Índice MC</div>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8}}>
-                {[{l:"Meta",v:`${g.mcMeta}%`,c:C.navy,ok:true},{l:"Realiz. Dia",v:`${g.mcDia}%`,c:g.mcDia>=g.mcMeta?C.green:C.amber,ok:g.mcDia>=g.mcMeta},{l:"Realiz. Mês",v:`${g.mcMes}%`,c:g.mcMes>=g.mcMeta?C.green:C.amber,ok:g.mcMes>=g.mcMeta}].map(m=>(
-                  <div key={m.l} style={{textAlign:"center",padding:"10px 6px",background:m.ok?"#F0FAF0":"#FFF9F0",borderRadius:10}}>
-                    <div style={{fontSize:16,fontWeight:700,color:m.c}}>{m.v}</div>
-                    <div style={{fontSize:9.5,color:C.hint,marginTop:2}}>{m.l}</div>
-                    <div style={{fontSize:9,color:m.ok?C.green:C.amber}}>{m.ok?"✓ ok":"▼ abaixo"}</div>
+                {[{l:"Meta",v:`${g.mcMeta}%`,c:IM.black},{l:"Realiz. Dia",v:`${g.mcDia}%`,c:g.mcDia>=g.mcMeta?IM.green:IM.amber},{l:"Realiz. Mês",v:`${g.mcMes}%`,c:g.mcMes>=g.mcMeta?IM.green:IM.red}].map(m=>(
+                  <div key={m.l} style={{textAlign:"center",padding:"10px 6px",background:IM.gray,borderRadius:10}}>
+                    <div style={{fontSize:15,fontWeight:800,color:m.c}}>{m.v}</div>
+                    <div style={{fontSize:9,color:IM.grayT,marginTop:2}}>{m.l}</div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Sparkline */}
-            <div style={{background:C.white,borderRadius:14,padding:"14px 16px",marginBottom:14,boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
+            {/* Sparkline — igual ao da Diretoria */}
+            <div style={{background:IM.white,borderRadius:14,padding:"13px 14px",marginBottom:12,boxShadow:"0 2px 10px rgba(0,0,0,0.07)"}}>
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
-                <span style={{fontSize:11,fontWeight:600,color:C.hint,textTransform:"uppercase",letterSpacing:"0.05em"}}>Ritmo do mês</span>
-                <span style={{fontSize:10,color:C.hint}}>% meta acumulada</span>
+                <span style={{fontSize:10,fontWeight:700,color:IM.black,textTransform:"uppercase",letterSpacing:"0.05em"}}>Ritmo do mês</span>
+                <span style={{fontSize:9,color:IM.grayT}}>% meta acumulada</span>
               </div>
-              <SparkLine data={g.evolucao} color={C.blue}/>
-              <div style={{display:"flex",justifyContent:"space-between",marginTop:4,fontSize:9,color:C.hint}}>
-                <span>início do mês</span><span>hoje</span>
+              <Spark data={g.evolucao} color={IM.red}/>
+              <div style={{display:"flex",justifyContent:"space-between",marginTop:4,fontSize:8.5,color:IM.grayT}}>
+                <span>início</span><span>hoje</span>
               </div>
             </div>
 
-            {/* Alerta da quinzena */}
-            <div style={{background:"#FFF9F0",borderRadius:14,padding:"12px 14px",marginBottom:20,display:"flex",gap:10,alignItems:"flex-start",boxShadow:"0 1px 4px rgba(0,0,0,0.05)"}}>
-              <div style={{width:26,height:26,borderRadius:8,background:C.amber,color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:700,flexShrink:0}}>⚠</div>
-              <div>
-                <div style={{fontSize:12,color:C.amber,lineHeight:1.4,fontWeight:600}}>Ritmo diário médio: R$ 444K</div>
-                <div style={{fontSize:11,color:"#8B5E20",lineHeight:1.4,marginTop:2}}>Para bater a meta precisa de R$ 694K/dia nos {14} dias restantes</div>
+            {/* Alerta de ritmo — igual ao padrão de alertas da Diretoria */}
+            <div style={{marginBottom:20}}>
+              <div style={{fontSize:10,fontWeight:700,color:IM.black,textTransform:"uppercase",letterSpacing:"0.05em",marginBottom:10}}>Alerta ativo</div>
+              <div style={{background:IM.amberL,borderRadius:12,padding:"10px 13px",display:"flex",gap:10,alignItems:"flex-start",borderLeft:`3px solid ${IM.amber}`}}>
+                <div style={{width:22,height:22,borderRadius:6,background:IM.amber,color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:800,flexShrink:0}}>⚠</div>
+                <div>
+                  <div style={{fontSize:12,color:IM.amber,lineHeight:1.4,fontWeight:700}}>Ritmo diário: {fmt(g.realizadoDia)}</div>
+                  <div style={{fontSize:11,color:"#7A5200",lineHeight:1.4,marginTop:2}}>Precisa de {fmt(Math.round(ritmoNecessario))}/dia nos {diasRestantes} dias restantes</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       )}
 
+      {/* ── EVOLUÇÃO ── */}
       {tab==="evolucao"&&(
-        <div style={{flex:1,overflowY:"auto",backgroundColor:"#F2F3F7"}}>
-          <div style={{background:`linear-gradient(160deg,#1E3A5A 0%,#2A5A8A 100%)`,padding:"20px 20px 24px"}}>
-            <div style={{fontSize:12,color:"rgba(255,255,255,0.6)",marginBottom:4}}>Acompanhamento</div>
-            <div style={{fontSize:20,fontWeight:700,color:"#fff"}}>Evolução Mensal</div>
+        <div style={{flex:1,overflowY:"auto",backgroundColor:IM.gray}}>
+          <div style={{backgroundColor:IM.red,padding:"16px 18px 20px"}}>
+            <div style={{display:"flex",alignItems:"center",gap:8}}>
+              <ImdepaLogo size={20} white/>
+              <div style={{fontSize:16,fontWeight:800,color:IM.white}}>Evolução Mensal</div>
+            </div>
           </div>
-          <div style={{padding:"16px",marginTop:-8}}>
-            {/* Bar chart mockado */}
+          <div style={{padding:"14px 14px 24px"}}>
             {[
-              {mes:"Jan",v:94,meta:100},{mes:"Fev",v:88,meta:100},{mes:"Mar",v:102,meta:100},
-              {mes:"Abr",v:97,meta:100},{mes:"Mai",v:91,meta:100},{mes:"Jun",v:82,meta:100,atual:true},
+              {mes:"Jan",v:94},{mes:"Fev",v:88},{mes:"Mar",v:102},
+              {mes:"Abr",v:97},{mes:"Mai",v:91},{mes:"Jun",v:82,atual:true},
             ].map(m=>(
-              <div key={m.mes} style={{background:C.white,borderRadius:12,padding:"12px 14px",marginBottom:8,boxShadow:"0 1px 4px rgba(0,0,0,0.05)"}}>
+              <div key={m.mes} style={{background:IM.white,borderRadius:14,padding:"12px 14px",marginBottom:9,boxShadow:"0 2px 10px rgba(0,0,0,0.07)",borderTop:`3px solid ${m.v>=100?IM.green:m.v>=80?IM.amber:IM.red}`}}>
                 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
-                  <span style={{fontSize:12,fontWeight:m.atual?700:500,color:m.atual?C.navy:C.text}}>{m.mes} 2025 {m.atual&&<span style={pill(C.blueL,C.blueT)}>atual</span>}</span>
-                  <span style={{fontSize:13,fontWeight:700,color:m.v>=100?C.green:m.v>=80?C.amber:C.red}}>{m.v}%</span>
+                  <div style={{display:"flex",alignItems:"center",gap:8}}>
+                    <span style={{fontSize:13,fontWeight:m.atual?800:600,color:IM.black}}>{m.mes} 2025</span>
+                    {m.atual&&<span style={{fontSize:9,padding:"2px 7px",borderRadius:10,background:IM.red,color:"#fff",fontWeight:700}}>atual</span>}
+                  </div>
+                  <span style={{fontSize:15,fontWeight:800,color:m.v>=100?IM.green:m.v>=80?IM.amber:IM.red}}>{m.v}%</span>
                 </div>
-                <div style={{height:8,backgroundColor:"#F0F0F0",borderRadius:4,overflow:"hidden"}}>
-                  <div style={{width:`${m.v}%`,height:"100%",background:m.v>=100?"linear-gradient(90deg,#3B8C42,#5BC87F)":m.v>=80?"linear-gradient(90deg,#BA7517,#EFAB3A)":"linear-gradient(90deg,#A32D2D,#E24B4A)",borderRadius:4}}/>
+                <div style={{height:7,backgroundColor:IM.gray,borderRadius:4,overflow:"hidden"}}>
+                  <div style={{width:`${m.v}%`,height:"100%",background:m.v>=100?IM.green:m.v>=80?IM.amber:IM.red,borderRadius:4}}/>
                 </div>
-                <div style={{fontSize:10,color:C.hint,marginTop:4}}>
-                  {m.v>=100?`+${m.v-100}% acima da meta`:`Faltou ${100-m.v}% para a meta`}
+                <div style={{fontSize:9.5,color:IM.grayT,marginTop:5}}>
+                  {m.v>=100?`+${m.v-100}% acima da meta`:`Faltou ${100-m.v}% para atingir a meta`}
                 </div>
               </div>
             ))}
@@ -1394,24 +1321,27 @@ function PagePrototypeGer(){
         </div>
       )}
 
+      {/* ── ALERTAS ── */}
       {tab==="alertas"&&(
-        <div style={{flex:1,overflowY:"auto",backgroundColor:"#F2F3F7"}}>
-          <div style={{background:`linear-gradient(160deg,#5C2A0A 0%,#A34A10 100%)`,padding:"20px 20px 24px"}}>
-            <div style={{fontSize:12,color:"rgba(255,255,255,0.6)",marginBottom:4}}>Seus</div>
-            <div style={{fontSize:20,fontWeight:700,color:"#fff"}}>Alertas</div>
+        <div style={{flex:1,overflowY:"auto",backgroundColor:IM.gray}}>
+          <div style={{backgroundColor:IM.red,padding:"16px 18px 20px"}}>
+            <div style={{display:"flex",alignItems:"center",gap:8}}>
+              <ImdepaLogo size={20} white/>
+              <div style={{fontSize:16,fontWeight:800,color:IM.white}}>Alertas</div>
+            </div>
           </div>
-          <div style={{padding:"16px",marginTop:-8}}>
+          <div style={{padding:"14px 14px 24px"}}>
             {[
-              {tipo:"!",texto:"Ritmo diário (R$ 444K) insuficiente. Precisa de R$ 694K/dia nos 14 dias restantes.",tempo:"Agora",cor:"#C0392B",bg:"#FCEBEB"},
-              {tipo:"⚠",texto:"% MC do mês (17,2%) abaixo da meta (17,44%). Atenção na rentabilidade.",tempo:"2h atrás",cor:"#BA7517",bg:"#FAEEDA"},
-              {tipo:"⚠",texto:"Margem mês em 76,9% da meta de margem. Acompanhar ritmo da segunda quinzena.",tempo:"4h atrás",cor:"#BA7517",bg:"#FAEEDA"},
-              {tipo:"i",texto:"Dados atualizados — Protheus 08:32",tempo:"08:32",cor:"#185FA5",bg:"#E6F1FB"},
+              {t:"!",msg:`Ritmo (${fmt(g.realizadoDia)}) insuficiente. Precisa ${fmt(Math.round(ritmoNecessario))}/dia nos ${diasRestantes} dias restantes.`,tempo:"Agora",cor:IM.red,bg:IM.redL},
+              {t:"⚠",msg:`% MC do mês (${g.mcMes}%) abaixo da meta (${g.mcMeta}%). Atenção na rentabilidade.`,tempo:"2h atrás",cor:IM.amber,bg:IM.amberL},
+              {t:"⚠",msg:`Margem em ${pctMarg}% da meta. Acompanhar na 2ª quinzena.`,tempo:"4h atrás",cor:IM.amber,bg:IM.amberL},
+              {t:"i",msg:"Dados atualizados — Protheus 08:32",tempo:"08:32",cor:"#1A5FA5",bg:"#E6F1FB"},
             ].map((a,i)=>(
-              <div key={i} style={{background:a.bg,borderRadius:14,padding:"12px 14px",marginBottom:10,display:"flex",gap:10,alignItems:"flex-start",boxShadow:"0 1px 4px rgba(0,0,0,0.06)"}}>
-                <div style={{width:26,height:26,borderRadius:8,background:a.cor,color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:700,flexShrink:0}}>{a.tipo}</div>
+              <div key={i} style={{background:a.bg,borderRadius:12,padding:"12px 13px",marginBottom:9,display:"flex",gap:10,alignItems:"flex-start",borderLeft:`3px solid ${a.cor}`}}>
+                <div style={{width:24,height:24,borderRadius:6,background:a.cor,color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:800,flexShrink:0}}>{a.t}</div>
                 <div style={{flex:1}}>
-                  <div style={{fontSize:12,color:a.cor,lineHeight:1.45,fontWeight:500,marginBottom:4}}>{a.texto}</div>
-                  <div style={{fontSize:10,color:"rgba(0,0,0,0.35)"}}>{a.tempo}</div>
+                  <div style={{fontSize:12,color:a.cor,lineHeight:1.4,fontWeight:600,marginBottom:3}}>{a.msg}</div>
+                  <div style={{fontSize:9.5,color:"rgba(0,0,0,0.35)"}}>{a.tempo}</div>
                 </div>
               </div>
             ))}
@@ -1419,33 +1349,30 @@ function PagePrototypeGer(){
         </div>
       )}
 
+      {/* ── PERFIL ── */}
       {tab==="perfil"&&(
-        <div style={{flex:1,overflowY:"auto",backgroundColor:"#F2F3F7"}}>
-          <div style={{background:`linear-gradient(160deg,#1E3A5A 0%,#2A5A8A 100%)`,padding:"28px 20px 48px",display:"flex",flexDirection:"column",alignItems:"center"}}>
-            <div style={{width:64,height:64,borderRadius:"50%",background:"rgba(255,255,255,0.2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:24,fontWeight:700,color:"#fff",marginBottom:10}}>CM</div>
-            <div style={{fontSize:18,fontWeight:700,color:"#fff",marginBottom:4}}>{g.nome}</div>
-            <div style={pill("rgba(255,255,255,0.2)","rgba(255,255,255,0.9)")}>Gerente · Indústria</div>
+        <div style={{flex:1,overflowY:"auto",backgroundColor:IM.gray}}>
+          <div style={{backgroundColor:IM.red,padding:"28px 18px 52px",display:"flex",flexDirection:"column",alignItems:"center"}}>
+            <div style={{width:64,height:64,borderRadius:"50%",background:"rgba(0,0,0,0.2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,fontWeight:800,color:"#fff",marginBottom:10}}>CM</div>
+            <div style={{fontSize:18,fontWeight:800,color:IM.white,marginBottom:4}}>{g.nome}</div>
+            <div style={{fontSize:10,padding:"4px 12px",borderRadius:20,background:"rgba(0,0,0,0.2)",color:"rgba(255,255,255,0.9)",fontWeight:600}}>Gerente · {g.segmento}</div>
           </div>
-          <div style={{padding:"0 16px",marginTop:-20}}>
-            {[{l:"Área",v:g.area},{l:"Segmento",v:g.segmento},{l:"Perfil",v:"Gerente"},{l:"Último acesso",v:"Hoje, 09:41"},{l:"Notificações",v:"Ativas · Push + In-app"}].map((r,i,arr)=>(
-              <div key={r.l} style={{background:C.white,borderRadius:14,padding:"14px 16px",marginBottom:8,boxShadow:"0 1px 4px rgba(0,0,0,0.06)",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                <span style={{fontSize:12,color:C.hint}}>{r.l}</span>
-                <span style={{fontSize:12,fontWeight:500,color:C.text}}>{r.v}</span>
+          <div style={{padding:"0 14px",marginTop:-18}}>
+            {[{l:"Área",v:g.area},{l:"Segmento",v:g.segmento},{l:"Perfil",v:"Gerente"},{l:"Último acesso",v:"Hoje, 09:41"},{l:"Notificações",v:"Ativas · Push + In-app"}].map((r,i)=>(
+              <div key={r.l} style={{background:IM.white,borderRadius:14,padding:"13px 15px",marginBottom:8,boxShadow:"0 2px 10px rgba(0,0,0,0.07)",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                <span style={{fontSize:12,color:IM.grayT}}>{r.l}</span>
+                <span style={{fontSize:12,fontWeight:700,color:IM.black}}>{r.v}</span>
               </div>
             ))}
-            <button style={{width:"100%",marginTop:8,padding:"14px",border:"none",borderRadius:14,background:"#FFF0F0",color:C.red,fontSize:13,fontWeight:600,cursor:"pointer"}}>Sair da conta</button>
+            <button style={{width:"100%",marginTop:8,padding:"14px",border:"none",borderRadius:14,background:IM.redL,color:IM.red,fontSize:13,fontWeight:800,cursor:"pointer",letterSpacing:"0.02em"}}>Sair da conta</button>
           </div>
         </div>
       )}
 
       {/* Bottom nav */}
-      <div style={{backgroundColor:C.white,borderTop:"0.5px solid rgba(0,0,0,0.08)",display:"flex",padding:"8px 0 16px",flexShrink:0}}>
+      <div style={{backgroundColor:IM.white,borderTop:`1px solid ${IM.grayM}`,display:"flex",padding:"6px 0 12px",flexShrink:0}}>
         {[{k:"home",icon:"⊞",label:"Home"},{k:"evolucao",icon:"📈",label:"Evolução"},{k:"alertas",icon:"🔔",label:"Alertas"},{k:"perfil",icon:"👤",label:"Perfil"}].map(n=>(
-          <button key={n.k} onClick={()=>setTab(n.k)} style={{flex:1,border:"none",backgroundColor:"transparent",display:"flex",flexDirection:"column",alignItems:"center",gap:3,cursor:"pointer",padding:"4px 0"}}>
-            <span style={{fontSize:18}}>{n.icon}</span>
-            <span style={{fontSize:9.5,fontWeight:tab===n.k?700:400,color:tab===n.k?C.navy:C.hint}}>{n.label}</span>
-            {tab===n.k&&<div style={{width:20,height:2.5,borderRadius:2,background:C.navy}}/>}
-          </button>
+          <NavBtn key={n.k} k={n.k} icon={n.icon} label={n.label}/>
         ))}
       </div>
     </PhoneFrame>
@@ -1462,7 +1389,6 @@ export default function ImdepaApp(){
     architecture:<PageArchitecture/>,
     roadmap:<PageRoadmap/>,
     team:<PageTeam/>,
-    scope:<PageScope/>,
     proto_dir:<PagePrototypeDir/>,
     proto_ger:<PagePrototypeGer/>,
   };
