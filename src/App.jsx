@@ -70,13 +70,13 @@ function Topbar({active}){
 function PageOverview(){
   const metrics=[
     {label:"Sistemas",value:"3",sub:"App · Backoffice · Pipeline",accent:C.blue},
-    {label:"Prazo Estimado",value:"4~5 meses",sub:"Design · ETL · Dev · QA",accent:C.purple},
+    {label:"Prazo Estimado",value:"5 meses",sub:"Backend · App Mobile · Backoffice · Go-live M5",accent:C.purple},
     {label:"Perfis de Acesso",value:"3",sub:"Diretoria · Gerente · Backoffice",accent:C.green},
   ];
   const systems=[
     {
       abbr:"APP", name:"App Imdepa", bg:C.navy,
-      tags:["App Mobile","Mobile-first","Diretoria","Gerente"],
+      tags:["Aplicativo","Mobile-first","Diretoria","Gerente"],
       feats:[
         "Home com KPIs consolidados + gauge de meta",
         "Módulo Indústria — faturamento e margem",
@@ -155,10 +155,10 @@ function PageOverview(){
         </div>
         <div style={{...card(),padding:16}}><ST>Estimativas</ST>
           {[
-            {l:"Designer UX/UI",       v:"2m part-time", w:false},
+            {l:"Designer UX/UI",       v:"3m part-time", w:false},
             {l:"Eng. de Dados (ETL)",  v:"2m full-time", w:false},
-            {l:"Dev Backend",          v:"4~5m full-time", w:false},
-            {l:"Dev Frontend",          v:"4~5m full-time", w:false},
+            {l:"Dev Backend",          v:"5m full-time", w:false},
+            {l:"Dev Frontend/Mobile",  v:"5m full-time", w:false},
             {l:"QA / Testes",          v:"1m part-time", w:false},
           ].map((e,i,arr)=>(
             <div key={e.l} style={{display:"flex",justifyContent:"space-between",fontSize:12,padding:"5px 0",borderBottom:i<arr.length-1?`0.5px solid ${C.border}`:"none"}}>
@@ -180,10 +180,10 @@ function PageArchitecture(){
 
   const SYSTEMS={
     pwa:{
-      abbr:"APP", label:"App Imdepa", sub:"App · Mobile-first",
+      abbr:"APP", label:"App Imdepa", sub:"Aplicativo · Mobile-first",
       color:"#1A3A5C", colorL:"#D0DCE8",
       profiles:["DIR · Diretoria","GER · Gerente"],
-      desc:"Aplicação web progressiva acessada pelo celular (ou desktop) pela diretoria e gerentes. Mobile-first, instalável na tela inicial como um app nativo.",
+      desc:"Aplicativo nativo em React Native para iOS e Android, acessado pela diretoria e gerentes. Mobile-first, publicado nas lojas App Store e Google Play.",
       screens:[
         {p:"Diretoria",items:["Login","Home — KPIs totais (Indústria + Revenda)","Módulo Indústria — faturamento, margem, % MC","Módulo Revenda — faturamento, margem, % MC","Filtros por gerente e área","Central de alertas — todas as áreas","Seletor de período Dia / Mês / Ano"]},
         {p:"Gerente",items:["Login","Home — KPIs da sua área + ritmo diário","Módulo da sua área (Indústria ou Revenda)","Filtros dentro da sua área/cidade","Central de alertas da área","Evolução mensal"]},
@@ -359,24 +359,36 @@ function PageRoadmap(){
     { id:"M1", fase:"Design +\nPipeline" },
     { id:"M2", fase:"Design +\nDev" },
     { id:"M3", fase:"Dev +\nQA" },
-    { id:"M4", fase:"QA +\nGo-live" },
+    { id:"M4", fase:"QA +\nHomologação" },
+    { id:"M5", fase:"Go-live" },
   ];
 
   const MARCOS = [
-    { at:"M1", title:"Design em andamento", desc:"Prototipação das telas principais em validação com diretoria. Pipeline e Auth iniciados.", color:"#534AB7" },
-    { at:"M2", title:"Handoff + Dev pleno", desc:"Design entrega handoff. Desenvolvimento App + Backend + Backoffice em curso.", color:"#185FA5" },
-    { at:"M3", title:"Feature complete + QA", desc:"Todas as features implementadas. QA funcional, integração e alertas em validação.", color:"#BA7517" },
-    { at:"M4", title:"MVP — Go-live",       desc:"App + Backoffice em produção. QA concluído. Deep-links, background jobs e notificações avançadas ativos.", color:"#3B6D11" },
+    { at:"M1", title:"Design + Fundação", desc:"Prototipação inicial, sistema de design, mapeamento Protheus, autenticação e RBAC.", color:"#534AB7" },
+    { at:"M2", title:"Handoff + Pipeline", desc:"Handoff de design, extração e carga Protheus concluídos, dashboards e backoffice iniciados.", color:"#185FA5" },
+    { at:"M3", title:"Feature complete", desc:"Design finalizado, pipeline entregue, features principais do app e backoffice completas. QA inicia.", color:"#3B6D11" },
+    { at:"M4", title:"QA & Integração", desc:"Testes funcionais, integração, alertas, notificações, deep-links e homologação com diretoria.", color:"#BA7517" },
+    { at:"M5", title:"MVP — Go-live",    desc:"Infraestrutura finalizada, logs e alertas do backoffice ativos. App + Backoffice em produção.", color:"#3B6D11" },
   ];
 
   const GROUPS = [
     {
-      group:"F1 · DESIGN UX/UI", sys:"design", abbr:"F1",
+      group:"F0 · DESIGN UX/UI", sys:"design", abbr:"F0",
       rows:[
         { label:"Prototipação das telas — App (todas as telas)",  sys:"design", start:0, span:2, ml:"M2" },
         { label:"Sistema de design & componentes",                sys:"design", start:0, span:1, ml:"M1" },
         { label:"Validação dos protótipos com diretoria",         sys:"design", start:0, span:2, ml:"M2" },
+        { label:"Suporte ao dev + ajustes de UI",                 sys:"design", start:1, span:2, ml:"M3" },
         { label:"Handoff completo para desenvolvimento",          sys:"design", start:1, span:1, ml:"M2" },
+      ],
+    },
+    {
+      group:"F1 · ENGENHARIA DE DADOS (Pipeline Protheus)", sys:"dados", abbr:"F1",
+      rows:[
+        { label:"Mapeamento e acesso ao banco Protheus",          sys:"dados", start:0, span:1, ml:"M1" },
+        { label:"Extração dos dados diretamente do Protheus",     sys:"dados", start:0, span:2, ml:"M2" },
+        { label:"Transformação e carga no banco analítico",       sys:"dados", start:0, span:2, ml:"M2" },
+        { label:"Atualização periódica dos dados",                sys:"dados", start:1, span:1, ml:"M2" },
       ],
     },
     {
@@ -384,59 +396,47 @@ function PageRoadmap(){
       rows:[
         { label:"Autenticação e RBAC",                            sys:"backend", start:0, span:1, ml:"M1" },
         { label:"Migração de Queries ADVPL → PostgreSQL",         sys:"backend", start:0, span:2, ml:"M2" },
-        { label:"Infraestrutura / DevOps",                        sys:"backend", start:0, span:4, ml:"M4" },
         { label:"Dashboards (backend)",                           sys:"backend", start:1, span:2, ml:"M3" },
         { label:"Endpoints de consulta de dados",                 sys:"backend", start:1, span:3, ml:"M4" },
         { label:"Auditoria e logs",                               sys:"backend", start:2, span:1, ml:"M3" },
         { label:"Sistema de alertas e triggers",                  sys:"alertas", start:2, span:2, ml:"M4" },
         { label:"Notificações e regras",                          sys:"alertas", start:2, span:2, ml:"M4" },
+        { label:"Infraestrutura / DevOps",                        sys:"backend", start:0, span:5, ml:"M5" },
       ],
     },
     {
-      group:"F3 · PIPELINE PROTHEUS", sys:"dados", abbr:"F3",
-      rows:[
-        { label:"Extração dos dados diretamente do Protheus",     sys:"dados",   start:0, span:2, ml:"M2" },
-        { label:"Transformação e carga no banco analítico",       sys:"dados",   start:0, span:2, ml:"M2" },
-        { label:"Autenticação JWT + controle de acesso",          sys:"backend", start:0, span:1, ml:"M1" },
-        { label:"Engine de alertas com regras de negócio",        sys:"alertas", start:2, span:2, ml:"M4" },
-      ],
-    },
-    {
-      group:"F4 · APP MOBILE — DIRETORIA & GERENTE", sys:"pwa", abbr:"F4",
+      group:"F3 · APLICATIVO MOBILE (React Native)", sys:"pwa", abbr:"F3",
       rows:[
         { label:"Autenticação e permissões",                      sys:"pwa", start:0, span:1, ml:"M1" },
-        { label:"Integração com backend",                         sys:"pwa", start:0, span:4, ml:"M4" },
-        { label:"Dashboards — Home KPIs + gauge de meta",         sys:"pwa", start:0, span:3, ml:"M3" },
-        { label:"Módulo Indústria — faturamento e margem",        sys:"pwa", start:1, span:2, ml:"M3" },
-        { label:"Módulo Revenda — faturamento e margem",          sys:"pwa", start:1, span:2, ml:"M3" },
+        { label:"Dashboards",                                     sys:"pwa", start:0, span:3, ml:"M3" },
         { label:"Listagem de Dados",                              sys:"pwa", start:1, span:2, ml:"M3" },
-        { label:"Filtros por área/cidade (Diretoria)",            sys:"pwa", start:2, span:1, ml:"M3" },
+        { label:"Integração com backend",                         sys:"pwa", start:0, span:4, ml:"M4" },
+        { label:"Notificações",                                   sys:"alertas", start:2, span:2, ml:"M4" },
         { label:"Background jobs",                                sys:"pwa", start:2, span:1, ml:"M3" },
-        { label:"Central de alertas + push notifications",        sys:"alertas", start:2, span:2, ml:"M4" },
         { label:"Deep-links",                                     sys:"pwa", start:3, span:1, ml:"M4" },
       ],
     },
     {
-      group:"F5 · BACKOFFICE", sys:"bko", abbr:"F5",
+      group:"F4 · BACKOFFICE (NextJS)", sys:"bko", abbr:"F4",
       rows:[
-        { label:"CRUD de usuários e atribuição de perfis",        sys:"bko", start:1, span:2, ml:"M3" },
-        { label:"Vinculação gerente ↔ área/cidade",              sys:"bko", start:1, span:1, ml:"M2" },
-        { label:"Configuração de thresholds de alertas",          sys:"alertas", start:2, span:1, ml:"M3" },
-        { label:"Log de acessos e atividades",                    sys:"bko", start:2, span:1, ml:"M3" },
+        { label:"Gerenciamento de permissões",                    sys:"bko", start:1, span:2, ml:"M3" },
+        { label:"Gerenciamento de usuários",                      sys:"bko", start:1, span:3, ml:"M4" },
+        { label:"Sistema de alertas",                             sys:"alertas", start:3, span:2, ml:"M5" },
+        { label:"Logs de acessos e atividades",                   sys:"bko", start:4, span:1, ml:"M5" },
       ],
     },
     {
-      group:"F6 · QA & HOMOLOGAÇÃO", sys:"qa", abbr:"F6",
+      group:"F5 · QA & HOMOLOGAÇÃO", sys:"qa", abbr:"F5",
       rows:[
         { label:"Testes funcionais — App + Backoffice",           sys:"qa", start:2.5, span:1.5, ml:"M4" },
         { label:"Testes de integração API ↔ Protheus",           sys:"qa", start:2.5, span:1.5, ml:"M4" },
         { label:"Testes de alertas e notificações",               sys:"qa", start:2.5, span:1.5, ml:"M4" },
-        { label:"Homologação com usuários reais (diretoria)",     sys:"qa", start:3, span:1, ml:"M4" },
+        { label:"Homologação com usuários reais (diretoria)",     sys:"qa", start:3,   span:1,   ml:"M4" },
       ],
     },
   ];
 
-  const TOTAL_M = 4;
+  const TOTAL_M = 5;
   const COL_W = 175;
   const LABEL_W = 210;
 
@@ -448,7 +448,7 @@ function PageRoadmap(){
       {/* Sub-header */}
       <div style={{padding:"10px 24px 0",borderBottom:`0.5px solid ${C.border}`,backgroundColor:C.white}}>
         <div style={{fontSize:11,color:C.hint,marginBottom:8}}>
-          Roadmap / Feature by feature · 4~5 meses · design M1–M2 (prototipação + handoff) · pipeline M1–M2 · dev M2–M4 · QA M3–M4 · go-live M4
+          Roadmap / 5 meses · Design M1–M3 · Eng. Dados M1–M2 · Backend M1–M5 · App Mobile M1–M4 · Backoffice M2–M5 · QA M3–M4 · go-live M5
         </div>
       </div>
 
@@ -457,7 +457,7 @@ function PageRoadmap(){
         {/* Marcos de entrega */}
         <div style={{marginBottom:20}}>
           <div style={{fontSize:11,fontWeight:600,color:C.text,marginBottom:12}}>Marcos de Entrega</div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12}}>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:12}}>
             {MARCOS.map(m=>(
               <div key={m.at} style={{backgroundColor:C.white,border:`0.5px solid ${C.border}`,borderRadius:10,padding:"14px 16px",borderTop:`2.5px solid ${m.color}`}}>
                 <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:6}}>
@@ -610,7 +610,8 @@ function PageTeam(){
     {id:"M1",fase:"Design +\nPipeline"},
     {id:"M2",fase:"Design +\nDev"},
     {id:"M3",fase:"Dev +\nQA"},
-    {id:"M4",fase:"QA +\nGo-live"},
+    {id:"M4",fase:"QA +\nHomologação"},
+    {id:"M5",fase:"Go-live"},
   ];
   const COL=170;
   const ROLE_W=168;
@@ -620,10 +621,10 @@ function PageTeam(){
   const ROLES=[
     {
       a:"UX",  label:"Designer UX/UI",
-      ded:"Part-time\nM1–M2",
+      ded:"Part-time\nM1–M3",
       color:"#534AB7",
       skills:"Figma · Prototipação · Sistema de design · Handoff",
-      segs:[{s:0, sp:2, t:"part"}],
+      segs:[{s:0, sp:3, t:"part"}],
     },
     {
       a:"DE",  label:"Eng. de Dados",
@@ -633,18 +634,18 @@ function PageTeam(){
       segs:[{s:0, sp:2, t:"full"}],
     },
     {
-      a:"BE",  label:"Dev Backend",
-      ded:"Full-time\nM1–M4",
+      a:"BE",  label:"Backend Pleno",
+      ded:"Full-time\nM1–M5",
       color:"#1A3A5C",
       skills:"Node.js · NestJS · API REST · JWT · PostgreSQL · Docker · CI/CD",
-      segs:[{s:0, sp:4, t:"full"}],
+      segs:[{s:0, sp:5, t:"full"}],
     },
     {
-      a:"FE",  label:"Dev Frontend / Mobile",
-      ded:"Full-time\nM1 (15d) – M4",
+      a:"FE",  label:"Frontend / Mobile Pleno",
+      ded:"Full-time\nM1–M5",
       color:"#2E6DA4",
-      skills:"React Native · Flutter · TypeScript · Firebase FCM · CSS mobile-first",
-      segs:[{s:0.5, sp:3.5, t:"full"}],
+      skills:"React Native · TypeScript · Firebase FCM · CSS mobile-first · NextJS",
+      segs:[{s:0, sp:5, t:"full"}],
     },
     {
       a:"QA",  label:"QA / Testes",
@@ -655,8 +656,8 @@ function PageTeam(){
     },
   ];
 
-  const monthBg=["#FFF8F0","#F0F7FF","#F5FFF0","#FFF0F5"];
-  const monthFaseColor=["#E8A020","#2E6DA4","#3B8C2A","#A32D2D"];
+  const monthBg=["#FFF8F0","#F0F7FF","#F5FFF0","#FFF0F5","#F0FFF8"];
+  const monthFaseColor=["#E8A020","#2E6DA4","#3B8C2A","#A32D2D","#3B6D11"];
 
   function Bar({seg,color}){
     const isFull=seg.t==="full";
@@ -695,8 +696,8 @@ function PageTeam(){
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:12,marginBottom:20}}>
           {[
             {accent:"#3B6D11", lbl:"PESSOAS NO TIME",  val:"5",        sub:"Papéis distintos e complementares"},
-            {accent:"#2E6DA4", lbl:"PERÍODO",          val:"4~5 meses",  sub:"M1–M4 · design → dev → QA → go-live"},
-            {accent:"#C8102E", lbl:"GO-LIVE",          val:"M4",       sub:"App + Backoffice em produção"},
+            {accent:"#2E6DA4", lbl:"PERÍODO",          val:"5 meses",  sub:"M1–M5 · design → dados → dev → QA → go-live"},
+            {accent:"#C8102E", lbl:"GO-LIVE",          val:"M5",       sub:"Aplicativo + Backoffice em produção"},
           ].map(m=>(
             <div key={m.lbl} style={{backgroundColor:C.white,border:`0.5px solid ${C.border}`,borderRadius:10,padding:"16px 20px",borderTop:`2.5px solid ${m.accent}`}}>
               <div style={{fontSize:10,fontWeight:600,color:C.hint,textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:8}}>{m.lbl}</div>
@@ -749,7 +750,7 @@ function PageTeam(){
               <div style={{width:28,height:12,borderRadius:3,backgroundColor:"#1A3A5C"}}/>
               <span style={{fontSize:11,color:C.muted}}>Full time</span>
             </div>
-            <div style={{marginLeft:"auto",fontSize:11,color:C.hint}}>3 meses · M1–M3 · design → pipeline → dev → QA → go-live</div>
+            <div style={{marginLeft:"auto",fontSize:11,color:C.hint}}>5 pessoas · M1–M5 · design → pipeline → dev → QA → go-live</div>
           </div>
 
         </div>
