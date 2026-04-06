@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // ─── Tokens ──────────────────────────────────────────────────────────────────
 const C = {
@@ -1399,10 +1399,132 @@ function PagePrototypeGer(){
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// PAGE: LOGIN
+// ═══════════════════════════════════════════════════════════════════════════════
+const CORRECT_PASSWORD = "imdepa_e_guidance";
+
+function PageLogin({ onSuccess }) {
+  const [pw, setPw] = useState("");
+  const [error, setError] = useState(false);
+  const [shake, setShake] = useState(false);
+  const [show, setShow] = useState(false);
+
+  function handleSubmit() {
+    if (pw === CORRECT_PASSWORD) {
+      onSuccess();
+    } else {
+      setError(true);
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
+    }
+  }
+
+  return (
+    <div style={{
+      display:"flex", alignItems:"center", justifyContent:"center",
+      height:"100vh", backgroundColor:C.bg,
+      fontFamily:"'DM Sans','Segoe UI',sans-serif",
+    }}>
+      <style>{`
+        @keyframes shake {
+          0%,100%{transform:translateX(0)}
+          20%,60%{transform:translateX(-6px)}
+          40%,80%{transform:translateX(6px)}
+        }
+        .shake { animation: shake 0.45s ease; }
+      `}</style>
+
+      <div className={shake ? "shake" : ""} style={{
+        backgroundColor:C.white,
+        border:`0.5px solid ${C.border}`,
+        borderRadius:16,
+        padding:"40px 36px",
+        width:340,
+        boxShadow:"0 8px 32px rgba(0,0,0,0.08)",
+      }}>
+        {/* Logo area */}
+        <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:28}}>
+          <div style={{width:36,height:36,borderRadius:8,background:C.navy,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:700,color:"#fff"}}>IM</div>
+          <div>
+            <div style={{fontSize:15,fontWeight:700,color:C.text}}>Imdepa & Guidance</div>
+            <div style={{fontSize:10.5,color:C.hint}}>Dashboard de Performance Comercial</div>
+          </div>
+        </div>
+
+        <div style={{fontSize:12,color:C.muted,marginBottom:20,lineHeight:1.6}}>
+          Acesso restrito. Insira a senha para continuar.
+        </div>
+
+        <div style={{display:"flex",flexDirection:"column",gap:14}}>
+          <div>
+            <div style={lbl}>Senha de acesso</div>
+            <div style={{position:"relative"}}>
+              <input
+                type={show ? "text" : "password"}
+                value={pw}
+                onChange={e=>{ setPw(e.target.value); setError(false); }}
+                onKeyDown={e=>{ if(e.key==="Enter") handleSubmit(); }}
+                placeholder="••••••••••••••••"
+                autoFocus
+                style={{
+                  width:"100%", padding:"10px 38px 10px 12px",
+                  border:`1px solid ${error ? C.red : C.border}`,
+                  borderRadius:8, fontSize:13, color:C.text,
+                  backgroundColor: error ? C.redL : C.white,
+                  outline:"none", boxSizing:"border-box",
+                  fontFamily:"inherit", transition:"border-color 0.15s",
+                }}
+              />
+              <button onClick={()=>setShow(v=>!v)} style={{
+                position:"absolute", right:10, top:"50%", transform:"translateY(-50%)",
+                border:"none", background:"none", cursor:"pointer", color:C.hint, fontSize:13, padding:2,
+              }}>{show ? "🙈" : "👁"}</button>
+            </div>
+            {error && (
+              <div style={{marginTop:6,fontSize:11,color:C.red,fontWeight:500}}>
+                Senha incorreta. Tente novamente.
+              </div>
+            )}
+          </div>
+
+          <button onClick={handleSubmit} style={{
+            padding:"11px", border:"none", borderRadius:8,
+            background:C.navy, color:"#fff", fontSize:13, fontWeight:600,
+            cursor:"pointer", letterSpacing:"0.02em",
+            transition:"background 0.15s",
+          }}
+            onMouseEnter={e=>e.target.style.background=C.blue}
+            onMouseLeave={e=>e.target.style.background=C.navy}
+          >
+            Entrar
+          </button>
+        </div>
+
+        <div style={{marginTop:24,textAlign:"center",fontSize:10.5,color:C.hint}}>
+          Imdepa · Guidance © {new Date().getFullYear()}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // ROOT
 // ═══════════════════════════════════════════════════════════════════════════════
 export default function ImdepaApp(){
+  const [authed, setAuthed] = useState(false);
   const [active,setActive]=useState("overview");
+
+  // Inject <title> and <link rel="icon"> into the document head
+  useEffect(()=>{
+    document.title = "Imdepa & Guidance";
+    let link = document.querySelector("link[rel='icon']");
+    if(!link){ link = document.createElement("link"); link.rel = "icon"; document.head.appendChild(link); }
+    link.href = "https://www.guidance.dev/favicon.ico";
+  },[]);
+
+  if(!authed) return <PageLogin onSuccess={()=>setAuthed(true)}/>;
+
   const pages={
     overview:<PageOverview/>,
     architecture:<PageArchitecture/>,
