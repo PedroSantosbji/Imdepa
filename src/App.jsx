@@ -71,7 +71,7 @@ function PageOverview(){
   const metrics=[
     {label:"Sistemas",value:"3",sub:"App Mobile · Backoffice · Backend",accent:C.blue},
     {label:"Prazo Estimado",value:"4 meses",sub:"M1–M4 · Backend + App + Backoffice",accent:C.purple},
-    {label:"Horas Estimadas",value:"≈ 1.063h",sub:"850h base + 25% margem de segurança",accent:C.green},
+    {label:"Horas Estimadas",value:"≈ 1.063h",sub:"Backend · App Mobile · Backoffice",accent:C.green},
   ];
   const systems=[
     {
@@ -117,38 +117,66 @@ function PageOverview(){
     {abbr:"BKO",name:"Backoffice", desc:"Backoffice Web · Gestão de acessos",             bg:C.purpleL,color:C.purple},
   ];
   return(
-    <div style={{flex:1,overflowY:"auto",padding:24,display:"flex",gap:20,alignItems:"flex-start"}}>
-      <div style={{flex:1,minWidth:0,display:"flex",flexDirection:"column",gap:16}}>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
-          {metrics.map(m=><div key={m.label} style={{...card(),padding:"16px 18px",borderTop:`2.5px solid ${m.accent}`}}><div style={lbl}>{m.label}</div><div style={big}>{m.value}</div><div style={sub}>{m.sub}</div></div>)}
-        </div>
-        <div><ST>Ecossistema de sistemas</ST>
-          <div style={{display:"flex",flexDirection:"column",gap:10}}>
-            {systems.map(s=>(
-              <div key={s.abbr} style={card({overflow:"hidden"})}>
-                <div style={{display:"flex",alignItems:"center",gap:10,padding:"13px 18px 10px",borderBottom:`0.5px solid ${C.border}`}}>
-                  <div style={{width:28,height:28,borderRadius:7,background:s.bg,display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,fontWeight:700,color:"#fff",flexShrink:0}}>{s.abbr}</div>
-                  <div><div style={{fontSize:13,fontWeight:600,color:C.text}}>{s.name}</div><div style={{display:"flex",gap:5,marginTop:3,flexWrap:"wrap"}}>{s.tags.map(t=><span key={t} style={pill(C.bg,C.hint)}>{t}</span>)}</div></div>
-                </div>
-                <div style={{padding:"12px 18px",borderBottom:`0.5px solid ${C.border}`,fontSize:12,color:C.muted,lineHeight:1.7,borderLeft:`3px solid ${s.bg}`}}>
-                  {s.desc}
-                </div>
-                <FeatGrid items={s.feats} color={C.hint}/>
-              </div>
-            ))}
+    <div style={{flex:1,overflowY:"auto",padding:24,display:"flex",flexDirection:"column",gap:16}}>
+
+      {/* Métricas */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
+        {metrics.map(m=>(
+          <div key={m.label} style={{...card(),padding:"16px 18px",borderTop:`2.5px solid ${m.accent}`}}>
+            <div style={lbl}>{m.label}</div>
+            <div style={big}>{m.value}</div>
+            <div style={sub}>{m.sub}</div>
           </div>
+        ))}
+      </div>
+
+      {/* Sistemas */}
+      <div>
+        <ST>Ecossistema de sistemas</ST>
+        <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          {systems.map(s=>(
+            <div key={s.abbr} style={card({overflow:"hidden"})}>
+              <div style={{display:"flex",alignItems:"center",gap:10,padding:"13px 18px 10px",borderBottom:`0.5px solid ${C.border}`}}>
+                <div style={{width:28,height:28,borderRadius:7,background:s.bg,display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,fontWeight:700,color:"#fff",flexShrink:0}}>{s.abbr}</div>
+                <div>
+                  <div style={{fontSize:13,fontWeight:600,color:C.text}}>{s.name}</div>
+                  <div style={{display:"flex",gap:5,marginTop:3,flexWrap:"wrap"}}>{s.tags.map(t=><span key={t} style={pill(C.bg,C.hint)}>{t}</span>)}</div>
+                </div>
+              </div>
+              <div style={{padding:"12px 18px",borderBottom:`0.5px solid ${C.border}`,fontSize:12,color:C.muted,lineHeight:1.7,borderLeft:`3px solid ${s.bg}`}}>
+                {s.desc}
+              </div>
+              <FeatGrid items={s.feats} color={C.hint}/>
+            </div>
+          ))}
         </div>
       </div>
-      <div style={{width:220,minWidth:220,display:"flex",flexDirection:"column",gap:12}}>
-        <div style={{...card(),padding:16}}><ST>Perfis de acesso</ST>
-          {profiles.map((p,i)=><div key={p.abbr} style={{display:"flex",alignItems:"flex-start",gap:10,padding:"9px 0",borderBottom:i<profiles.length-1?`0.5px solid ${C.border}`:"none"}}><Badge a={p.abbr} bg={p.bg} color={p.color}/><div><div style={{fontSize:12.5,fontWeight:600,color:C.text,marginBottom:2}}>{p.name}</div><div style={{fontSize:11,color:C.hint,lineHeight:1.4}}>{p.desc}</div></div></div>)}
+
+      {/* Painéis inferiores em grid */}
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:12}}>
+
+        {/* Perfis */}
+        <div style={{...card(),padding:16}}>
+          <ST>Perfis de acesso</ST>
+          {profiles.map((p,i)=>(
+            <div key={p.abbr} style={{display:"flex",alignItems:"flex-start",gap:10,padding:"9px 0",borderBottom:i<profiles.length-1?`0.5px solid ${C.border}`:"none"}}>
+              <Badge a={p.abbr} bg={p.bg} color={p.color}/>
+              <div>
+                <div style={{fontSize:12.5,fontWeight:600,color:C.text,marginBottom:2}}>{p.name}</div>
+                <div style={{fontSize:11,color:C.hint,lineHeight:1.4}}>{p.desc}</div>
+              </div>
+            </div>
+          ))}
         </div>
-        <div style={{...card(),padding:16}}><ST>Estimativas de horas</ST>
+
+        {/* Estimativas */}
+        <div style={{...card(),padding:16}}>
+          <ST>Estimativas de horas</ST>
           {[
-            {l:"Backend (NestJS)",      v:"438h",     sub:"350h + 25% margem"},
-            {l:"App Mobile (React Native)", v:"500h", sub:"400h + 25% margem"},
-            {l:"Backoffice (NextJS)",   v:"125h",     sub:"100h + 25% margem"},
-            {l:"Total com margem",      v:"≈ 1.063h", sub:"850h base + 213h (25%)"},
+            {l:"Backend (NestJS)",           v:"438h",     sub:""},
+            {l:"App Mobile (React Native)",  v:"500h",     sub:""},
+            {l:"Backoffice (NextJS)",        v:"125h",     sub:""},
+            {l:"Total",                      v:"≈ 1.063h", sub:""},
           ].map((e,i,arr)=>(
             <div key={e.l} style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",fontSize:12,padding:"6px 0",borderBottom:i<arr.length-1?`0.5px solid ${C.border}`:"none"}}>
               <div><span style={{color:C.muted}}>{e.l}</span>{e.sub&&<div style={{fontSize:10,color:C.hint,marginTop:1}}>{e.sub}</div>}</div>
@@ -156,20 +184,24 @@ function PageOverview(){
             </div>
           ))}
         </div>
-        <div style={{...card(),padding:16}}><ST>Equipe de desenvolvimento</ST>
+
+        {/* Equipe */}
+        <div style={{...card(),padding:16}}>
+          <ST>Equipe de desenvolvimento</ST>
           {[
-            {l:"Gestor de Projetos",    v:"40h/mês · M1–M4"},
-            {l:"Designer UX/UI",        v:"Part-time · M1–M2"},
-            {l:"Eng. de Dados",         v:"Full-time · M1–M2"},
-            {l:"Backend Pleno",         v:"Full-time · M1–M4"},
-            {l:"Front End/Mobile Pleno",v:"Full-time · M1–M4"},
+            {l:"Gestor de Projetos",     v:"40h/mês · M1–M4"},
+            {l:"Designer UX/UI",         v:"Part-time · M1–M2"},
+            {l:"Eng. de Dados",          v:"Full-time · M1–M2"},
+            {l:"Backend Pleno",          v:"Full-time · M1–M4"},
+            {l:"Front End/Mobile Pleno", v:"Full-time · M1–M4"},
           ].map((e,i,arr)=>(
             <div key={e.l} style={{display:"flex",justifyContent:"space-between",fontSize:12,padding:"5px 0",borderBottom:i<arr.length-1?`0.5px solid ${C.border}`:"none"}}>
               <span style={{color:C.muted}}>{e.l}</span>
-              <span style={{color:C.text,fontWeight:500}}>{e.v}</span>
+              <span style={{color:C.text,fontWeight:500,flexShrink:0,marginLeft:8,textAlign:"right"}}>{e.v}</span>
             </div>
           ))}
         </div>
+
       </div>
     </div>
   );
@@ -1481,10 +1513,109 @@ function PageFuturo(){
 
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// PAGE: LOGIN
+// ═══════════════════════════════════════════════════════════════════════════════
+function PageLogin({onLogin}){
+  const [senha,setSenha]=useState("");
+  const [erro,setErro]=useState(false);
+  const [mostrar,setMostrar]=useState(false);
+
+  function tentar(){
+    if(senha==="imdepa_e_guidance"){
+      onLogin();
+    } else {
+      setErro(true);
+      setSenha("");
+      setTimeout(()=>setErro(false),2500);
+    }
+  }
+
+  return(
+    <div style={{
+      display:"flex",alignItems:"center",justifyContent:"center",
+      height:"100vh",width:"100%",
+      fontFamily:"'DM Sans','Segoe UI',sans-serif",
+      backgroundColor:"#FFFFFF",
+    }}>
+      <div style={{width:"100%",maxWidth:340,padding:"0 24px",textAlign:"center"}}>
+
+        {/* Brand */}
+        <div style={{marginBottom:32}}>
+          <div style={{fontSize:20,fontWeight:800,color:"#111",letterSpacing:"-0.01em"}}>
+            Imdepa <span style={{color:"#C8102E"}}>+</span> Guidance
+          </div>
+        </div>
+
+        <div style={{marginBottom:24,textAlign:"left"}}>
+          <div style={{fontSize:18,fontWeight:700,color:"#111",marginBottom:4,letterSpacing:"-0.01em"}}>Acesso restrito</div>
+          <div style={{fontSize:13,color:"#888"}}>Insira a senha para continuar</div>
+        </div>
+
+        <div style={{textAlign:"left"}}>
+          <div style={{marginBottom:12}}>
+            <div style={{fontSize:11,fontWeight:600,color:"#555",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:6}}>Senha</div>
+            <div style={{position:"relative"}}>
+              <input
+                type={mostrar?"text":"password"}
+                value={senha}
+                onChange={e=>{setSenha(e.target.value);setErro(false);}}
+                placeholder="••••••••••••••••"
+                autoFocus
+                onKeyDown={e=>e.key==="Enter"&&tentar()}
+                style={{
+                  width:"100%",padding:"12px 48px 12px 14px",
+                  borderRadius:8,fontSize:13,
+                  backgroundColor:"#fff",
+                  border:`1.5px solid ${erro?"#C8102E":"#E0E0E0"}`,
+                  color:"#111",outline:"none",boxSizing:"border-box",
+                }}
+              />
+              <button onClick={()=>setMostrar(v=>!v)} style={{
+                position:"absolute",right:12,top:"50%",transform:"translateY(-50%)",
+                background:"none",border:"none",cursor:"pointer",
+                fontSize:12,color:"#999",padding:0,
+              }}>
+                {mostrar?"ocultar":"ver"}
+              </button>
+            </div>
+          </div>
+
+          {erro&&(
+            <div style={{
+              padding:"8px 12px",borderRadius:7,marginBottom:12,
+              backgroundColor:"#FDECEA",border:"1px solid #F5C0BB",
+              fontSize:12,color:"#C8102E",fontWeight:500,
+            }}>
+              Senha incorreta. Tente novamente.
+            </div>
+          )}
+
+          <button
+            onClick={tentar}
+            style={{
+              width:"100%",padding:"12px",marginTop:4,borderRadius:8,border:"none",
+              backgroundColor:"#C8102E",color:"#fff",
+              fontSize:13,fontWeight:700,cursor:"pointer",letterSpacing:"0.02em",
+            }}
+          >
+            Acessar
+          </button>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // ROOT
 // ═══════════════════════════════════════════════════════════════════════════════
 export default function ImdepaApp(){
+  const [auth,setAuth]=useState(false);
   const [active,setActive]=useState("overview");
+
+  if(!auth) return <PageLogin onLogin={()=>setAuth(true)}/>;
+
   const pages={
     overview:<PageOverview/>,
     architecture:<PageArchitecture/>,
