@@ -84,7 +84,6 @@ function PageOverview(){
         "Listagem de dados por gerente e área",
         "Integração com backend via API REST",
         "Seletor de período Dia / Mês / Ano",
-        "Central de alertas com severidade",
       ],
     },
     {
@@ -100,12 +99,11 @@ function PageOverview(){
     {
       abbr:"API", name:"Backend & API", bg:C.greenT,
       tags:["NestJS","PostgreSQL","DevOps"],
-      desc:"Camada técnica que sustenta o app e o backoffice. Autentica usuários, expõe os dados via API REST, gerencia permissões por perfil (RBAC), realiza a migração das queries ADVPL do Protheus para PostgreSQL e cuida de toda a infraestrutura de produção.",
+      desc:"Camada técnica que sustenta o app e o backoffice. Autentica usuários, consome a API externa fornecida pelo cliente com os dados já prontos, expõe via API REST para o app e o backoffice, e cuida de toda a infraestrutura de produção.",
       feats:[
         "Autenticação e RBAC",
+        "Integração com API externa (dados do cliente)",
         "Dashboards — endpoints e agregações",
-        "Endpoints de consulta de dados",
-        "Migração de Queries ADVPL → PostgreSQL",
         "Auditoria e logs",
         "Infraestrutura / DevOps",
       ],
@@ -113,7 +111,7 @@ function PageOverview(){
   ];
   const profiles=[
     {abbr:"DIR",name:"Diretoria",  desc:"App Mobile · Visão total de todas as áreas",    bg:C.blueL,  color:C.blueT},
-    {abbr:"COM",name:"Comercial",  desc:"App Mobile · Filtrado pela sua área/cidade",     bg:C.greenL, color:C.green},
+    {abbr:"GER",name:"Gerente",    desc:"App Mobile · Filtrado pela sua área/cidade",     bg:C.greenL, color:C.green},
     {abbr:"BKO",name:"Backoffice", desc:"Backoffice Web · Gestão de acessos",             bg:C.purpleL,color:C.purple},
   ];
   return(
@@ -191,7 +189,6 @@ function PageOverview(){
           {[
             {l:"Gestor de Projetos",     v:"40h/mês · M1–M4"},
             {l:"Designer UX/UI",         v:"Part-time · M1–M2"},
-            {l:"Eng. de Dados",          v:"Full-time · M1–M2"},
             {l:"Backend Pleno",          v:"Full-time · M1–M4"},
             {l:"Front End/Mobile Pleno", v:"Full-time · M1–M4"},
           ].map((e,i,arr)=>(
@@ -217,11 +214,11 @@ function PageArchitecture(){
     pwa:{
       abbr:"APP", label:"App Mobile", sub:"React Native · iOS + Android",
       color:"#1A3A5C", colorL:"#D0DCE8",
-      profiles:["DIR · Diretoria","COM · Comercial"],
-      desc:"Aplicativo mobile para diretoria e equipe comercial acompanharem a performance em tempo real. Construído em React Native para rodar nativamente em iOS e Android.",
+      profiles:["DIR · Diretoria","GER · Gerente"],
+      desc:"Aplicativo mobile para diretoria e equipe gerencial acompanharem a performance em tempo real. Construído em React Native para rodar nativamente em iOS e Android.",
       screens:[
         {p:"Diretoria",items:["Login","Home — KPIs totais (Indústria + Revenda)","Módulo Indústria — faturamento, margem, % MC","Módulo Revenda — faturamento, margem, % MC","Filtros por gerente e área","Central de alertas","Seletor de período Dia / Mês / Ano"]},
-        {p:"Comercial",items:["Login","Home — KPIs da sua área","Módulo da sua área (Indústria ou Revenda)","Filtros dentro da sua área/cidade","Central de alertas da área"]},
+        {p:"Gerente",items:["Login","Home — KPIs da sua área","Módulo da sua área (Indústria ou Revenda)","Filtros dentro da sua área/cidade"]},
       ],
     },
     backoffice:{
@@ -236,11 +233,10 @@ function PageArchitecture(){
     pipeline:{
       abbr:"API", label:"Backend & API", sub:"NestJS · PostgreSQL · DevOps",
       color:"#3B6D11", colorL:"#EAF3DE",
-      profiles:["Backend","Eng. de Dados"],
-      desc:"Backend construído em NestJS com PostgreSQL. Autentica usuários, expõe dados via API REST, migra queries ADVPL do Protheus para PostgreSQL e cuida de toda a infraestrutura.",
+      profiles:["Backend"],
+      desc:"Backend construído em NestJS com PostgreSQL. Consome a API externa fornecida pelo cliente, autentica usuários, expõe dados via API REST e cuida de toda a infraestrutura.",
       screens:[
-        {p:"Backend",items:["Autenticação e RBAC","Dashboards — endpoints e agregações","Endpoints de consulta de dados","Auditoria e logs","Infraestrutura / DevOps"]},
-        {p:"Eng. de Dados",items:["Extração direta do banco Protheus","Migração de Queries ADVPL → PostgreSQL","Transformação e carga no banco analítico","Disponibilização via API"]},
+        {p:"Backend",items:["Autenticação e RBAC","Integração com API externa (dados do cliente)","Dashboards — endpoints e agregações","Auditoria e logs","Infraestrutura / DevOps"]},
       ],
     },
   };
@@ -381,7 +377,6 @@ function SitemapNode({sys,id,selected,onSelect}){
 function PageRoadmap(){
   const SYS = {
     design:  { label:"Design UX/UI",              color:"#534AB7", bg:"#EEEDFE" },
-    dados:   { label:"Eng. Dados / Protheus",      color:"#3B6D11", bg:"#EAF3DE" },
     backend: { label:"Backend — NestJS",           color:"#185FA5", bg:"#E6F1FB" },
     infra:   { label:"Infra / DevOps",             color:"#5F5E5A", bg:"#F1EFE8" },
     app:     { label:"App Mobile — React Native",  color:"#1A3A5C", bg:"#D0DCE8" },
@@ -390,16 +385,16 @@ function PageRoadmap(){
 
   const MONTHS = [
     { id:"M1", fase:"Autenticação\n+ Infra" },
-    { id:"M2", fase:"Dashboards\n+ Queries" },
-    { id:"M3", fase:"Dashboards\n+ Dados" },
+    { id:"M2", fase:"Dashboards\n+ Dev" },
+    { id:"M3", fase:"Dashboards\n+ Integração" },
     { id:"M4", fase:"Logs\n+ DevOps" },
   ];
 
   const MARCOS = [
-    { at:"M1", title:"Auth + Infra prontos",      desc:"RBAC, autenticação, infra cloud configurada e início da migração ADVPL → PostgreSQL.", color:"#185FA5" },
+    { at:"M1", title:"Auth + Infra prontos",       desc:"RBAC, autenticação e infra cloud configurada. API externa do cliente integrada.", color:"#185FA5" },
     { at:"M2", title:"Design aprovado + Dev pleno",desc:"Design entrega handoff. Dashboards e endpoints em desenvolvimento no backend e app.", color:"#534AB7" },
-    { at:"M3", title:"Dashboards operacionais",   desc:"Dashboards funcionando no app e no backend. Dados do Protheus disponíveis via API.", color:"#3B6D11" },
-    { at:"M4", title:"MVP — Go-live",             desc:"App + Backoffice em produção. Logs, auditoria e DevOps completos.", color:"#1A3A5C" },
+    { at:"M3", title:"Dashboards operacionais",    desc:"Dashboards funcionando no app e no backend. Dados da API do cliente disponíveis.", color:"#1A3A5C" },
+    { at:"M4", title:"MVP — Go-live",              desc:"App + Backoffice em produção. Logs, auditoria e DevOps completos.", color:"#3B6D11" },
   ];
 
   const GROUPS = [
@@ -413,18 +408,11 @@ function PageRoadmap(){
       ],
     },
     {
-      group:"ENG. DE DADOS — PROTHEUS", sys:"dados", abbr:"DE",
-      rows:[
-        { label:"Extração dos dados diretamente do Protheus",        sys:"dados",   start:0, span:2, ml:"M2" },
-        { label:"Transformação e carga no banco analítico",          sys:"dados",   start:0, span:2, ml:"M2" },
-      ],
-    },
-    {
       group:"BACKEND — NestJS + PostgreSQL", sys:"backend", abbr:"BE",
       rows:[
         { label:"Autenticação e RBAC",                               sys:"backend", start:0, span:1, ml:"M1" },
+        { label:"Integração com API externa (dados do cliente)",     sys:"backend", start:0, span:2, ml:"M2" },
         { label:"Dashboards — endpoints e agregações",               sys:"backend", start:1, span:2, ml:"M3" },
-        { label:"Endpoints de consulta de dados",                    sys:"backend", start:1, span:2, ml:"M3" },
         { label:"Auditoria e logs",                                  sys:"backend", start:2, span:2, ml:"M4" },
         { label:"Infraestrutura / DevOps",                           sys:"infra",   start:0, span:4, ml:"M4" },
       ],
@@ -460,7 +448,7 @@ function PageRoadmap(){
       {/* Sub-header */}
       <div style={{padding:"10px 24px 0",borderBottom:`0.5px solid ${C.border}`,backgroundColor:C.white}}>
         <div style={{fontSize:11,color:C.hint,marginBottom:8}}>
-          Roadmap / Feature by feature · 4 meses · design M1–M2 · Eng. Dados M1–M2 · Backend M1–M4 · App Mobile M1–M3 · Backoffice M2–M4 · Go-live M4
+          Roadmap / Feature by feature · 4 meses · design M1–M2 · Backend M1–M4 · App Mobile M1–M3 · Backoffice M2–M4 · Go-live M4
         </div>
       </div>
 
@@ -638,28 +626,21 @@ function PageTeam(){
     },
     {
       a:"UX",  label:"Designer UX/UI",
-      ded:"Part-time\nM1–M2",
+      ded:"80h/mês\nM1–M2",
       color:"#534AB7",
       skills:"Figma · Prototipação · Sistema de design · Handoff",
       segs:[{s:0, sp:2, t:"part"}],
     },
     {
-      a:"DE",  label:"Eng. de Dados",
-      ded:"Full-time\nM1–M2",
-      color:"#3B6D11",
-      skills:"SQL · PostgreSQL · ADVPL → PostgreSQL · TOTVS/Protheus",
-      segs:[{s:0, sp:2, t:"full"}],
-    },
-    {
       a:"BE",  label:"Backend Pleno",
-      ded:"Full-time\nM1–M4",
+      ded:"160h/mês\nM1–M4",
       color:"#1A3A5C",
-      skills:"NestJS · PostgreSQL · RBAC · REST APIs · Auditoria · DevOps · Infra",
+      skills:"NestJS · PostgreSQL · RBAC · REST APIs · Integração API externa · Auditoria · DevOps",
       segs:[{s:0, sp:4, t:"full"}],
     },
     {
       a:"MB",  label:"Front End / Mobile Pleno",
-      ded:"Full-time\nM1–M4",
+      ded:"160h/mês\nM1–M4",
       color:"#2E6DA4",
       skills:"React Native · NextJS · Dashboards · Listagem de dados · Integração backend",
       segs:[{s:0, sp:4, t:"full"}],
@@ -705,7 +686,7 @@ function PageTeam(){
         {/* Metric cards */}
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:12,marginBottom:20}}>
           {[
-            {accent:"#3B6D11", lbl:"PESSOAS NO TIME",  val:"5",        sub:"GP · Designer · Eng. Dados · Backend · Mobile"},
+            {accent:"#3B6D11", lbl:"PESSOAS NO TIME",  val:"4",        sub:"GP · Designer · Backend · Mobile"},
             {accent:"#2E6DA4", lbl:"PERÍODO",          val:"4 meses",  sub:"M1–M4 · Backend + App + Backoffice"},
             {accent:"#C8102E", lbl:"GO-LIVE",          val:"M4",       sub:"App + Backoffice em produção"},
           ].map(m=>(
